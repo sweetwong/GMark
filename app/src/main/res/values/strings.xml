@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SweetNote</string>
+    <string name="project">项目</string>
+    <string name="outline">大纲</string>
 </resources>
