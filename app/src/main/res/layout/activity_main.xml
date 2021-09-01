@@ -58,7 +58,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start">
 
-        <sweet.wong.sweetnote.drawer.DrawerView
+        <sweet.wong.sweetnote.drawer.ProjectDrawerView
             android:id="@+id/drawer_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

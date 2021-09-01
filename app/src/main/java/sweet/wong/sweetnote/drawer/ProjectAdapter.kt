@@ -17,18 +17,32 @@ import java.io.File
  */
 class ProjectAdapter : RecyclerView.Adapter<ProjectAdapter.ViewHolder>() {
 
-    private var currentPath = ""
+    private var currentFolder: String = ""
 
-    private var files = emptyList<File>()
+    private var files: List<File> = emptyList()
 
-    fun refresh(path: String) {
-        currentPath = path
-        files = File(currentPath).listFiles().toList()
+    fun refresh(path: String?) {
+        path ?: return
+
+        currentFolder = path
+
+        val file = File(path)
+
+        if (!file.exists()) return
+
+        if (file.isFile) {
+            files = file.parentFile?.listFiles()?.toList() ?: emptyList()
+        }
+
+        if (file.isDirectory) {
+            files = file.listFiles()?.toList() ?: emptyList()
+        }
+
         notifyDataSetChanged()
     }
 
     fun back() {
-        refresh(File(currentPath).parent)
+        refresh(File(currentFolder).parent)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

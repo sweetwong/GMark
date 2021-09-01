@@ -1,5 +1,7 @@
 package sweet.wong.sweetnote
 
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.KeyEvent
@@ -10,35 +12,40 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
-import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.PathUtils
 import com.google.android.material.navigation.NavigationView
 import io.noties.markwon.Markwon
 import io.noties.markwon.html.HtmlPlugin
 import io.noties.markwon.image.glide.GlideImagesPlugin
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.schedulers.Schedulers
-import org.eclipse.jgit.lib.ProgressMonitor
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
-import sweet.wong.sweetnote.drawer.DrawerView
+import sweet.wong.sweetnote.core.postDelayed
+import sweet.wong.sweetnote.drawer.ProjectDrawerView
 import sweet.wong.sweetnote.event.TextUpdateEvent
 import java.io.File
 
-class MainActivity : AppCompatActivity() {
+class MDViewActivity : AppCompatActivity() {
+
+    private lateinit var currentPath: String
 
     private lateinit var toolbar: Toolbar
     private lateinit var drawerLayout: DrawerLayout
-    private lateinit var drawerView: DrawerView
+    private lateinit var drawerView: ProjectDrawerView
     private lateinit var navigationView: NavigationView
     private lateinit var textView: TextView
     private lateinit var progressBar: ProgressBar
 
+    private lateinit var markwon: Markwon
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        EventBus.getDefault().register(this)
+
+        markwon = Markwon.builder(this)
+            .usePlugins(listOf(GlideImagesPlugin.create(this), HtmlPlugin.create()))
+            .build()
+
+        parseParams()
 
         initView()
         initData()
@@ -46,10 +53,26 @@ class MainActivity : AppCompatActivity() {
         toolbar.isVisible = false
     }
 
+    private fun parseParams() {
+        currentPath = intent.extras?.getString(EXTRA_REPOSITORY_ROOT) ?: DEFAULT
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (drawerLayout.isDrawerOpen(navigationView)) {
-                drawerView.onBackPressed()
+                if (!drawerView.onBackPressed()) {
+                    drawerLayout.closeDrawer(navigationView)
+                }
                 return true
             }
         }
@@ -59,26 +82,23 @@ class MainActivity : AppCompatActivity() {
 
     @Subscribe
     fun onTextUpdateEvent(event: TextUpdateEvent) {
-        Observable.fromCallable { File(event.path).readText() }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext {
-                val markwon = Markwon.builder(this)
-                    .usePlugins(listOf(GlideImagesPlugin.create(this), HtmlPlugin.create()))
-                    .build()
-                markwon.setMarkdown(textView, it)
-                drawerLayout.closeDrawer(navigationView)
-            }
-            .doOnError {
-                ToastUtils.showLong(it.toString())
-            }
-            .subscribe()
+        drawerLayout.closeDrawer(navigationView)
+        postDelayed(180) {
+            start(this, event.path)
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 
     private fun initView() {
         findViews()
         initToolbar()
         initDrawer()
+        markwon.setMarkdown(textView, File(currentPath).readText())
     }
 
     private fun findViews() {
@@ -103,35 +123,29 @@ class MainActivity : AppCompatActivity() {
         )
         actionBarDrawerToggle.drawerArrowDrawable.color = Color.WHITE
         actionBarDrawerToggle.syncState()
+
+        drawerView.currentMDPath = currentPath
     }
 
     private fun initData() {
-//        CloneRepository.clone(RepoCloneMonitor())
+//        CloneRepository.clone(object : ProgressMonitor by noOpDelegate() {})
     }
 
-    inner class RepoCloneMonitor : ProgressMonitor {
+    companion object {
 
-        override fun start(totalTasks: Int) {
-            log("start", totalTasks)
+        fun start(context: Context, mdPath: String) {
+            val intent = Intent(context, MDViewActivity::class.java).apply {
+                putExtra(EXTRA_REPOSITORY_ROOT, mdPath)
+            }
+            context.startActivity(intent)
         }
 
-        override fun beginTask(title: String?, totalWork: Int) {
-            log("beginTask", title, totalWork)
-        }
 
-        override fun update(completed: Int) {
-            log("update", completed)
-        }
+        private const val EXTRA_REPOSITORY_ROOT = "extra_repository_root"
 
-        override fun endTask() {
-            log("endTask")
-        }
+        private val DEFAULT = PathUtils.getExternalAppFilesPath() + "/QA/QA.md"
 
-        override fun isCancelled(): Boolean {
-            return false
-        }
     }
-
 
 }
 
