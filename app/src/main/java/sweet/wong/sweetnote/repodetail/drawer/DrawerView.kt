@@ -1,4 +1,4 @@
-package sweet.wong.sweetnote.drawer
+package sweet.wong.sweetnote.repodetail.drawer
 
 import android.content.Context
 import android.util.AttributeSet

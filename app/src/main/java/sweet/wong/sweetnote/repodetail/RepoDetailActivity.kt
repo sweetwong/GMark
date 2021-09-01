@@ -19,7 +19,7 @@ import io.noties.markwon.image.glide.GlideImagesPlugin
 import sweet.wong.sweetnote.R
 import sweet.wong.sweetnote.repolist.RepoListActivity
 import sweet.wong.sweetnote.core.postDelayed
-import sweet.wong.sweetnote.drawer.DrawerView
+import sweet.wong.sweetnote.repodetail.drawer.DrawerView
 import sweet.wong.sweetnote.utils.SPUtils
 import java.io.File
 
@@ -38,19 +38,49 @@ class RepoDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_repo_detail)
+
+        // 解析参数
         viewModel.path.value = SPUtils.getString(RepoListActivity.SP_LOCAL_REPO_PATH) + "/README.md"
 
-        initView()
-        initData()
+        // 找到视图
+        toolbar = findViewById(R.id.toolbar)
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navigationView = findViewById(R.id.navigation_view)
+        drawerView = findViewById(R.id.drawer_view)
+        textView = findViewById(R.id.text_view)
 
+        // 工具栏
+        setSupportActionBar(toolbar)
         toolbar.isVisible = false
+
+        // 抽屉栏
+        val actionBarDrawerToggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.app_name,
+            R.string.app_name
+        )
+        actionBarDrawerToggle.drawerArrowDrawable.color = Color.WHITE
+        actionBarDrawerToggle.syncState()
+
+        // Markdown
+        markwon = Markwon.builder(this)
+            .usePlugins(listOf(GlideImagesPlugin.create(this), HtmlPlugin.create()))
+            .build()
+        markwon.setMarkdown(textView, File(viewModel.path.value.orEmpty()).readText())
+
+        // 数据绑定
         viewModel.path.observe(this) {
             drawerLayout.closeDrawer(navigationView)
             postDelayed(180) {
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             }
         }
+
+        // 加载数据
+        initData()
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
@@ -68,44 +98,6 @@ class RepoDetailActivity : AppCompatActivity() {
     override fun finish() {
         super.finish()
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-    }
-
-    private fun initView() {
-        findViews()
-        initToolbar()
-        initDrawer()
-        initMarkdownPreview()
-    }
-
-    private fun initMarkdownPreview() {
-        markwon = Markwon.builder(this)
-            .usePlugins(listOf(GlideImagesPlugin.create(this), HtmlPlugin.create()))
-            .build()
-        markwon.setMarkdown(textView, File(viewModel.path.value.orEmpty()).readText())
-    }
-
-    private fun findViews() {
-        toolbar = findViewById(R.id.toolbar)
-        drawerLayout = findViewById(R.id.drawer_layout)
-        navigationView = findViewById(R.id.navigation_view)
-        drawerView = findViewById(R.id.drawer_view)
-        textView = findViewById(R.id.text_view)
-    }
-
-    private fun initToolbar() {
-        setSupportActionBar(toolbar)
-    }
-
-    private fun initDrawer() {
-        val actionBarDrawerToggle = ActionBarDrawerToggle(
-            this,
-            drawerLayout,
-            toolbar,
-            R.string.app_name,
-            R.string.app_name
-        )
-        actionBarDrawerToggle.drawerArrowDrawable.color = Color.WHITE
-        actionBarDrawerToggle.syncState()
     }
 
     private fun initData() {
