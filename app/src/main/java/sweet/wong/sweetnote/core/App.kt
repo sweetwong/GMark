@@ -1,4 +1,4 @@
-package sweet.wong.sweetnote
+package sweet.wong.sweetnote.core
 
 import android.app.Application
 

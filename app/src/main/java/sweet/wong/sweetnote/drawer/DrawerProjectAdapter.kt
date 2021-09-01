@@ -1,13 +1,15 @@
 package sweet.wong.sweetnote.drawer
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import org.greenrobot.eventbus.EventBus
+import sweet.wong.sweetnote.repodetail.RepoDetailViewModel
 import sweet.wong.sweetnote.R
-import sweet.wong.sweetnote.event.TextUpdateEvent
 import java.io.File
 
 /**
@@ -15,34 +17,27 @@ import java.io.File
  *
  * @author sweetwang 2021/9/1
  */
-class ProjectAdapter : RecyclerView.Adapter<ProjectAdapter.ViewHolder>() {
+class DrawerProjectAdapter(context: Context) :
+    RecyclerView.Adapter<DrawerProjectAdapter.ViewHolder>() {
 
-    private var currentFolder: String = ""
+    private val activity = context as AppCompatActivity
 
-    private var files: List<File> = emptyList()
+    private val viewModel: RepoDetailViewModel by activity.viewModels()
 
-    fun refresh(path: String?) {
-        path ?: return
+    private val files = mutableListOf<File>()
 
-        currentFolder = path
-
-        val file = File(path)
-
-        if (!file.exists()) return
-
-        if (file.isFile) {
-            files = file.parentFile?.listFiles()?.toList() ?: emptyList()
+    init {
+        viewModel.drawerFold.observe(activity) {
+            files.clear()
+            File(it).listFiles()?.toList()?.let { list ->
+                files.addAll(list)
+            }
+            notifyDataSetChanged()
         }
-
-        if (file.isDirectory) {
-            files = file.listFiles()?.toList() ?: emptyList()
-        }
-
-        notifyDataSetChanged()
     }
 
-    fun back() {
-        refresh(File(currentFolder).parent)
+    fun onBackPressed() {
+        viewModel.drawerFold.value = File(viewModel.drawerFold.value ?: return).parent ?: return
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -65,10 +60,10 @@ class ProjectAdapter : RecyclerView.Adapter<ProjectAdapter.ViewHolder>() {
             itemView.setOnClickListener {
                 val file = files[adapterPosition]
                 if (file.isDirectory) {
-                    refresh(file.absolutePath)
+                    viewModel.drawerFold.value = file.absolutePath
                 }
                 if (file.isFile && file.name.endsWith(".md")) {
-                    EventBus.getDefault().post(TextUpdateEvent(file.path))
+                    viewModel.path.value = file.absolutePath
                 }
             }
         }
