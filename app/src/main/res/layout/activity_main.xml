@@ -46,7 +46,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start">
 
-        <sweet.wong.sweetnote.DrawerView
+        <sweet.wong.sweetnote.drawer.DrawerView
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

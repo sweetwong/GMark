@@ -8,13 +8,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
-import com.blankj.utilcode.util.PathUtils
 import com.google.android.material.navigation.NavigationView
-import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.lib.ProgressMonitor
-import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider
-import java.io.File
-import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
@@ -60,16 +55,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        thread(true) {
-            val cloneCommand = Git.cloneRepository()
-                    .setURI("https://github.com/sweetwong/Android-Interview-QA.git")
-                    .setProgressMonitor(RepoCloneMonitor())
-                    .setDirectory(File(PathUtils.getExternalAppFilesPath() + "/QA"))
-                    .setCloneSubmodules(false)
-                    .setCredentialsProvider(UsernamePasswordCredentialsProvider("sweetwong", "123Woaini!!"))
-
-            cloneCommand.call()
-        }
+        CloneRepository.clone(RepoCloneMonitor())
     }
 
     inner class RepoCloneMonitor : ProgressMonitor {

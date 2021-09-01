@@ -32,6 +32,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+    }
 }
 
 dependencies {
@@ -43,7 +47,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
     implementation 'com.google.android.material:material:1.4.0'
     // Git
-    implementation "org.eclipse.jgit:org.eclipse.jgit:5.12.0.202106070339-r"
+    implementation "org.eclipse.jgit:org.eclipse.jgit:4.5.0.201609210915-r"
     // AndroidUtilCode
     implementation 'com.blankj:utilcodex:1.30.6'
     // Markdown
