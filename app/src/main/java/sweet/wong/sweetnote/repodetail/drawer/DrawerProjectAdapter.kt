@@ -1,15 +1,12 @@
 package sweet.wong.sweetnote.repodetail.drawer
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import sweet.wong.sweetnote.repodetail.RepoDetailViewModel
-import sweet.wong.sweetnote.R
+import sweet.wong.sweetnote.databinding.RecyclerItemProjectBinding
+import sweet.wong.sweetnote.repodetail.RepoViewerViewModel
 import java.io.File
 
 /**
@@ -17,54 +14,72 @@ import java.io.File
  *
  * @author sweetwang 2021/9/1
  */
-class DrawerProjectAdapter(context: Context) :
-    RecyclerView.Adapter<DrawerProjectAdapter.ViewHolder>() {
+class DrawerProjectAdapter(private val viewModel: RepoViewerViewModel) :
+    ListAdapter<File, DrawerProjectAdapter.VH>(diffCallback) {
 
-    private val activity = context as AppCompatActivity
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = VH.from(parent)
 
-    private val viewModel: RepoDetailViewModel by activity.viewModels()
+    override fun onBindViewHolder(holder: VH, position: Int) =
+        holder.bind(viewModel, getItem(position))
 
-    private val files = mutableListOf<File>()
-
-    init {
-        viewModel.drawerFold.observe(activity) {
-            files.clear()
-            File(it).listFiles()?.toList()?.let { list ->
-                files.addAll(list)
-            }
-            notifyDataSetChanged()
+    fun onBackPressed(): Boolean {
+        if (viewModel.currentProjectFolder.value?.absolutePath == viewModel.repo.value?.localPath) {
+            return false
         }
+        viewModel.currentProjectFolder.value?.parentFile?.let {
+            if (it.exists()) {
+                viewModel.currentProjectFolder.value = it
+                return true
+            }
+        }
+        return false
     }
 
-    fun onBackPressed() {
-        viewModel.drawerFold.value = File(viewModel.drawerFold.value ?: return).parent ?: return
-    }
+    class VH(private val binding: RecyclerItemProjectBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.recycler_item_project, parent, false)
-        return ViewHolder(itemView)
-    }
+        fun bind(viewModel: RepoViewerViewModel, childFile: File) {
+            binding.file = childFile
+            binding.executePendingBindings()
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = with(holder) {
-        text.text = files[position].name
-    }
-
-    override fun getItemCount(): Int = files.size
-
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        val text: TextView = itemView.findViewById(R.id.text)
-
-        init {
             itemView.setOnClickListener {
-                val file = files[adapterPosition]
-                if (file.isDirectory) {
-                    viewModel.drawerFold.value = file.absolutePath
+                if (childFile.isDirectory) {
+                    viewModel.currentProjectFolder.value = childFile
                 }
-                if (file.isFile && file.name.endsWith(".md")) {
-                    viewModel.path.value = file.absolutePath
+                if (childFile.isFile) {
+                    viewModel.currentFile.value = childFile
                 }
+            }
+        }
+
+        companion object {
+
+            fun from(parent: ViewGroup) = VH(
+                RecyclerItemProjectBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
+
+        }
+
+    }
+
+    companion object {
+        private val diffCallback = object : DiffUtil.ItemCallback<File>() {
+            override fun areItemsTheSame(
+                oldItem: File,
+                newItem: File
+            ): Boolean {
+                return oldItem === newItem
+            }
+
+            override fun areContentsTheSame(
+                oldItem: File,
+                newItem: File
+            ): Boolean {
+                return oldItem.absolutePath == newItem.absolutePath
             }
         }
 
