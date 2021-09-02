@@ -20,6 +20,7 @@ import sweet.wong.sweetnote.R
 import sweet.wong.sweetnote.repolist.RepoListActivity
 import sweet.wong.sweetnote.core.postDelayed
 import sweet.wong.sweetnote.repodetail.drawer.DrawerView
+import sweet.wong.sweetnote.repolist.RepoListViewModel.Companion.SP_LOCAL_REPO_PATH
 import sweet.wong.sweetnote.utils.SPUtils
 import java.io.File
 
@@ -42,7 +43,7 @@ class RepoDetailActivity : AppCompatActivity() {
 
         // 解析参数
         // FIXME: 2021/9/2 这里传参应该用Intent
-        viewModel.path.value = SPUtils.getString(RepoListActivity.SP_LOCAL_REPO_PATH) + "/README.md"
+        viewModel.path.value = SPUtils.getString(SP_LOCAL_REPO_PATH) + "/README.md"
 
         // 找到视图
         toolbar = findViewById(R.id.toolbar)

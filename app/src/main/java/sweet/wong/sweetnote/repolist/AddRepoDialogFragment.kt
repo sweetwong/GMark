@@ -24,7 +24,7 @@ import sweet.wong.sweetnote.data.RepoModel
  *
  * @author sweetwang 2021/9/2
  */
-class RepoAuthDialogFragment : DialogFragment(R.layout.dialog_add_repo) {
+class RepoAuthDialogFragment(private val viewModel: RepoListViewModel) : DialogFragment(R.layout.dialog_add_repo) {
 
     private lateinit var radioGroup: RadioGroup
     private lateinit var radioHttp: RadioButton
@@ -44,13 +44,6 @@ class RepoAuthDialogFragment : DialogFragment(R.layout.dialog_add_repo) {
     }
 
     /**
-     * Share view model with host activity
-     *
-     * Note that it's lifecycle owner is activity, not fragment
-     */
-    private lateinit var viewModel: RepoListViewModel
-
-    /**
      * Interface to listen dialog dismiss
      */
     var onDismiss: (() -> Unit)? = null
@@ -63,8 +56,6 @@ class RepoAuthDialogFragment : DialogFragment(R.layout.dialog_add_repo) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Init view model
-        viewModel = ViewModelProvider(requireActivity())[RepoListViewModel::class.java]
 
         dialog?.window?.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,

@@ -1,6 +1,5 @@
 package sweet.wong.sweetnote.repolist
 
-import sweet.wong.sweetnote.core.NonNullLiveData
 import sweet.wong.sweetnote.data.Repo
 
 /**
@@ -8,12 +7,10 @@ import sweet.wong.sweetnote.data.Repo
  *
  * @author sweetwang 2021/9/2
  */
-class RepoUIState(data: Repo) {
+class RepoUIState(val repo: Repo) {
 
-    val repo = NonNullLiveData(data)
+    val progress = "0"
 
-    val progress = NonNullLiveData(0)
-
-    val tipText = NonNullLiveData("")
+    val tipText = "tipText"
 
 }
