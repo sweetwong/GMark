@@ -27,7 +27,7 @@ class RepoListViewModel : ViewModel() {
 
             }
             .doOnError {
-                toast("refresh repo failed", it)
+                toast("Refresh repo list failed", it)
             }
             .subscribe()
     }
@@ -38,7 +38,18 @@ class RepoListViewModel : ViewModel() {
                 refreshRepoList()
             }
             .doOnError {
-                toast("addNewRepo failed", it)
+                toast("Add new repo failed", it)
+            }
+            .subscribe()
+    }
+
+    fun deleteRepo(repo: Repo) {
+        RepoModel.delete(repo)
+            .doOnNext {
+                refreshRepoList()
+            }
+            .doOnError {
+                toast("Delete repo failed", it)
             }
             .subscribe()
     }

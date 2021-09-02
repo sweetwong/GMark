@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
@@ -28,26 +29,26 @@ class RepoListAdapter : ListAdapter<RepoUIState, RepoListAdapter.VH>(diffCallbac
         private val tipText: TextView = itemView.findViewById(R.id.tip_text)
         private val progressText: TextView = itemView.findViewById(R.id.progress_text)
 
-        private val lifecycleOwner: LifecycleOwner = (itemView.context as AppCompatActivity)
+        private val activity: AppCompatActivity = (itemView.context as AppCompatActivity)
+        private val viewModel: RepoListViewModel by activity.viewModels()
 
         /**
-         * Bind ui here
+         * Bind UI here
          */
         fun bind(uiState: RepoUIState) {
-            uiState.repo.observe(lifecycleOwner) {
+            uiState.repo.observe(activity) {
                 repoNameText.text = it.name
             }
-            uiState.progress.observe(lifecycleOwner) {
+            uiState.progress.observe(activity) {
                 progressText.text = it.toString()
             }
-            uiState.tipText.observe(lifecycleOwner) {
+            uiState.tipText.observe(activity) {
                 tipText.text = it
             }
 
-            repoNameText.setOnClickListener {
-                val value = uiState.repo.value
-                value.name = "不错"
-                uiState.updateRepo(value)
+            itemView.setOnLongClickListener {
+                viewModel.deleteRepo(uiState.repo.value)
+                true
             }
         }
 
