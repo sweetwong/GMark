@@ -52,6 +52,10 @@ class RepoListActivity : AppCompatActivity() {
 
         viewModel.repoSelectEvent.observe(this, EventObserver {
             RepoViewerActivity.start(this, it)
+            overridePendingTransition(
+                android.R.anim.fade_in,
+                android.R.anim.fade_out
+            )
         })
     }
 

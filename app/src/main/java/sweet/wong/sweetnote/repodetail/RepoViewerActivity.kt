@@ -1,5 +1,6 @@
 package sweet.wong.sweetnote.repodetail
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -64,12 +65,12 @@ class RepoViewerActivity : AppCompatActivity() {
 //            }
 //        }
 
-        viewModel.repo.value = repo
-        viewModel.currentProjectFolder.value = File(repo.localPath)
-
         viewModel.fileText.observe(this) {
             markwon.setMarkdown(binding.markText, it)
+            binding.drawerLayout.closeDrawer(binding.navigationView)
         }
+
+        viewModel.init(repo)
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {

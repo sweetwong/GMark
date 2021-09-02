@@ -29,6 +29,21 @@ class RepoViewerViewModel : ViewModel() {
         MutableLiveData(getFileList(it))
     }
 
+    fun init(repo: Repo) {
+        this.repo.value = repo
+
+        val file = File(repo.localPath)
+        if (file.exists()) {
+            currentProjectFolder.value = file
+        }
+
+        file.listFiles()?.forEach {
+            if (it.name == "README.md") {
+                currentFile.value = it
+            }
+        }
+    }
+
     private fun getFileList(folderFile: File): List<File> {
         if (!folderFile.exists()) return emptyList()
         if (!folderFile.isDirectory) return emptyList()
