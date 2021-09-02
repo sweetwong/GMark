@@ -5,7 +5,9 @@ import android.view.Menu
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import sweet.wong.sweetnote.R
+import sweet.wong.sweetnote.core.EventObserver
 import sweet.wong.sweetnote.databinding.ActivityRepoListBinding
+import sweet.wong.sweetnote.repodetail.RepoViewerActivity
 import java.util.*
 
 /**
@@ -47,6 +49,10 @@ class RepoListActivity : AppCompatActivity() {
 
         // Refresh repo list
         viewModel.refreshRepoList()
+
+        viewModel.repoSelectEvent.observe(this, EventObserver {
+            RepoViewerActivity.start(this, it)
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

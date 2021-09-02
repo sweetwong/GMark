@@ -1,14 +1,15 @@
 package sweet.wong.sweetnote.repolist
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import org.eclipse.jgit.lib.ProgressMonitor
+import sweet.wong.sweetnote.core.Event
 import sweet.wong.sweetnote.core.NonNullLiveData
 import sweet.wong.sweetnote.core.log
 import sweet.wong.sweetnote.core.toast
 import sweet.wong.sweetnote.data.Repo
 import sweet.wong.sweetnote.data.RepoModel
 import sweet.wong.sweetnote.git.Clone
-import sweet.wong.sweetnote.utils.Utils
 
 /**
  * TODO: Add Description
@@ -19,6 +20,8 @@ class RepoListViewModel : ViewModel() {
 
     val repoUIStates = NonNullLiveData<MutableList<RepoUIState>>(mutableListOf())
 
+    val repoSelectEvent = MutableLiveData<Event<Repo>>()
+
     fun refreshRepoList() {
         // FIXME: 2021/9/2 这里刷新可能会导致丢失UI状态
         RepoModel.getAll()
@@ -28,7 +31,6 @@ class RepoListViewModel : ViewModel() {
                     repoUtiStatesValue.add(RepoUIState(repo))
                 }
                 repoUIStates.value = repoUtiStatesValue
-
             }
             .doOnError {
                 toast("Refresh repo list failed", it)
@@ -39,7 +41,9 @@ class RepoListViewModel : ViewModel() {
     fun addNewRepo(repo: Repo) {
         RepoModel.insertAll(repo)
             .doOnNext {
-                refreshRepoList()
+                val repoUIState = RepoUIState(repo)
+                repoUIStates.value = repoUIStates.value.apply { add(repoUIState) }
+                startClone(repoUIState)
             }
             .doOnError {
                 toast("Add new repo failed", it)
@@ -58,58 +62,39 @@ class RepoListViewModel : ViewModel() {
             .subscribe()
     }
 
-    private fun startClone() {
-        val localRepoPath = Utils.getRepoPath(REMOTE_URL)
-        log("repoPath", localRepoPath)
+    private fun startClone(repoUIState: RepoUIState) {
+        val repo = repoUIState.repo
+        val ssh = repo.ssh
 
-        Clone.cloneWithSsh(
-            REMOTE_URL,
-            localRepoPath,
-            SSH_PRIVATE_KEY_PATH,
-            object : ProgressMonitor {
+        if (ssh != null) {
+            Clone.cloneWithSsh(
+                repo.url,
+                repo.localPath,
+                ssh,
+                object : ProgressMonitor {
 
-                private var taskTitle: String? = null
-                private var taskTotalWork: Int? = null
+                    override fun start(totalTasks: Int) {
+                        log("start", totalTasks)
+                    }
 
-                override fun start(totalTasks: Int) {
-                    log("start", totalTasks)
-                }
+                    override fun beginTask(title: String?, totalWork: Int) {
+                        log("beginTask", title, totalWork)
+                    }
 
-                override fun beginTask(title: String?, totalWork: Int) {
-                    log("beginTask", title, totalWork)
-                    taskTitle = title
-                    taskTotalWork = totalWork
-                }
+                    override fun update(completed: Int) {
+                        log("update", completed)
+                    }
 
-                override fun update(completed: Int) {
-                    log("update", completed)
-                }
+                    override fun endTask() {
+                        log("endTask")
+                    }
 
-                override fun endTask() {
-                    log("endTask")
-//                    if (taskTitle == "Updating references" && taskTotalWork == 2) {
-//                        SPUtils.putString(SP_LOCAL_REPO_PATH, localRepoPath)
-//                        startActivity(Intent(this@RepositoryActivity, PreviewActivity::class.java))
-//                    }
-                }
-
-                override fun isCancelled(): Boolean {
-                    return false
-                }
-            })
+                    override fun isCancelled(): Boolean {
+                        return false
+                    }
+                })
+        }
     }
-
-
-    //        PermissionUtils.onGranted(Permission.Group.STORAGE) {
-//            log("")
-//            val localRepoPath = SPUtils.getString(SP_LOCAL_REPO_PATH)
-//            if (localRepoPath == null) {
-//                startClone()
-//            } else {
-//                startActivity(Intent(this@RepoListActivity, RepoDetailActivity::class.java))
-//            }
-//
-//        }
 
     companion object {
 

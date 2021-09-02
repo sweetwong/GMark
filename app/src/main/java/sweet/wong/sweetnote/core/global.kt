@@ -28,7 +28,7 @@ fun log(vararg any: Any?) {
 fun toast(vararg any: Any?) {
     runOnMainThread {
         Toast.makeText(App.app, any.joinToString(", "), Toast.LENGTH_SHORT).show()
-        log(any)
+        log(*any)
     }
 }
 

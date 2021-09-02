@@ -1,6 +1,7 @@
 package sweet.wong.sweetnote.repolist
 
 import android.content.DialogInterface
+import android.database.DatabaseUtils
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -18,13 +19,16 @@ import sweet.wong.sweetnote.R
 import sweet.wong.sweetnote.core.toast
 import sweet.wong.sweetnote.data.Repo
 import sweet.wong.sweetnote.data.RepoModel
+import sweet.wong.sweetnote.utils.Utils
+import java.io.File
 
 /**
  * Dialog Fragment which is used to input necessary information for git clone
  *
  * @author sweetwang 2021/9/2
  */
-class RepoAuthDialogFragment(private val viewModel: RepoListViewModel) : DialogFragment(R.layout.dialog_add_repo) {
+class RepoAuthDialogFragment(private val viewModel: RepoListViewModel) :
+    DialogFragment(R.layout.dialog_add_repo) {
 
     private lateinit var radioGroup: RadioGroup
     private lateinit var radioHttp: RadioButton
@@ -40,7 +44,9 @@ class RepoAuthDialogFragment(private val viewModel: RepoListViewModel) : DialogF
      * Instead of [onActivityResult]
      */
     private val fileChooseLauncher = registerForActivityResult(GetContent()) { uri: Uri? ->
-        uri?.let { editSsh.setText(it.toString()) }
+        if (uri == null) return@registerForActivityResult
+
+        editSsh.setText(uri.path ?: return@registerForActivityResult)
     }
 
     /**
@@ -132,9 +138,16 @@ class RepoAuthDialogFragment(private val viewModel: RepoListViewModel) : DialogF
             return toast("Please select ssh private key")
         }
 
-        viewModel.addNewRepo(Repo(++count, url, "", url, null, null, sshKey))
+        viewModel.addNewRepo(
+            Repo(
+                url,
+                Utils.getRepoPath(url),
+                Utils.getTitleByGitUrl(url),
+                null,
+                null,
+                Utils.replaceExternalFiles(sshKey)
+            )
+        )
     }
 
 }
-
-var count: Int = 0

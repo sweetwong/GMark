@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import sweet.wong.sweetnote.core.Event
 import sweet.wong.sweetnote.databinding.RecyclerItemRepoBinding
 
 /**
@@ -30,6 +31,10 @@ class RepoListAdapter(private val viewModel: RepoListViewModel) :
             itemView.setOnLongClickListener {
                 viewModel.deleteRepo(uiState.repo)
                 true
+            }
+
+            itemView.setOnClickListener {
+                viewModel.repoSelectEvent.value = Event(uiState.repo)
             }
         }
 

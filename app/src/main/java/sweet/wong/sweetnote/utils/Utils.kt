@@ -24,5 +24,9 @@ object Utils {
         }.toString()
     }
 
+    fun replaceExternalFiles(source: String): String {
+        return source.replace("/external_files", PathUtils.getExternalStoragePath())
+    }
+
 
 }

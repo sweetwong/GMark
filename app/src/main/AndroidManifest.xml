@@ -25,9 +25,8 @@
 
         </activity>
 
-        <activity android:name=".repodetail.RepoDetailActivity">
+        <activity android:name=".repodetail.RepoViewerActivity">
         </activity>
-        <activity android:name=".repolist.RepoAuthDialogFragment" />
 
     </application>
 
