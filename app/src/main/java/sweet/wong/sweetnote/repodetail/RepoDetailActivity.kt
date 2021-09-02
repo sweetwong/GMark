@@ -41,6 +41,7 @@ class RepoDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_repo_detail)
 
         // 解析参数
+        // FIXME: 2021/9/2 这里传参应该用Intent
         viewModel.path.value = SPUtils.getString(RepoListActivity.SP_LOCAL_REPO_PATH) + "/README.md"
 
         // 找到视图
@@ -69,7 +70,7 @@ class RepoDetailActivity : AppCompatActivity() {
         markwon = Markwon.builder(this)
             .usePlugins(listOf(GlideImagesPlugin.create(this), HtmlPlugin.create()))
             .build()
-        markwon.setMarkdown(textView, File(viewModel.path.value.orEmpty()).readText())
+        markwon.setMarkdown(textView, File(viewModel.path.value).readText())
 
         // 数据绑定
         viewModel.path.observe(this) {
