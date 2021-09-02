@@ -41,13 +41,3 @@ internal inline fun <reified T : Any> noOpDelegate(): T {
 private val NO_OP_HANDLER = InvocationHandler { _, _, _ ->
     // no op
 }
-
-val Int.dp: Int
-    get() = toFloat().dp
-
-val Float.dp: Int
-    get() = TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_DIP,
-        this,
-        App.app.resources.displayMetrics
-    ).toInt()

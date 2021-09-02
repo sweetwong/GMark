@@ -1,11 +1,13 @@
 package sweet.wong.sweetnote.repolist
 
+import android.content.DialogInterface
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.RadioGroup
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.contract.ActivityResultContracts.GetContent
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
@@ -15,9 +17,8 @@ import sweet.wong.sweetnote.R
 import sweet.wong.sweetnote.core.NonNullLiveData
 import sweet.wong.sweetnote.data.Repo
 
-
 /**
- * TODO: Add Description
+ * Dialog Fragment which is used to input necessary information for git clone
  *
  * @author sweetwang 2021/9/2
  */
@@ -31,20 +32,34 @@ class RepoAuthDialogFragment : DialogFragment(R.layout.dialog_add_repo) {
     private lateinit var editSsh: TextInputEditText
     private lateinit var btnClone: Button
 
-    private val fileChooseLauncher =
-        registerForActivityResult(ActivityResultContracts.GetContent()) {
-            editSsh.setText(it.toString())
-        }
+    /**
+     * Instead of [onActivityResult]
+     */
+    private val fileChooseLauncher = registerForActivityResult(GetContent()) { uri: Uri? ->
+        uri?.let { editSsh.setText(it.toString()) }
+    }
 
+    /**
+     * Share view model with host activity
+     *
+     * Note that it's lifecycle owner is activity, not fragment
+     */
     private lateinit var viewModel: RepoListViewModel
+
+    /**
+     * Interface to listen dialog dismiss
+     */
+    var onDismiss: (() -> Unit)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Set style method should be called before onCreateView
         setStyle(STYLE_NO_TITLE, R.style.Theme_MaterialComponents_Light_Dialog)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Init view model
         viewModel = ViewModelProvider(requireActivity())[RepoListViewModel::class.java]
 
         dialog?.window?.setLayout(
@@ -52,7 +67,7 @@ class RepoAuthDialogFragment : DialogFragment(R.layout.dialog_add_repo) {
             WindowManager.LayoutParams.WRAP_CONTENT
         )
 
-        // 找到视图
+        // Find views
         radioGroup = view.findViewById(R.id.radio_group)
         inputUrl = view.findViewById(R.id.input_url)
         inputUsername = view.findViewById(R.id.input_username)
@@ -61,8 +76,8 @@ class RepoAuthDialogFragment : DialogFragment(R.layout.dialog_add_repo) {
         editSsh = view.findViewById(R.id.edit_ssh)
         btnClone = view.findViewById(R.id.btn_clone)
 
-        // 切换 HTTP 和 SSH
-        radioGroup.setOnCheckedChangeListener { group, checkedId ->
+        // Radio group to switch git http clone or git ssh clone
+        radioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.radio_http -> {
                     inputUsername.isVisible = true
@@ -77,19 +92,26 @@ class RepoAuthDialogFragment : DialogFragment(R.layout.dialog_add_repo) {
             }
         }
 
-        // 默认选中 HTTP
+        // Default is hhtp
         radioGroup.check(R.id.radio_http)
 
+        // When click ssh edit text end icon, we should open file chooser and select ssh private key
         inputSsh.setEndIconOnClickListener {
             fileChooseLauncher.launch("file/*")
         }
 
+        // When click clone button, modify view model's data then trigger git clone action and last save to local storage
         btnClone.setOnClickListener {
             val repos = viewModel.repos.value
             repos.add(RepoUIState(NonNullLiveData(Repo(++count, "", "", "不错哦", "", "", ""))))
             viewModel.repos.value = repos
         }
 
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        onDismiss?.let { it() }
     }
 
 }

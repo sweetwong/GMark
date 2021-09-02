@@ -52,7 +52,10 @@ class RepoListActivity : AppCompatActivity() {
 
         // 悬浮按钮
         fab.setOnClickListener {
-            RepoAuthDialogFragment().show(supportFragmentManager, null)
+            fab.isEnabled = false
+            val dialogFragment = RepoAuthDialogFragment()
+            dialogFragment.onDismiss = { fab.isEnabled = true }
+            dialogFragment.show(supportFragmentManager, RepoAuthDialogFragment::class.java.name)
         }
 
         // 列表容器
