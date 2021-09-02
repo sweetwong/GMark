@@ -59,7 +59,7 @@ class RepoListActivity : AppCompatActivity() {
         repoListAdapter = RepoListAdapter()
         repoList.adapter = repoListAdapter
         viewModel.repos.observe(this) {
-            repoListAdapter.submitList(mutableListOf<NonNullLiveData<Repo>>().apply { addAll(it) })
+            repoListAdapter.submitList(it.toMutableList())
 
             //        PermissionUtils.onGranted(Permission.Group.STORAGE) {
 //            log("")

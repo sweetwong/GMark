@@ -11,6 +11,6 @@ import sweet.wong.sweetnote.data.Repo
  */
 class RepoListViewModel : ViewModel() {
 
-    val repos = NonNullLiveData<MutableList<NonNullLiveData<Repo>>>(mutableListOf())
+    val repos = NonNullLiveData<MutableList<RepoUIState>>(mutableListOf())
 
 }

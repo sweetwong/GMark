@@ -4,20 +4,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import sweet.wong.sweetnote.R
-import sweet.wong.sweetnote.core.NonNullLiveData
-import sweet.wong.sweetnote.data.Repo
-import sweet.wong.sweetnote.ext.lifecycleOwner
 
 /**
  * TODO: Add Description
  *
  * @author sweetwang 2021/9/2
  */
-class RepoListAdapter : ListAdapter<NonNullLiveData<Repo>, RepoListAdapter.VH>(diffCallback) {
+class RepoListAdapter : ListAdapter<RepoUIState, RepoListAdapter.VH>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = VH.from(parent)
 
@@ -27,11 +26,15 @@ class RepoListAdapter : ListAdapter<NonNullLiveData<Repo>, RepoListAdapter.VH>(d
 
         private val repoNameText: TextView = itemView.findViewById(R.id.repo_name_text)
 
-        fun bind(repo: NonNullLiveData<Repo>) {
-            repoNameText.text = repo.value.name
+        private val lifecycleOwner: LifecycleOwner = (itemView.context as AppCompatActivity)
 
-            repo.observe(itemView.lifecycleOwner) {
-                repoNameText.text = it.name
+        fun bind(uiState: RepoUIState) {
+            uiState.progress.observe(lifecycleOwner) {
+                repoNameText.text = it.toString()
+            }
+
+            repoNameText.setOnClickListener {
+                uiState.progress.value = uiState.progress.value + 1
             }
         }
 
@@ -43,24 +46,23 @@ class RepoListAdapter : ListAdapter<NonNullLiveData<Repo>, RepoListAdapter.VH>(d
             )
 
         }
-
     }
 
     companion object {
 
-        private val diffCallback = object : DiffUtil.ItemCallback<NonNullLiveData<Repo>>() {
+        private val diffCallback = object : DiffUtil.ItemCallback<RepoUIState>() {
             override fun areItemsTheSame(
-                oldItem: NonNullLiveData<Repo>,
-                newItem: NonNullLiveData<Repo>
+                oldItem: RepoUIState,
+                newItem: RepoUIState
             ): Boolean {
-                return oldItem.value.uid == newItem.value.uid
+                return oldItem.repo.value.uid == newItem.repo.value.uid
             }
 
             override fun areContentsTheSame(
-                oldItem: NonNullLiveData<Repo>,
-                newItem: NonNullLiveData<Repo>
+                oldItem: RepoUIState,
+                newItem: RepoUIState
             ): Boolean {
-                return oldItem.value.name == newItem.value.name
+                return oldItem.repo.value.uid == newItem.repo.value.uid
             }
         }
 

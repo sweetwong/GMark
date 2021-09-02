@@ -86,7 +86,7 @@ class RepoAuthDialogFragment : DialogFragment(R.layout.dialog_add_repo) {
 
         btnClone.setOnClickListener {
             val repos = viewModel.repos.value
-            repos.add(NonNullLiveData(Repo(++count, "", "", "不错哦", "", "", "")))
+            repos.add(RepoUIState(NonNullLiveData(Repo(++count, "", "", "不错哦", "", "", ""))))
             viewModel.repos.value = repos
         }
 
