@@ -8,10 +8,10 @@ import java.util.*
 @Entity
 data class Repo(
     @PrimaryKey val uid: Int,
-    @ColumnInfo(name = "url") val url: String,
-    @ColumnInfo(name = "local_path") val local_path: String,
-    @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "username") val username: String?,
-    @ColumnInfo(name = "password") val password: String?,
-    @ColumnInfo(name = "ssh") val ssh: String?
+    @ColumnInfo(name = "url") var url: String,
+    @ColumnInfo(name = "local_path") var local_path: String,
+    @ColumnInfo(name = "name") var name: String,
+    @ColumnInfo(name = "username") var username: String?,
+    @ColumnInfo(name = "password") var password: String?,
+    @ColumnInfo(name = "ssh") var ssh: String?
 )

@@ -1,5 +1,6 @@
 package sweet.wong.sweetnote.core
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 /**
@@ -7,7 +8,7 @@ import androidx.lifecycle.MutableLiveData
  *
  * @author sweetwang 2021/9/2
  */
-class NonNullLiveData<T>(value: T) : MutableLiveData<T>(value) {
+open class NonNullLiveData<T>(value: T) : MutableLiveData<T>(value) {
 
     override fun getValue(): T {
         return super.getValue() ?: throw NullPointerException()
@@ -18,3 +19,29 @@ class NonNullLiveData<T>(value: T) : MutableLiveData<T>(value) {
     }
 
 }
+
+fun <T> LiveData<T>.toNonNull() =
+    object : NonNullLiveData<T>(this.value ?: throw NullPointerException()) {
+
+        override fun getValue(): T {
+            return this@toNonNull.value ?: throw NullPointerException()
+        }
+
+        override fun setValue(value: T) {
+            toast("This live data is not mutable, please remove set value function")
+        }
+
+    }
+
+fun <T> MutableLiveData<T>.toNonNull() =
+    object : NonNullLiveData<T>(this.value ?: throw NullPointerException()) {
+
+        override fun getValue(): T {
+            return this@toNonNull.value ?: throw NullPointerException()
+        }
+
+        override fun setValue(value: T) {
+            this@toNonNull.value = value
+        }
+
+    }

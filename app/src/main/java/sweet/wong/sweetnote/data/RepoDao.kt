@@ -1,9 +1,6 @@
 package sweet.wong.sweetnote.data
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface RepoDao {
@@ -11,8 +8,12 @@ interface RepoDao {
     fun getAll(): List<Repo>
 
     @Insert
-    fun insertAll(vararg users: Repo)
+    fun insertAll(vararg repos: Repo)
 
     @Delete
-    fun delete(user: Repo)
+    fun delete(repo: Repo)
+
+    @Update
+    fun update(repo: Repo)
+
 }

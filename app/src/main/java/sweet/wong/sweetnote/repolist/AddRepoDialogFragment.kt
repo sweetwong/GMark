@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.activity.result.contract.ActivityResultContracts.GetContent
 import androidx.core.view.isVisible
@@ -14,8 +15,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import sweet.wong.sweetnote.R
-import sweet.wong.sweetnote.core.NonNullLiveData
+import sweet.wong.sweetnote.core.toast
 import sweet.wong.sweetnote.data.Repo
+import sweet.wong.sweetnote.data.RepoModel
 
 /**
  * Dialog Fragment which is used to input necessary information for git clone
@@ -25,6 +27,8 @@ import sweet.wong.sweetnote.data.Repo
 class RepoAuthDialogFragment : DialogFragment(R.layout.dialog_add_repo) {
 
     private lateinit var radioGroup: RadioGroup
+    private lateinit var radioHttp: RadioButton
+    private lateinit var radioSsh: RadioButton
     private lateinit var inputUrl: TextInputLayout
     private lateinit var inputUsername: TextInputLayout
     private lateinit var inputPassword: TextInputLayout
@@ -69,6 +73,8 @@ class RepoAuthDialogFragment : DialogFragment(R.layout.dialog_add_repo) {
 
         // Find views
         radioGroup = view.findViewById(R.id.radio_group)
+        radioHttp = view.findViewById(R.id.radio_http)
+        radioSsh = view.findViewById(R.id.radio_ssh)
         inputUrl = view.findViewById(R.id.input_url)
         inputUsername = view.findViewById(R.id.input_username)
         inputPassword = view.findViewById(R.id.input_password)
@@ -102,9 +108,7 @@ class RepoAuthDialogFragment : DialogFragment(R.layout.dialog_add_repo) {
 
         // When click clone button, modify view model's data then trigger git clone action and last save to local storage
         btnClone.setOnClickListener {
-            val repos = viewModel.repos.value
-            repos.add(RepoUIState(NonNullLiveData(Repo(++count, "", "", "不错哦", "", "", ""))))
-            viewModel.repos.value = repos
+            createRepo()
         }
 
     }
@@ -112,6 +116,32 @@ class RepoAuthDialogFragment : DialogFragment(R.layout.dialog_add_repo) {
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         onDismiss?.let { it() }
+    }
+
+    private fun createRepo() {
+        val url = inputUrl.editText?.text?.toString()
+        if (url.isNullOrBlank()) {
+            return toast("Url should not be empty")
+        }
+
+        if (radioHttp.isChecked) {
+            createHttpRepo(url)
+        } else {
+            createSshRepo(url)
+        }
+    }
+
+    private fun createHttpRepo(url: String) {
+
+    }
+
+    private fun createSshRepo(url: String) {
+        val sshKey = inputSsh.editText?.text?.toString()
+        if (sshKey.isNullOrBlank()) {
+            return toast("Please select ssh private key")
+        }
+
+        viewModel.addNewRepo(Repo(++count, url, "", url, null, null, sshKey))
     }
 
 }

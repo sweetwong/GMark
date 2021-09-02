@@ -25,16 +25,29 @@ class RepoListAdapter : ListAdapter<RepoUIState, RepoListAdapter.VH>(diffCallbac
     class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val repoNameText: TextView = itemView.findViewById(R.id.repo_name_text)
+        private val tipText: TextView = itemView.findViewById(R.id.tip_text)
+        private val progressText: TextView = itemView.findViewById(R.id.progress_text)
 
         private val lifecycleOwner: LifecycleOwner = (itemView.context as AppCompatActivity)
 
+        /**
+         * Bind ui here
+         */
         fun bind(uiState: RepoUIState) {
+            uiState.repo.observe(lifecycleOwner) {
+                repoNameText.text = it.name
+            }
             uiState.progress.observe(lifecycleOwner) {
-                repoNameText.text = it.toString()
+                progressText.text = it.toString()
+            }
+            uiState.tipText.observe(lifecycleOwner) {
+                tipText.text = it
             }
 
             repoNameText.setOnClickListener {
-                uiState.progress.value = uiState.progress.value + 1
+                val value = uiState.repo.value
+                value.name = "不错"
+                uiState.updateRepo(value)
             }
         }
 

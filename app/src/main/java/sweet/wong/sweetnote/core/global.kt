@@ -3,7 +3,6 @@ package sweet.wong.sweetnote.core
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.util.TypedValue
 import android.widget.Toast
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Proxy
@@ -27,8 +26,10 @@ fun log(vararg any: Any?) {
 }
 
 fun toast(vararg any: Any?) {
-    Toast.makeText(App.app, any.joinToString(", "), Toast.LENGTH_SHORT).show()
-    log(any)
+    runOnMainThread {
+        Toast.makeText(App.app, any.joinToString(", "), Toast.LENGTH_SHORT).show()
+        log(any)
+    }
 }
 
 internal inline fun <reified T : Any> noOpDelegate(): T {

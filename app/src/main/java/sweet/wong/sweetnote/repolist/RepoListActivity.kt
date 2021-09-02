@@ -61,7 +61,7 @@ class RepoListActivity : AppCompatActivity() {
         // 列表容器
         repoListAdapter = RepoListAdapter()
         repoList.adapter = repoListAdapter
-        viewModel.repos.observe(this) {
+        viewModel.repoUIStates.observe(this) {
             repoListAdapter.submitList(it.toMutableList())
 
             //        PermissionUtils.onGranted(Permission.Group.STORAGE) {
@@ -75,6 +75,8 @@ class RepoListActivity : AppCompatActivity() {
 //
 //        }
         }
+
+        viewModel.refreshRepoList()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
