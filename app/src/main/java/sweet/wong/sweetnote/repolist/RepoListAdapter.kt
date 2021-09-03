@@ -38,7 +38,9 @@ class RepoListAdapter(private val viewModel: RepoListViewModel) :
         companion object {
 
             fun from(parent: ViewGroup) = VH(
-                RecyclerItemRepoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                RecyclerItemRepoBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false
+                )
             )
 
         }

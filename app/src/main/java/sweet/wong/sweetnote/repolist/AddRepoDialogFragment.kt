@@ -1,26 +1,20 @@
 package sweet.wong.sweetnote.repolist
 
 import android.content.DialogInterface
-import android.database.DatabaseUtils
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.RadioButton
-import android.widget.RadioGroup
 import androidx.activity.result.contract.ActivityResultContracts.GetContent
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import sweet.wong.sweetnote.R
 import sweet.wong.sweetnote.core.toast
 import sweet.wong.sweetnote.data.Repo
-import sweet.wong.sweetnote.data.RepoModel
+import sweet.wong.sweetnote.databinding.DialogAddRepoBinding
 import sweet.wong.sweetnote.utils.Utils
-import java.io.File
 
 /**
  * Dialog Fragment which is used to input necessary information for git clone
@@ -28,15 +22,7 @@ import java.io.File
 class RepoAuthDialogFragment(private val viewModel: RepoListViewModel) :
     DialogFragment(R.layout.dialog_add_repo) {
 
-    private lateinit var radioGroup: RadioGroup
-    private lateinit var radioHttp: RadioButton
-    private lateinit var radioSsh: RadioButton
-    private lateinit var inputUrl: TextInputLayout
-    private lateinit var inputUsername: TextInputLayout
-    private lateinit var inputPassword: TextInputLayout
-    private lateinit var inputSsh: TextInputLayout
-    private lateinit var editSsh: TextInputEditText
-    private lateinit var btnClone: Button
+    private lateinit var binding: DialogAddRepoBinding
 
     /**
      * Instead of [onActivityResult]
@@ -44,7 +30,7 @@ class RepoAuthDialogFragment(private val viewModel: RepoListViewModel) :
     private val fileChooseLauncher = registerForActivityResult(GetContent()) { uri: Uri? ->
         if (uri == null) return@registerForActivityResult
 
-        editSsh.setText(uri.path ?: return@registerForActivityResult)
+        binding.editSsh.setText(uri.path ?: return@registerForActivityResult)
     }
 
     /**
@@ -58,24 +44,22 @@ class RepoAuthDialogFragment(private val viewModel: RepoListViewModel) :
         setStyle(STYLE_NO_TITLE, R.style.Theme_MaterialComponents_Light_Dialog)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = DialogAddRepoBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
         super.onViewCreated(view, savedInstanceState)
 
         dialog?.window?.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
-
-        // Find views
-        radioGroup = view.findViewById(R.id.radio_group)
-        radioHttp = view.findViewById(R.id.radio_http)
-        radioSsh = view.findViewById(R.id.radio_ssh)
-        inputUrl = view.findViewById(R.id.input_url)
-        inputUsername = view.findViewById(R.id.input_username)
-        inputPassword = view.findViewById(R.id.input_password)
-        inputSsh = view.findViewById(R.id.input_ssh)
-        editSsh = view.findViewById(R.id.edit_ssh)
-        btnClone = view.findViewById(R.id.btn_clone)
 
         // Radio group to switch git http clone or git ssh clone
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
@@ -114,12 +98,12 @@ class RepoAuthDialogFragment(private val viewModel: RepoListViewModel) :
     }
 
     private fun createRepo() {
-        val url = inputUrl.editText?.text?.toString()
+        val url = binding.inputUrl.editText?.text?.toString()
         if (url.isNullOrBlank()) {
             return toast("Url should not be empty")
         }
 
-        if (radioHttp.isChecked) {
+        if (binding.radioHttp.isChecked) {
             createHttpRepo(url)
         } else {
             createSshRepo(url)
@@ -131,7 +115,7 @@ class RepoAuthDialogFragment(private val viewModel: RepoListViewModel) :
     }
 
     private fun createSshRepo(url: String) {
-        val sshKey = inputSsh.editText?.text?.toString()
+        val sshKey = binding.inputSsh.editText?.text?.toString()
         if (sshKey.isNullOrBlank()) {
             return toast("Please select ssh private key")
         }
