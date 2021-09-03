@@ -12,9 +12,7 @@ import sweet.wong.sweetnote.data.RepoModel
 import sweet.wong.sweetnote.git.Clone
 
 /**
- * TODO: Add Description
- *
- * @author sweetwang 2021/9/2
+ * Git repository list view model
  */
 class RepoListViewModel : ViewModel() {
 
@@ -66,6 +64,7 @@ class RepoListViewModel : ViewModel() {
         val repo = repoUIState.repo
         val ssh = repo.ssh
 
+        // TODO: 2021/9/3 添加进度条
         if (ssh != null) {
             Clone.cloneWithSsh(
                 repo.url,
@@ -94,16 +93,6 @@ class RepoListViewModel : ViewModel() {
                     }
                 })
         }
-    }
-
-    companion object {
-
-        const val SP_LOCAL_REPO_PATH = "sp_local_repo_path"
-
-        private const val SSH_PRIVATE_KEY_PATH = "/storage/emulated/0/id_rsa"
-
-        private const val REMOTE_URL = "git@github.com:sweetwong/Android-Interview-QA.git"
-
     }
 
 }

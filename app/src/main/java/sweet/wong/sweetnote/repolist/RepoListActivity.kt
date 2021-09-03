@@ -11,9 +11,7 @@ import sweet.wong.sweetnote.repodetail.RepoViewerActivity
 import java.util.*
 
 /**
- * 仓库选择页面
- *
- * @author sweetwang 2021/9/1
+ * Repository list page
  */
 class RepoListActivity : AppCompatActivity() {
 

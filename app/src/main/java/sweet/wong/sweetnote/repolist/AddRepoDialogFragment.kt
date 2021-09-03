@@ -24,8 +24,6 @@ import java.io.File
 
 /**
  * Dialog Fragment which is used to input necessary information for git clone
- *
- * @author sweetwang 2021/9/2
  */
 class RepoAuthDialogFragment(private val viewModel: RepoListViewModel) :
     DialogFragment(R.layout.dialog_add_repo) {

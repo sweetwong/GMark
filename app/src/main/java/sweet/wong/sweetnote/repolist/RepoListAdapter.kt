@@ -10,8 +10,6 @@ import sweet.wong.sweetnote.databinding.RecyclerItemRepoBinding
 
 /**
  * TODO: Add Description
- *
- * @author sweetwang 2021/9/2
  */
 class RepoListAdapter(private val viewModel: RepoListViewModel) :
     ListAdapter<RepoUIState, RepoListAdapter.VH>(diffCallback) {
@@ -21,8 +19,7 @@ class RepoListAdapter(private val viewModel: RepoListViewModel) :
     override fun onBindViewHolder(holder: VH, position: Int) =
         holder.bind(viewModel, getItem(position))
 
-    class VH(private val binding: RecyclerItemRepoBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class VH(private val binding: RecyclerItemRepoBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(viewModel: RepoListViewModel, uiState: RepoUIState) {
             binding.state = uiState
@@ -41,11 +38,7 @@ class RepoListAdapter(private val viewModel: RepoListViewModel) :
         companion object {
 
             fun from(parent: ViewGroup) = VH(
-                RecyclerItemRepoBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
+                RecyclerItemRepoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             )
 
         }
@@ -54,19 +47,15 @@ class RepoListAdapter(private val viewModel: RepoListViewModel) :
     companion object {
 
         private val diffCallback = object : DiffUtil.ItemCallback<RepoUIState>() {
-            override fun areItemsTheSame(
-                oldItem: RepoUIState,
-                newItem: RepoUIState
-            ): Boolean {
+
+            override fun areItemsTheSame(oldItem: RepoUIState, newItem: RepoUIState): Boolean {
                 return oldItem.repo.uid == newItem.repo.uid
             }
 
-            override fun areContentsTheSame(
-                oldItem: RepoUIState,
-                newItem: RepoUIState
-            ): Boolean {
+            override fun areContentsTheSame(oldItem: RepoUIState, newItem: RepoUIState): Boolean {
                 return oldItem.repo.uid == newItem.repo.uid
             }
+
         }
 
     }
