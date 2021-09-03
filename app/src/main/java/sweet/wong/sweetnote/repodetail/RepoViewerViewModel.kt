@@ -3,8 +3,12 @@ package sweet.wong.sweetnote.repodetail
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
-import sweet.wong.sweetnote.core.NonNullLiveData
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
+import sweet.wong.sweetnote.core.toast
 import sweet.wong.sweetnote.data.Repo
+import sweet.wong.sweetnote.utils.LimitedDeque
 import java.io.File
 
 class RepoViewerViewModel : ViewModel() {
@@ -16,9 +20,7 @@ class RepoViewerViewModel : ViewModel() {
      */
     val currentFile = MutableLiveData<File>()
 
-    val fileText = currentFile.switchMap {
-        MutableLiveData(it.readText())
-    }
+    val fileText = MutableLiveData<String>()
 
     /**
      * Point to current drawer project folder, must be directory not a file
@@ -27,6 +29,22 @@ class RepoViewerViewModel : ViewModel() {
 
     val projectChildFiles = currentProjectFolder.switchMap {
         MutableLiveData(getFileList(it))
+    }
+
+    val historyStack = LimitedDeque<String>(5)
+
+    fun selectFile(file: File) {
+        Observable.fromCallable { file.readText() }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext {
+                fileText.value?.takeIf { value -> value.isNotBlank() }?.let { value -> historyStack.add(value) }
+                fileText.value = it
+            }
+            .doOnError {
+                toast("Read text failed", it)
+            }
+            .subscribe()
     }
 
     fun init(repo: Repo) {
@@ -39,7 +57,7 @@ class RepoViewerViewModel : ViewModel() {
 
         file.listFiles()?.forEach {
             if (it.name == "README.md") {
-                currentFile.value = it
+                selectFile(it)
             }
         }
     }

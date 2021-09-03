@@ -1,6 +1,5 @@
 package sweet.wong.sweetnote.repodetail
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -14,9 +13,9 @@ import io.noties.markwon.Markwon
 import io.noties.markwon.html.HtmlPlugin
 import io.noties.markwon.image.glide.GlideImagesPlugin
 import sweet.wong.sweetnote.R
+import sweet.wong.sweetnote.core.EventObserver
 import sweet.wong.sweetnote.data.Repo
 import sweet.wong.sweetnote.databinding.ActivityRepoViewerBinding
-import java.io.File
 
 class RepoViewerActivity : AppCompatActivity() {
 
@@ -75,15 +74,26 @@ class RepoViewerActivity : AppCompatActivity() {
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // Handle drawer view back
             if (binding.drawerLayout.isDrawerOpen(binding.navigationView)) {
                 if (!binding.drawerView.onBackPressed()) {
                     binding.drawerLayout.closeDrawer(binding.navigationView)
                 }
                 return true
             }
+            // Handle main text back stack
+            val historyStack = viewModel.historyStack
+            if (historyStack.isNotEmpty()) {
+                setText(historyStack.removeLast())
+                return true
+            }
         }
 
         return super.onKeyUp(keyCode, event)
+    }
+
+    private fun setText(md: String) {
+        markwon.setMarkdown(binding.markText, md)
     }
 
     override fun finish() {

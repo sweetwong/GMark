@@ -47,7 +47,7 @@ class DrawerProjectAdapter(private val viewModel: RepoViewerViewModel) :
                     viewModel.currentProjectFolder.value = childFile
                 }
                 if (childFile.isFile) {
-                    viewModel.currentFile.value = childFile
+                    viewModel.selectFile(childFile)
                 }
             }
         }
