@@ -17,13 +17,14 @@ class RepoListAdapter(private val viewModel: RepoListViewModel) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = VH.from(parent)
 
     override fun onBindViewHolder(holder: VH, position: Int) =
-        holder.bind(viewModel, getItem(position))
+        holder.bind(viewModel, getItem(position), position)
 
     class VH(private val binding: RecyclerItemRepoBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: RepoListViewModel, uiState: RepoUIState) {
+        fun bind(viewModel: RepoListViewModel, uiState: RepoUIState, position: Int) {
             binding.state = uiState
             binding.executePendingBindings()
+            uiState.position = position
 
             itemView.setOnLongClickListener {
                 viewModel.deleteRepo(uiState.repo)

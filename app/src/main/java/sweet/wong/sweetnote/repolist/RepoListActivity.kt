@@ -55,6 +55,12 @@ class RepoListActivity : AppCompatActivity() {
                 android.R.anim.fade_out
             )
         })
+
+        viewModel.repoUpdateEvent.observe(this, EventObserver {
+            if (it != -1) {
+                repoListAdapter.notifyItemChanged(it)
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

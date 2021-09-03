@@ -7,8 +7,10 @@ import sweet.wong.sweetnote.data.Repo
  */
 class RepoUIState(val repo: Repo) {
 
-    val progress = "0"
+    var position = -1
 
-    val tipText = "tipText"
+    var progress = ""
+
+    var statusText = ""
 
 }

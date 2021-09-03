@@ -18,6 +18,7 @@ class RepoListViewModel : ViewModel() {
 
     val repoUIStates = NonNullLiveData<MutableList<RepoUIState>>(mutableListOf())
 
+    val repoUpdateEvent = MutableLiveData<Event<Int>>()
     val repoSelectEvent = MutableLiveData<Event<Repo>>()
 
     fun refreshRepoList() {
@@ -62,7 +63,6 @@ class RepoListViewModel : ViewModel() {
 
     private fun startClone(repoUIState: RepoUIState) {
         val repo = repoUIState.repo
-        val ssh = repo.ssh
 
         // TODO: 2021/9/3 添加进度条
         Clone.clone(
@@ -70,29 +70,8 @@ class RepoListViewModel : ViewModel() {
             repo.localPath,
             repo.username,
             repo.password,
-            ssh,
-            object : ProgressMonitor {
-
-                override fun start(totalTasks: Int) {
-                    log("start", totalTasks)
-                }
-
-                override fun beginTask(title: String?, totalWork: Int) {
-                    log("beginTask", title, totalWork)
-                }
-
-                override fun update(completed: Int) {
-                    log("update", completed)
-                }
-
-                override fun endTask() {
-                    log("endTask")
-                }
-
-                override fun isCancelled(): Boolean {
-                    return false
-                }
-            })
+            repo.ssh,
+            RepoCloneMonitor(this, repoUIState))
     }
 
 }
