@@ -1,12 +1,12 @@
-package sweet.wong.sweetnote.repodetail.drawer
+package sweet.wong.sweetnote.filepreview.drawer
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import sweet.wong.sweetnote.databinding.RecyclerItemProjectBinding
-import sweet.wong.sweetnote.repodetail.RepoViewerViewModel
+import sweet.wong.sweetnote.databinding.RecycleItemProjectBinding
+import sweet.wong.sweetnote.filepreview.FilePreviewViewModel
 import java.io.File
 
 /**
@@ -14,7 +14,7 @@ import java.io.File
  *
  * @author sweetwang 2021/9/1
  */
-class DrawerProjectAdapter(private val viewModel: RepoViewerViewModel) :
+class DrawerProjectAdapter(private val viewModel: FilePreviewViewModel) :
     ListAdapter<File, DrawerProjectAdapter.VH>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = VH.from(parent)
@@ -35,10 +35,10 @@ class DrawerProjectAdapter(private val viewModel: RepoViewerViewModel) :
         return false
     }
 
-    class VH(private val binding: RecyclerItemProjectBinding) :
+    class VH(private val binding: RecycleItemProjectBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: RepoViewerViewModel, childFile: File) {
+        fun bind(viewModel: FilePreviewViewModel, childFile: File) {
             binding.file = childFile
             binding.executePendingBindings()
 
@@ -55,7 +55,7 @@ class DrawerProjectAdapter(private val viewModel: RepoViewerViewModel) :
         companion object {
 
             fun from(parent: ViewGroup) = VH(
-                RecyclerItemProjectBinding.inflate(
+                RecycleItemProjectBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false

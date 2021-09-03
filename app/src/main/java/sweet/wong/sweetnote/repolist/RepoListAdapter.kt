@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import sweet.wong.sweetnote.core.Event
-import sweet.wong.sweetnote.databinding.RecyclerItemRepoBinding
+import sweet.wong.sweetnote.databinding.RecycleItemRepoBinding
 
 /**
  * TODO: Add Description
@@ -19,7 +19,7 @@ class RepoListAdapter(private val viewModel: RepoListViewModel) :
     override fun onBindViewHolder(holder: VH, position: Int) =
         holder.bind(viewModel, getItem(position), position)
 
-    class VH(private val binding: RecyclerItemRepoBinding) : RecyclerView.ViewHolder(binding.root) {
+    class VH(private val binding: RecycleItemRepoBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(viewModel: RepoListViewModel, uiState: RepoUIState, position: Int) {
             binding.state = uiState
@@ -39,7 +39,7 @@ class RepoListAdapter(private val viewModel: RepoListViewModel) :
         companion object {
 
             fun from(parent: ViewGroup) = VH(
-                RecyclerItemRepoBinding.inflate(
+                RecycleItemRepoBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
             )

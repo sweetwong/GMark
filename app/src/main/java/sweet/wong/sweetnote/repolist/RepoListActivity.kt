@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import sweet.wong.sweetnote.R
 import sweet.wong.sweetnote.core.EventObserver
 import sweet.wong.sweetnote.databinding.ActivityRepoListBinding
-import sweet.wong.sweetnote.repodetail.RepoViewerActivity
+import sweet.wong.sweetnote.filepreview.FilePreviewActivity
 import java.util.*
 
 /**
@@ -49,7 +49,7 @@ class RepoListActivity : AppCompatActivity() {
         viewModel.refreshRepoList()
 
         viewModel.repoSelectEvent.observe(this, EventObserver {
-            RepoViewerActivity.start(this, it)
+            FilePreviewActivity.start(this, it)
             overridePendingTransition(
                 android.R.anim.fade_in,
                 android.R.anim.fade_out

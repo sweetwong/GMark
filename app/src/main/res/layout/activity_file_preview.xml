@@ -64,7 +64,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="start">
 
-            <sweet.wong.sweetnote.repodetail.drawer.DrawerView
+            <sweet.wong.sweetnote.filepreview.drawer.DrawerView
                 android:id="@+id/drawer_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

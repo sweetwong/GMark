@@ -1,4 +1,4 @@
-package sweet.wong.sweetnote.repodetail
+package sweet.wong.sweetnote.filepreview
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,7 +11,7 @@ import sweet.wong.sweetnote.data.Repo
 import sweet.wong.sweetnote.utils.LimitedDeque
 import java.io.File
 
-class RepoViewerViewModel : ViewModel() {
+class FilePreviewViewModel : ViewModel() {
 
     val repo = MutableLiveData<Repo>()
 

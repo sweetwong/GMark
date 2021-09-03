@@ -25,7 +25,7 @@
 
         </activity>
 
-        <activity android:name=".repodetail.RepoViewerActivity">
+        <activity android:name=".filepreview.FilePreviewActivity">
         </activity>
 
     </application>

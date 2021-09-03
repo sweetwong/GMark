@@ -1,4 +1,4 @@
-package sweet.wong.sweetnote.repodetail
+package sweet.wong.sweetnote.filepreview
 
 import android.content.Context
 import android.content.Intent
@@ -13,21 +13,20 @@ import io.noties.markwon.Markwon
 import io.noties.markwon.html.HtmlPlugin
 import io.noties.markwon.image.glide.GlideImagesPlugin
 import sweet.wong.sweetnote.R
-import sweet.wong.sweetnote.core.EventObserver
 import sweet.wong.sweetnote.data.Repo
-import sweet.wong.sweetnote.databinding.ActivityRepoViewerBinding
+import sweet.wong.sweetnote.databinding.ActivityFilePreviewBinding
 
-class RepoViewerActivity : AppCompatActivity() {
+class FilePreviewActivity : AppCompatActivity() {
 
-    private val viewModel: RepoViewerViewModel by viewModels()
+    private val viewModel: FilePreviewViewModel by viewModels()
 
-    private lateinit var binding: ActivityRepoViewerBinding
+    private lateinit var binding: ActivityFilePreviewBinding
 
     private lateinit var markwon: Markwon
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRepoViewerBinding.inflate(layoutInflater)
+        binding = ActivityFilePreviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val repo = intent.getParcelableExtra<Repo>(EXTRA_REPO)
@@ -107,7 +106,7 @@ class RepoViewerActivity : AppCompatActivity() {
 
         fun start(context: Context, repo: Repo) {
             context.startActivity(
-                Intent(context, RepoViewerActivity::class.java).putExtra(EXTRA_REPO, repo)
+                Intent(context, FilePreviewActivity::class.java).putExtra(EXTRA_REPO, repo)
             )
         }
 
