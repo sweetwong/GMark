@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import sweet.wong.sweetnote.R
 import sweet.wong.sweetnote.databinding.RecycleItemProjectBinding
 import sweet.wong.sweetnote.filepreview.FilePreviewViewModel
 import java.io.File
@@ -41,6 +42,13 @@ class DrawerProjectAdapter(private val viewModel: FilePreviewViewModel) :
         fun bind(viewModel: FilePreviewViewModel, childFile: File) {
             binding.file = childFile
             binding.executePendingBindings()
+
+            if (childFile.isDirectory) {
+                binding.icon.setImageResource(R.drawable.folder)
+            }
+            if (childFile.isFile) {
+                binding.icon.setImageResource(R.drawable.text)
+            }
 
             itemView.setOnClickListener {
                 if (childFile.isDirectory) {

@@ -43,7 +43,7 @@ class FilePreviewViewModel : ViewModel() {
 
     val historyStack = LimitedDeque<HistoryFile>(5)
 
-    val selectFileEvent = MutableLiveData<Event<Unit>>()
+    val selectFileEvent = MutableLiveData<Event<File>>()
 
     fun selectFile(file: File) {
         if (!file.exists() || !file.isFile) {
@@ -62,7 +62,7 @@ class FilePreviewViewModel : ViewModel() {
 
                 raw.value = it
                 currentFile = file
-                selectFileEvent.value = Event(Unit)
+                selectFileEvent.value = Event(file)
             }
             .doOnError {
                 toast("Read text failed", it)
@@ -94,7 +94,7 @@ class FilePreviewViewModel : ViewModel() {
             childFiles.add(it)
         }
 
-        return childFiles.reversed()
+        return childFiles
     }
 
 }

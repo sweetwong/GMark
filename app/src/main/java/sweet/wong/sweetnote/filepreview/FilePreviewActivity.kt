@@ -5,12 +5,14 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.Menu
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.transition.TransitionManager
 import sweet.wong.sweetnote.R
+import sweet.wong.sweetnote.core.EventObserver
 import sweet.wong.sweetnote.core.log
 import sweet.wong.sweetnote.core.postDelayed
 import sweet.wong.sweetnote.data.Repo
@@ -46,7 +48,6 @@ class FilePreviewActivity : AppCompatActivity() {
             R.string.app_name,
             R.string.app_name
         )
-        actionBarDrawerToggle.drawerArrowDrawable.color = Color.WHITE
         actionBarDrawerToggle.syncState()
 
         markdown = MarkdownDelegate(viewModel)
@@ -68,9 +69,10 @@ class FilePreviewActivity : AppCompatActivity() {
             binding.drawerLayout.closeDrawer(binding.navigationView)
         }
 
-        viewModel.selectFileEvent.observe(this) {
+        viewModel.selectFileEvent.observe(this, EventObserver {
+            binding.toolbar.title = it.name
             changeFileAnim(0)
-        }
+        })
 
         viewModel.init(repo)
     }
@@ -90,6 +92,7 @@ class FilePreviewActivity : AppCompatActivity() {
                 val historyFile = historyStack.removeLast()
                 viewModel.raw.value = historyFile.data
                 viewModel.currentFile = historyFile.file
+                binding.toolbar.title = historyFile.file.name
                 changeFileAnim(historyFile.scrollY)
                 log("history file", historyFile.file)
                 return true
@@ -97,6 +100,11 @@ class FilePreviewActivity : AppCompatActivity() {
         }
 
         return super.onKeyUp(keyCode, event)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_repo_list, menu)
+        return true
     }
 
     private fun changeFileAnim(scrollY: Int) {

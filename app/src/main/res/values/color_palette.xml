@@ -1,0 +1,2457 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- APP 全局色值表 -->
+<resources>
+
+
+    <!-- 2020 新色表 使用前参考颜色规范 旧色表已停用-->
+
+    <!-- model 蓝50-->
+    <color name="ck_blue50">#F0F6FF</color>
+
+    <!-- model 蓝50 40%透明度-->
+    <color name="ck_blue50_40">#66F0F6FF</color>
+
+    <!-- model 蓝100-->
+    <color name="ck_blue100">#E0ECFF</color>
+
+    <!-- model 蓝150-->
+    <color name="ck_blue150">#D4E4FF</color>
+
+    <!-- model 蓝200-->
+    <color name="ck_blue200">#C7DCFF</color>
+
+    <!-- model 蓝250-->
+    <color name="ck_blue250">#B2CFFF</color>
+
+    <!-- model 蓝250 40%透明度-->
+    <color name="ck_blue250_40">#66B2CFFF</color>
+
+    <!-- model 蓝300-->
+    <color name="ck_blue300">#9CC2FF</color>
+
+    <!-- model 蓝350-->
+    <color name="ck_blue350">#81B1FF</color>
+
+    <!-- model 蓝350 40%透明度-->
+    <color name="ck_blue350_40">#6681B1FF</color>
+
+    <!-- model 蓝400-->
+    <color name="ck_blue400">#6DA5FF</color>
+
+    <!-- model 蓝400 25%透明度-->
+    <color name="ck_blue400_25">#406DA5FF</color>
+
+    <!-- model 蓝400 40%透明度-->
+    <color name="ck_blue400_40">#666DA5FF</color>
+
+    <!-- model 蓝450-->
+    <color name="ck_blue450">#5B9AFF</color>
+
+    <!-- model 蓝460-->
+    <color name="ck_blue460">#3798e2</color>
+
+    <!-- model 蓝500-->
+    <color name="ck_blue500">#478EFF</color>
+
+    <!-- model 蓝500 4%透明度-->
+    <color name="ck_blue500_04">#0A478EFF</color>
+
+    <!-- model 蓝500 4%透明度-->
+    <color name="ck_blue500_08">#14478EFF</color>
+
+    <!-- model 蓝500 10%透明度-->
+    <color name="ck_blue500_10">#1A478EFF</color>
+
+    <!-- model 蓝500 20%透明度-->
+    <color name="ck_blue500_20">#33478EFF</color>
+
+    <!-- model 蓝500 25%透明度-->
+    <color name="ck_blue500_25">#40478EFF</color>
+
+    <!-- model 蓝500 30%透明度-->
+    <color name="ck_blue500_30">#4D478EFF</color>
+
+    <!-- model 蓝500 40%透明度-->
+    <color name="ck_blue500_40">#66478EFF</color>
+
+    <!-- model 蓝500 60%透明度-->
+    <color name="ck_blue500_60">#99478EFF</color>
+
+    <!-- model 蓝-->
+    <color name="ck_blue">#327FFF</color>
+
+    <!-- model 蓝550 5%透明度-->
+    <color name="ck_blue_05">#0D327FFF</color>
+
+    <!-- model 蓝 8% -->
+    <color name="ck_blue_8">#14327FFF</color>
+
+    <!-- model 蓝550 8%透明度-->
+    <color name="ck_blue_08">#14327FFF</color>
+
+    <!-- model 蓝550 10%透明度-->
+    <color name="ck_blue_10">#1A327FFF</color>
+
+    <!-- model 蓝550 12%透明度-->
+    <color name="ck_blue_12">#1F327FFF</color>
+
+    <!-- model 蓝550 15%透明度-->
+    <color name="ck_blue_15">#26327FFF</color>
+
+    <!-- model 蓝550 20%透明度-->
+    <color name="ck_blue_20">#33327FFF</color>
+
+    <!-- model 蓝550 30%透明度-->
+    <color name="ck_blue_30">#4D327FFF</color>
+
+    <!-- model 蓝550 40%透明度-->
+    <color name="ck_blue_40">#66327FFF</color>
+
+    <!-- model 蓝550 50%透明度-->
+    <color name="ck_blue_50">#80327FFF</color>
+
+    <!-- model 蓝550 60%透明度-->
+    <color name="ck_blue_60">#99327FFF</color>
+
+    <!-- model 蓝550 70%透明度-->
+    <color name="ck_blue_70">#B3327FFF</color>
+
+    <!-- model 蓝550 80%透明度-->
+    <color name="ck_blue_80">#CC327FFF</color>
+
+    <!-- model 蓝550-->
+    <color name="ck_blue550">#327FFF</color>
+
+    <!-- model 蓝550 12%透明度-->
+    <color name="ck_blue550_12">#1F327FFF</color>
+
+    <!-- model 蓝550 20%透明度-->
+    <color name="ck_blue550_20">#33327FFF</color>
+
+    <!-- model 蓝550 30%透明度-->
+    <color name="ck_blue550_30">#4D327FFF</color>
+
+    <!-- model 蓝550 60%透明度-->
+    <color name="ck_blue550_60">#99327FFF</color>
+
+    <!-- model 蓝550 70%透明度-->
+    <color name="ck_blue550_70">#B3327FFF</color>
+
+    <!-- model 蓝600-->
+    <color name="ck_blue600">#1B73FF</color>
+
+    <!-- model 蓝600 40%透明度-->
+    <color name="ck_blue600_40">#661B73FF</color>
+
+    <!-- model 蓝650-->
+    <color name="ck_blue650">#0B69FF</color>
+
+    <!-- model 蓝650 30%透明度-->
+    <color name="ck_blue650_30">#4D0B69FF</color>
+
+    <!-- model 蓝650 60%透明度-->
+    <color name="ck_blue650_60">#990B69FF</color>
+
+    <!-- model 蓝700-->
+    <color name="ck_blue700">#0A5EE3</color>
+
+    <!-- model 蓝750-->
+    <color name="ck_blue750">#0E55C9</color>
+
+    <!-- model 蓝800-->
+    <color name="ck_blue800">#0A46A6</color>
+
+    <!-- model 蓝800 30%透明度-->
+    <color name="ck_blue800_30">#4D0A46A6</color>
+
+    <!-- model 蓝800 40%透明度-->
+    <color name="ck_blue800_40">#660A46A6</color>
+
+    <!-- model 蓝850-->
+    <color name="ck_blue850">#06377B</color>
+
+    <!-- model 蓝900-->
+    <color name="ck_blue900">#0A295C</color>
+
+    <!-- model 蓝950-->
+    <color name="ck_blue950">#04193C</color>
+
+
+
+
+    <!-- 2020 新色表 使用前参考颜色规范 旧色表已停用-->
+
+
+
+
+    <!-- model 灰蓝50-->
+    <color name="ck_grayblue50">#CDD5E0</color>
+
+    <!-- model 灰蓝100-->
+    <color name="ck_grayblue100">#ACB9CC</color>
+
+    <!-- model 灰蓝200-->
+    <color name="ck_grayblue200">#95A2B8</color>
+
+    <!-- model 灰蓝200 10%透明度-->
+    <color name="ck_grayblue200_10">#1A95A2B8</color>
+
+    <!-- model 灰蓝200 15%透明度-->
+    <color name="ck_grayblue200_15">#2695A2B8</color>
+
+    <!-- model 灰蓝200 20%透明度-->
+    <color name="ck_grayblue200_20">#3395A2B8</color>
+
+    <!-- model 灰蓝200 30%透明度-->
+    <color name="ck_grayblue200_30">#4D95A2B8</color>
+
+    <!-- model 灰蓝200 60%透明度-->
+    <color name="ck_grayblue200_60">#9995A2B8</color>
+
+    <!-- model 灰蓝300-->
+    <color name="ck_grayblue300">#6D7B91</color>
+
+    <!-- model 蓝灰 300 10%透明度-->
+    <color name="ck_grayblue300_10">#1A677DA2</color>
+
+    <!-- model 灰蓝300 30%透明度-->
+    <color name="ck_grayblue300_30">#4D6D7B91</color>
+
+    <!-- model 灰蓝400-->
+    <color name="ck_grayblue400">#656F80</color>
+
+    <!-- model 灰蓝400 30%透明度-->
+    <color name="ck_grayblue400_30">#4D656F80</color>
+
+    <!-- model 灰蓝400 60%透明度-->
+    <color name="ck_grayblue400_60">#99656F80</color>
+
+    <!-- model 灰蓝500-->
+    <color name="ck_grayblue500">#595F6D</color>
+
+    <!-- model 灰蓝500 30%透明度-->
+    <color name="ck_grayblue500_30">#4D595F6D</color>
+
+    <!-- model 灰蓝600-->
+    <color name="ck_grayblue600">#4C515C</color>
+
+    <!-- model 灰蓝700-->
+    <color name="ck_grayblue700">#3F454F</color>
+
+    <!-- model 灰蓝700 95%透明度-->
+    <color name="ck_grayblue700_95">#F23F454F</color>
+
+    <!-- model 灰蓝700 60%透明度-->
+    <color name="ck_grayblue700_60">#993F454F</color>
+
+    <!-- model 灰蓝800-->
+    <color name="ck_grayblue800">#373B42</color>
+
+    <!-- model 灰蓝900-->
+    <color name="ck_grayblue900">#2C2E34</color>
+
+    <!-- model 蓝绿 100-->
+    <color name="ck_cyan100">#A4EFFC</color>
+
+    <!-- model 蓝绿 200-->
+    <color name="ck_cyan200">#7CE7FA</color>
+
+    <!-- model 蓝绿 300-->
+    <color name="ck_cyan300">#5FDDF3</color>
+
+    <!-- model 蓝绿 400-->
+    <color name="ck_cyan400">#41CEE7</color>
+
+    <!-- model 蓝绿 500-->
+    <color name="ck_cyan500">#18B5D0</color>
+
+    <!-- model 蓝绿 500 30%透明度-->
+    <color name="ck_cyan500_30">#4D18B5D0</color>
+
+    <!-- model 蓝绿 600-->
+    <color name="ck_cyan600">#0E9EB8</color>
+
+    <!-- model 蓝绿 700-->
+    <color name="ck_cyan700">#167B8C</color>
+
+    <!-- model 蓝绿 800-->
+    <color name="ck_cyan800">#135B67</color>
+
+    <!-- model 蓝绿 900-->
+    <color name="ck_cyan900">#0E3F47</color>
+
+    <!-- model 蓝绿 900 50%透明度-->
+    <color name="ck_cyan900_50">#800E3F47</color>
+
+    <!-- model 蓝绿 900 70%透明度-->
+    <color name="ck_cyan900_70">#B30E3F47</color>
+
+
+
+
+
+    <!-- 2020 新色表 使用前参考颜色规范 旧色表已停用-->
+
+
+
+
+    <!-- model 蓝紫 50-->
+    <color name="ck_indigo50">#F0F1FF</color>
+
+    <!-- model 蓝紫 100-->
+    <color name="ck_indigo100">#D6D7FF</color>
+
+    <!-- model 蓝紫 300-->
+    <color name="ck_indigo300">#989BFF</color>
+
+    <!-- model 蓝紫 300 35%透明度-->
+    <color name="ck_indigo300_35">#59989BFF</color>
+
+    <!-- model 蓝紫 400-->
+    <color name="ck_indigo400">#7F83FF</color>
+
+    <!-- model 蓝紫 450-->
+    <color name="ck_indigo450">#7074F5</color>
+
+    <!-- model 蓝紫 500-->
+    <color name="ck_indigo500">#5A5FFE</color>
+
+    <!-- model 蓝紫 550-->
+    <color name="ck_indigo550">#4F55F7</color>
+
+    <!-- model 蓝紫 550 10%透明度-->
+    <color name="ck_indigo550_10">#1A4F55F7</color>
+
+    <!-- model 蓝紫 550 20%透明度-->
+    <color name="ck_indigo550_20">#334F55F7</color>
+
+    <!-- model 蓝紫 550 30%透明度-->
+    <color name="ck_indigo550_30">#4D4F55F7</color>
+
+    <!-- model 蓝紫 550 50%透明度-->
+    <color name="ck_indigo550_50">#804F55F7</color>
+
+    <!-- model 蓝紫 550 60%透明度-->
+    <color name="ck_indigo550_60">#994F55F7</color>
+
+    <!-- model 蓝紫 600-->
+    <color name="ck_indigo600">#383EF2</color>
+
+    <!-- model 蓝紫 700-->
+    <color name="ck_indigo700">#2328C7</color>
+
+    <!-- model 蓝紫 900-->
+    <color name="ck_indigo900">#232671</color>
+
+    <!-- model 紫 50-->
+    <color name="ck_purple50">#F7F0FF</color>
+
+    <!-- model 紫 100-->
+    <color name="ck_purple100">#EBD7FF</color>
+
+    <!-- model 紫 100 10%透明度-->
+    <color name="ck_purple100_10">#1AEBD7FF</color>
+
+    <!-- model 紫 200-->
+    <color name="ck_purple200">#DEBEFF</color>
+
+    <!-- model 紫 200 70%透明度-->
+    <color name="ck_purple200_70">#B3DEBEFF</color>
+
+    <!-- model 紫 300-->
+    <color name="ck_purple300">#CFA2FF</color>
+
+    <!-- model 紫 400-->
+    <color name="ck_purple400">#C084FF</color>
+
+    <!-- model 紫 400 12%透明度-->
+    <color name="ck_purple400_12">#1FC084FF</color>
+
+    <!-- model 紫 500-->
+    <color name="ck_purple500">#AF64FF</color>
+
+    <!-- model 紫 500 10%透明度-->
+    <color name="ck_purple500_10">#1AAF64FF</color>
+
+    <!-- model 紫 600-->
+    <color name="ck_purple600">#9B4BF0</color>
+
+    <!-- model 紫 700-->
+    <color name="ck_purple700">#8834E1</color>
+
+    <!-- model 紫 800-->
+    <color name="ck_purple800">#7B2CCF</color>
+
+
+
+
+
+
+    <!-- 2020 新色表 使用前参考颜色规范 旧色表已停用-->
+
+
+
+
+
+    <!-- model 粉 50-->
+    <color name="ck_pink50">#FFF0FA</color>
+
+    <!-- model 粉 100-->
+    <color name="ck_pink100">#FFCEEE</color>
+
+    <!-- model 粉 200-->
+    <color name="ck_pink200">#FBA8DE</color>
+
+    <!-- model 粉 300-->
+    <color name="ck_pink300">#FA85D2</color>
+
+    <!-- model 粉 400-->
+    <color name="ck_pink400">#F760C2</color>
+
+    <!-- model 粉 400 20%透明度-->
+    <color name="ck_pink400_20">#33F760C2</color>
+
+    <!-- model 粉 500-->
+    <color name="ck_pink500">#EC51B6</color>
+
+    <!-- model 粉 600-->
+    <color name="ck_pink600">#DB4BA9</color>
+
+    <!-- model 粉 700-->
+    <color name="ck_pink700">#CD3C9A</color>
+
+    <!-- model 粉 800-->
+    <color name="ck_pink800">#B43788</color>
+
+    <!-- model 粉 900-->
+    <color name="ck_pink900">#A02977</color>
+
+
+
+
+    <!-- 2020 新色表 使用前参考颜色规范 旧色表已停用-->
+
+
+
+
+
+
+    <!-- model 橙 50-->
+    <color name="ck_orange50">#FFF2E8</color>
+
+    <!-- model 橙 100-->
+    <color name="ck_orange100">#FFDEC7</color>
+
+    <!-- model 橙 100 60%透明度-->
+    <color name="ck_orange100_60">#99FFDEC7</color>
+
+    <!-- model 橙 150-->
+    <color name="ck_orange150">#FFD3B4</color>
+
+    <!-- model 橙 200-->
+    <color name="ck_orange200">#FFC59B</color>
+
+    <!-- model 橙 250-->
+    <color name="ck_orange250">#FFB681</color>
+
+    <!-- model 橙 300-->
+    <color name="ck_orange300">#FFA667</color>
+
+    <!-- model 橙 350-->
+    <color name="ck_orange350">#FF974D</color>
+
+    <!-- model 橙 350 15%透明度-->
+    <color name="ck_orange350_15">#26FF974D</color>
+
+    <!-- model 橙 350 20%透明度-->
+    <color name="ck_orange350_20">#33FF974D</color>
+
+    <!-- model 橙 350 40%透明度-->
+    <color name="ck_orange350_40">#66FF974D</color>
+
+    <!-- model 橙 400-->
+    <color name="ck_orange400">#FF8A34</color>
+
+    <!-- model 橙 400 8%透明度-->
+    <color name="ck_orange400_08">#14FF8A34</color>
+
+    <!-- model 橙 400 15%透明度-->
+    <color name="ck_orange400_15">#26FF8A34</color>
+
+    <!-- model 橙 400 30%透明度-->
+    <color name="ck_orange400_30">#66FF8A34</color>
+
+    <!-- model 橙 400 60%透明度-->
+    <color name="ck_orange400_60">#99FF8A34</color>
+
+    <!-- model 橙 450-->
+    <color name="ck_orange450">#FF771C</color>
+
+    <!-- model 橙-->
+    <color name="ck_orange">#FF6900</color>
+
+    <!-- model 橙 5%透明度-->
+    <color name="ck_orange_05">#0DFF6900</color>
+
+    <!-- model 橙 8%透明度-->
+    <color name="ck_orange_8">#14FF6900</color>
+
+    <!-- model 橙 10%透明度-->
+    <color name="ck_orange_10">#1AFF6900</color>
+
+    <!-- model 橙 12%透明度-->
+    <color name="ck_orange_12">#1FFF6900</color>
+
+    <!-- model 橙 15%透明度-->
+    <color name="ck_orange_15">#26FF6900</color>
+
+    <!-- model 橙 20%透明度-->
+    <color name="ck_orange_20">#33FF6900</color>
+
+    <!-- model 橙 30%透明度-->
+    <color name="ck_orange_30">#4DFF6900</color>
+
+    <!-- model 橙 40%透明度-->
+    <color name="ck_orange_40">#66FF6900</color>
+
+    <!-- model 橙 50%透明度-->
+    <color name="ck_orange_50">#80FF6900</color>
+
+    <!-- model 橙 60%透明度-->
+    <color name="ck_orange_60">#99FF6900</color>
+
+    <!-- model 橙 80%透明度-->
+    <color name="ck_orange_80">#CCFF6900</color>
+
+    <!-- model 橙 500-->
+    <color name="ck_orange500">#FF6900</color>
+
+    <!-- model 橙 500 4%透明度-->
+    <color name="ck_orange500_04">#0AFF6900</color>
+
+    <!-- model 橙 500 5%透明度-->
+    <color name="ck_orange500_05">#0DFF6900</color>
+
+    <!-- model 橙 500 10%透明度-->
+    <color name="ck_orange500_10">#1AFF6900</color>
+
+    <!-- model 橙 500 20%透明度-->
+    <color name="ck_orange500_20">#33FF6900</color>
+
+    <!-- model 橙 500 30%透明度-->
+    <color name="ck_orange500_30">#4DFF6900</color>
+
+    <!-- model 橙 500 60%透明度-->
+    <color name="ck_orange500_60">#99FF6900</color>
+
+    <!-- model 橙 500 80%透明度-->
+    <color name="ck_orange500_80">#CCFF6900</color>
+
+    <!-- model 橙 550-->
+    <color name="ck_orange550">#ED6201</color>
+
+    <!-- model 橙 600-->
+    <color name="ck_orange600">#DA5C02</color>
+
+    <!-- model 橙 650-->
+    <color name="ck_orange650">#BE5002</color>
+
+    <!-- model 橙 700-->
+    <color name="ck_orange700">#A34300</color>
+
+    <!-- model 橙 750-->
+    <color name="ck_orange750">#883800</color>
+
+    <!-- model 橙 750 30%透明度-->
+    <color name="ck_orange750_30">#4D883800</color>
+
+    <!-- model 橙 800-->
+    <color name="ck_orange800">#702E00</color>
+
+    <!-- model 橙 850-->
+    <color name="ck_orange850">#592500</color>
+
+    <!-- model 橙 900-->
+    <color name="ck_orange900">#411B00</color>
+
+
+
+
+
+
+    <!-- 2020 新色表 使用前参考颜色规范 旧色表已停用-->
+
+
+
+
+
+
+    <!-- model 黄 50-->
+    <color name="ck_yellow50">#FFFCF3</color>
+
+    <!-- model 黄 100-->
+    <color name="ck_yellow100">#FFF3CA</color>
+
+    <!-- model 黄 100 40%透明度-->
+    <color name="ck_yellow100_40">#66FFF3CA</color>
+
+    <!-- model 黄 150-->
+    <color name="ck_yellow150">#FFE493</color>
+
+    <!-- model 黄 150 80%透明度-->
+    <color name="ck_yellow150_80">#CCFFE493</color>
+
+    <!-- model 黄 200-->
+    <color name="ck_yellow200">#FFDB71</color>
+
+    <!-- model 黄 200 20%透明度-->
+    <color name="ck_yellow200_20">#33FFDB71</color>
+
+    <!-- model 黄 200 80%透明度-->
+    <color name="ck_yellow200_80">#CCFFDB71</color>
+
+    <!-- model 黄 200 70%透明度-->
+    <color name="ck_yellow200_70">#B3FFDB71</color>
+
+    <!-- model 黄 250-->
+    <color name="ck_yellow250">#FFD136</color>
+
+    <!-- model 黄 300-->
+    <color name="ck_yellow300">#FEC710</color>
+
+    <!-- model 黄300 10%透明度-->
+    <color name="ck_yellow300_10">#1AFEC710</color>
+
+    <!-- model 黄 300 55%透明度-->
+    <color name="ck_yellow300_55">#8CFEC710</color>
+
+    <!-- model 黄 350-->
+    <color name="ck_yellow350">#F6B900</color>
+
+    <!-- model 黄 350 4%透明度-->
+    <color name="ck_yellow350_04">#0AF6B900</color>
+
+    <!-- model 黄 350 15%透明度-->
+    <color name="ck_yellow350_15">#26F6B900</color>
+
+    <!-- model 黄 350 30%透明度-->
+    <color name="ck_yellow350_30">#4DF6B900</color>
+
+    <!-- model 黄 350 40%透明度-->
+    <color name="ck_yellow350_40">#66F6B900</color>
+
+    <!-- model 黄 350 50%透明度-->
+    <color name="ck_yellow350_50">#80F6B900</color>
+
+    <!-- model 黄 350 55%透明度-->
+    <color name="ck_yellow350_55">#8CF6B900</color>
+
+    <!-- model 黄 400-->
+    <color name="ck_yellow400">#EDAE00</color>
+
+    <!-- model 黄 400 8%透明度-->
+    <color name="ck_yellow400_08">#14EDAE00</color>
+
+    <!-- model 黄 450-->
+    <color name="ck_yellow450">#E3A200</color>
+
+    <!-- model 黄 450 8%透明度-->
+    <color name="ck_yellow450_08">#14E3A200</color>
+
+    <!-- model 黄 450 15%透明度-->
+    <color name="ck_yellow450_15">#26E3A200</color>
+
+    <!-- model 黄 450 20%透明度-->
+    <color name="ck_yellow450_20">#33E3A200</color>
+
+    <!-- model 黄 450 40%透明度-->
+    <color name="ck_yellow450_40">#66E3A200</color>
+
+    <!-- model 黄 450 50%透明度-->
+    <color name="ck_yellow450_50">#80E3A200</color>
+
+    <!-- model 黄 450 60%透明度-->
+    <color name="ck_yellow450_60">#99E3A200</color>
+
+    <!-- model 黄 500-->
+    <color name="ck_yellow500">#D49B15</color>
+
+    <!-- model 黄 550-->
+    <color name="ck_yellow550">#C18B0F</color>
+
+    <!-- model 黄 550 10%透明度-->
+    <color name="ck_yellow550_10">#1AC18B0F</color>
+
+    <!-- model 黄 550 70%透明度-->
+    <color name="ck_yellow550_70">#B3C18B0F</color>
+
+    <!-- model 黄 550 60%透明度-->
+    <color name="ck_yellow550_60">#99C18B0F</color>
+
+    <!-- model 黄 600-->
+    <color name="ck_yellow600">#AF8218</color>
+
+    <!-- model 黄 650-->
+    <color name="ck_yellow650">#A1750C</color>
+
+    <!-- model 黄 700-->
+    <color name="ck_yellow700">#8A6612</color>
+
+    <!-- model 黄 750-->
+    <color name="ck_yellow750">#76591F</color>
+
+    <!-- model 黄 800-->
+    <color name="ck_yellow800">#654E20</color>
+
+    <!-- model 黄 850-->
+    <color name="ck_yellow850">#56441F</color>
+
+    <!-- model 黄 900-->
+    <color name="ck_yellow900">#40351F</color>
+
+    <!-- model 黄 950-->
+    <color name="ck_yellow950">#372F1F</color>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- model 金 50-->
+    <color name="ck_gold50">#FAE8C8</color>
+
+    <!-- model 金 50 80%透明度-->
+    <color name="ck_gold50_80">#CCFAE8C8</color>
+
+    <!-- model 金色 50 50%透明度-->
+    <color name="ck_gold50_50">#80FAE8C8</color>
+
+    <!-- model 金 100-->
+    <color name="ck_gold100">#F2DCB6</color>
+
+    <!-- model 金 150-->
+    <color name="ck_gold150">#EBD3A9</color>
+
+    <!-- model 金 150 20%透明度-->
+    <color name="ck_gold150_20">#33EBD3A9</color>
+
+    <!-- model 金 200-->
+    <color name="ck_gold200">#E3C898</color>
+
+    <!-- model 金 250-->
+    <color name="ck_gold250">#DEBD85</color>
+
+    <!-- model 金 250 80%透明度-->
+    <color name="ck_gold250_80">#CCDEBD85</color>
+
+    <!-- model 金 300-->
+    <color name="ck_gold300">#D9B377</color>
+
+    <!-- model 金 350-->
+    <color name="ck_gold350">#D1AA6B</color>
+
+    <!-- model 金色 350 8%透明度-->
+    <color name="ck_gold350_08">#14D1AA6B</color>
+
+    <!-- model 金色 350 10%透明度-->
+    <color name="ck_gold350_10">#1AD1AA6B</color>
+
+    <!-- model 金 400-->
+    <color name="ck_gold400">#C9A469</color>
+
+    <!-- model 金 400 15%透明度-->
+    <color name="ck_gold400_15">#26C9A469</color>
+
+    <!-- model 金 450-->
+    <color name="ck_gold450">#BD9862</color>
+
+    <!-- model 金色 450 80%透明度-->
+    <color name="ck_gold450_80">#CCBD9862</color>
+
+    <!-- model 金 500-->
+    <color name="ck_gold500">#AD8D5F</color>
+
+    <!-- model 金 500 30%透明度-->
+    <color name="ck_gold500_30">#4DAD8D5F</color>
+
+
+
+
+    <!-- 2020 新色表 使用前参考颜色规范 旧色表已停用-->
+
+
+
+
+
+    <!-- model 红 50-->
+    <color name="ck_red50">#FFE8E8</color>
+
+    <!-- model 红 100-->
+    <color name="ck_red100">#FFC7C6</color>
+
+    <!-- model 红 100 30%透明度-->
+    <color name="ck_red100_30">#4DFFC7C6</color>
+
+    <!-- model 红 100 60%透明度-->
+    <color name="ck_red100_60">#99FFC7C6</color>
+
+    <!-- model 红 200-->
+    <color name="ck_red200">#FF8B89</color>
+
+    <!-- model 红 200 12%透明度-->
+    <color name="ck_red200_12">#1FFF8B89</color>
+
+    <!-- model 红 200 20%透明度-->
+    <color name="ck_red200_20">#33FF8B89</color>
+
+    <!-- model 红 250-->
+    <color name="ck_red250">#FF7A79</color>
+
+    <!-- model 红 300-->
+    <color name="ck_red300">#FB5E5E</color>
+
+    <!-- model 红 350-->
+    <color name="ck_red350">#F35756</color>
+
+    <!-- model 红-->
+    <color name="ck_red">#F13E3A</color>
+
+    <!-- model 红 0%-->
+    <color name="ck_red_0">#00FC4242</color>
+
+    <!-- model 红 400 10%透明度-->
+    <color name="ck_red_10">#1AF13E3A</color>
+
+    <!-- model 红 400 15%透明度-->
+    <color name="ck_red_15">#26F13E3A</color>
+
+    <!-- model 红 400 20%透明度-->
+    <color name="ck_red_20">#33F13E3A</color>
+
+    <!-- model 红 400 30%透明度-->
+    <color name="ck_red_30">#4DF13E3A</color>
+
+    <!-- model 红 400 40%透明度-->
+    <color name="ck_red_40">#66F13E3A</color>
+
+    <!-- model 红 400 40%透明度-->
+    <color name="ck_red_60">#99F13E3A</color>
+
+    <!-- model 红 80% -->
+    <color name="ck_red_80">#CCFC4242</color>
+
+    <!-- model 红 100% -->
+    <color name="ck_red_100">#FF4249</color>
+
+    <!-- model 红200 5%透明度 -->
+    <color name="ck_red200_05">#0DFF8B89</color>
+
+    <!-- model 红200 10%透明度 -->
+    <color name="ck_red200_10">#1AFF8B89</color>
+
+    <!-- model 红 400-->
+    <color name="ck_red400">#F13E3A</color>
+
+    <!-- model 红 400 10%透明度-->
+    <color name="ck_red400_10">#1AF13E3A</color>
+
+    <!-- model 红 400 20%透明度-->
+    <color name="ck_red400_20">#33F13E3A</color>
+
+    <!-- model 红 400 30%透明度-->
+    <color name="ck_red400_30">#4DF13E3A</color>
+
+    <!-- model 红 400 40%透明度-->
+    <color name="ck_red400_60">#99F13E3A</color>
+
+    <!-- model 红 500-->
+    <color name="ck_red500">#D82A26</color>
+
+    <!-- model 红 600-->
+    <color name="ck_red600">#C01D19</color>
+
+    <!-- model 红 700-->
+    <color name="ck_red700">#9E1D1B</color>
+
+    <!-- model 红 800-->
+    <color name="ck_red800">#791919</color>
+
+    <!-- model 红 900-->
+    <color name="ck_red900">#611717</color>
+
+    <!-- model 红 900 50%透明度-->
+    <color name="ck_red900_50">#80611717</color>
+
+    <!-- model 红 950-->
+    <color name="ck_red950">#481B1B</color>
+
+
+
+
+    <!-- 2020 新色表 使用前参考颜色规范 旧色表已停用-->
+
+
+
+
+
+
+    <!-- model 绿 50-->
+    <color name="ck_green50">#CBFFE0</color>
+
+    <!-- model 绿 100-->
+    <color name="ck_green100">#90EBB4</color>
+
+    <!-- model 绿 200-->
+    <color name="ck_green200">#52D486</color>
+
+    <!-- model 绿 300-->
+    <color name="ck_green300">#21BB5E</color>
+
+    <!-- model 绿-->
+    <color name="ck_green">#00A843</color>
+
+    <!-- model 绿 0%-->
+    <color name="ck_green_0">#0000AA3B</color>
+
+    <!-- model 绿 400 10%透明度-->
+    <color name="ck_green_10">#1A00A843</color>
+
+    <!-- model 绿 400 15%透明度-->
+    <color name="ck_green_15">#2600A843</color>
+
+    <!-- model 绿 400 20%透明度-->
+    <color name="ck_green_20">#3300A843</color>
+
+    <!-- model 绿 400 30%透明度-->
+    <color name="ck_green_30">#4D00A843</color>
+
+    <!-- model 绿 400 40%透明度-->
+    <color name="ck_green_40">#6600A843</color>
+
+    <!-- model 绿 60%-->
+    <color name="ck_green_60">#9900AA3B</color>
+
+    <!-- model 绿 80%-->
+    <color name="ck_green_80">#CC00AA3B</color>
+
+    <!-- model 绿 100%-->
+    <color name="ck_green_100">#00C76F</color>
+
+    <!-- model 绿 400-->
+    <color name="ck_green400">#00A843</color>
+
+    <!-- model 绿 400 10%透明度-->
+    <color name="ck_green400_10">#1A00A843</color>
+
+    <!-- model 绿 400 20%透明度-->
+    <color name="ck_green400_20">#3300A843</color>
+
+    <!-- model 绿 400 30%透明度-->
+    <color name="ck_green400_30">#4D00A843</color>
+
+    <!-- model 绿 500-->
+    <color name="ck_green500">#04933D</color>
+
+    <!-- model 绿 600-->
+    <color name="ck_green600">#0A7C37</color>
+
+    <!-- model 绿 700-->
+    <color name="ck_green700">#136B36</color>
+
+    <!-- model 绿 800-->
+    <color name="ck_green800">#175530</color>
+
+    <!-- model 绿 900-->
+    <color name="ck_green900">#1B422B</color>
+
+
+
+    <!-- 2020 新色表 使用前参考颜色规范 旧色表已停用-->
+
+
+
+
+    <!-- model 灰 50-->
+    <color name="ck_gray50">#F9F9F9</color>
+
+    <!-- model 灰 50 20%透明度-->
+    <color name="ck_gray50_20">#33F9F9F9</color>
+
+    <!-- model 灰 50 60%透明度-->
+    <color name="ck_gray50_60">#99F9F9F9</color>
+
+    <!-- model 灰 50 100%透明度-->
+    <color name="ck_gray50_100">#00F9F9F9</color>
+
+    <!-- model 灰 100-->
+    <color name="ck_gray100">#F2F2F2</color>
+
+    <!-- model 灰 100 80%透明度-->
+    <color name="ck_gray100_80">#CCF2F2F2</color>
+
+    <!-- model 灰 100 90%透明度-->
+    <color name="ck_gray100_90">#E6F2F2F2</color>
+
+    <!-- model 灰 100 60%透明度-->
+    <color name="ck_gray100_60">#99F2F2F2</color>
+
+    <!-- model 灰 100 30%透明度-->
+    <color name="ck_gray100_30">#4DF2F2F2</color>
+
+    <!-- model 灰 150-->
+    <color name="ck_gray150">#E5E5E5</color>
+
+    <!-- model 灰 150 30%透明度-->
+    <color name="ck_gray150_30">#4DE8E8E8</color>
+
+    <!-- model 灰 150 60%透明度-->
+    <color name="ck_gray150_60">#99E8E8E8</color>
+
+    <!-- model 灰 150 80%透明度-->
+    <color name="ck_gray150_80">#CCE8E8E8</color>
+
+    <!-- model 灰 200-->
+    <color name="ck_gray200">#DDDDDD</color>
+
+    <!-- model 灰 200 90%透明度-->
+    <color name="ck_gray200_90">#E6DDDDDD</color>
+
+    <!-- model 灰 200 90%透明度-->
+    <color name="ck_gray200_10">#1ADDDDDD</color>
+
+    <!-- model 灰 250-->
+    <color name="ck_gray250">#D3D3D3</color>
+
+    <!-- model 灰 250 10%透明度-->
+    <color name="ck_gray250_10">#1AD3D3D3</color>
+
+    <!-- model 灰 250 30%透明度-->
+    <color name="ck_gray250_30">#4DD3D3D3</color>
+
+    <!-- model 灰 250 40%透明度-->
+    <color name="ck_gray250_40">#66D3D3D3</color>
+
+    <!-- model 灰 250 60%透明度-->
+    <color name="ck_gray250_60">#99D3D3D3</color>
+
+    <!-- model 灰 250 80%透明度-->
+    <color name="ck_gray250_80">#CCD3D3D3</color>
+
+    <!-- model 灰 300-->
+    <color name="ck_gray300">#C3C3C3</color>
+
+    <!-- model 灰 300 30%透明度-->
+    <color name="ck_gray300_30">#4DC3C3C3</color>
+
+    <!-- model 灰 300 50%透明度-->
+    <color name="ck_gray300_50">#80C3C3C3</color>
+
+    <!-- model 灰 350-->
+    <color name="ck_gray350">#B8B8B8</color>
+
+    <!-- model 灰 350 30%透明度-->
+    <color name="ck_gray350_30">#4DB8B8B8</color>
+
+    <!-- model 灰 350 60%透明度-->
+    <color name="ck_gray350_60">#99B8B8B8</color>
+
+    <!-- model 灰 400-->
+    <color name="ck_gray400">#AAAAAA</color>
+
+    <!-- model 灰 450-->
+    <color name="ck_gray450">#939393</color>
+
+    <!-- model 灰 450 6%透明度-->
+    <color name="ck_gray450_06">#0A939393</color>
+
+    <!-- model 灰 450 10%透明度-->
+    <color name="ck_gray450_10">#1A939393</color>
+
+    <!-- model 灰 450 20%透明度-->
+    <color name="ck_gray450_20">#33939393</color>
+
+    <!-- model 灰 450 30%透明度-->
+    <color name="ck_gray450_30">#4D939393</color>
+
+    <!-- model 灰 450 60%透明度-->
+    <color name="ck_gray450_60">#99939393</color>
+
+    <!-- model 灰 450 90%透明度-->
+    <color name="ck_gray450_90">#E6939393</color>
+
+    <!-- model 灰 450 96%透明度-->
+    <color name="ck_gray450_96">#F5939393</color>
+
+    <!-- model 灰 500-->
+    <color name="ck_gray500">#858585</color>
+
+    <!-- model 灰 550-->
+    <color name="ck_gray550">#7A7A7A</color>
+
+    <!-- model 灰 550 30%透明度-->
+    <color name="ck_gray550_30">#4D7A7A7A</color>
+
+    <!-- model 灰 550 60%透明度-->
+    <color name="ck_gray550_60">#997A7A7A</color>
+
+    <!-- model 灰 600-->
+    <color name="ck_gray600">#6E6E6E</color>
+
+    <!-- model 灰 600 30%透明度-->
+    <color name="ck_gray600_30">#4D6E6E6E</color>
+
+    <!-- model 灰 600 40%透明度-->
+    <color name="ck_gray600_40">#666E6E6E</color>
+
+    <!-- model 灰 600 60%透明度-->
+    <color name="ck_gray600_60">#996E6E6E</color>
+
+    <!-- model 灰 650-->
+    <color name="ck_gray650">#5F5F5F</color>
+
+    <!-- model 灰 650 50%透明度-->
+    <color name="ck_gray650_50">#805F5F5F</color>
+
+    <!-- model 灰 700-->
+    <color name="ck_gray700">#505050</color>
+
+    <!-- model 灰 750-->
+    <color name="ck_gray750">#3D3D3D</color>
+
+    <!-- model 灰 750 80%透明度-->
+    <color name="ck_gray750_80">#CC3D3D3D</color>
+
+    <!-- model 灰 800-->
+    <color name="ck_gray800">#333333</color>
+
+    <!-- model 灰 800 90%透明度-->
+    <color name="ck_gray800_90">#E6333333</color>
+
+    <!-- model 灰 850-->
+    <color name="ck_gray850">#262626</color>
+
+    <!-- model 灰 850 30%透明度-->
+    <color name="ck_gray850_30">#4D262626</color>
+
+    <!-- model 灰 850 60%透明度-->
+    <color name="ck_gray850_60">#99262626</color>
+
+    <!-- model 灰 850 80%透明度-->
+    <color name="ck_gray850_80">#CC262626</color>
+
+    <!-- model 灰 850 100%透明度-->
+    <color name="ck_gray850_100">#00262626</color>
+
+    <!-- model 灰 860-->
+    <color name="ck_gray860">#1F1F1F</color>
+
+    <!-- model 灰 900-->
+    <color name="ck_gray900">#191919</color>
+
+    <!-- model 灰 900 30%透明度-->
+    <color name="ck_gray900_30">#4D191919</color>
+
+    <!-- model 灰 900 90%透明度-->
+    <color name="ck_gray900_90">#E6191919</color>
+
+    <!-- model 灰 900 70%透明度-->
+    <color name="ck_gray900_70">#B3191919</color>
+
+    <!-- model 灰 950-->
+    <color name="ck_gray950">#0A0A0A</color>
+
+
+
+
+
+    <!-- 2020 新色表 使用前参考颜色规范 旧色表已停用-->
+
+
+
+
+
+    <!-- model 黑-->
+    <color name="ck_black">#000000</color>
+
+    <!-- model 黑-->
+    <color name="ck_black_0">#00000000</color>
+
+    <!-- model 黑 3%不透明度-->
+    <color name="ck_black_03">#08000000</color>
+
+    <!-- model 黑 10%不透明度-->
+    <color name="ck_black_10">#1A000000</color>
+
+    <!-- model 黑 12%不透明度 new-->
+    <color name="ck_black_12">#1f000000</color>
+
+    <!-- model 黑 14%不透明度 new-->
+    <color name="ck_black_14">#24000000</color>
+
+    <!-- model 黑 20%不透明度-->
+    <color name="ck_black_20">#33000000</color>
+
+    <!-- model 黑 25%不透明度-->
+    <color name="ck_black_25">#40000000</color>
+
+    <!-- model 黑 30%不透明度-->
+    <color name="ck_black_30">#4D000000</color>
+
+    <!-- model 黑 40%不透明度 new-->
+    <color name="ck_black_40">#66000000</color>
+
+    <!-- model 黑 50%不透明度-->
+    <color name="ck_black_50">#80000000</color>
+
+    <!-- model 黑 60%不透明度-->
+    <color name="ck_black_60">#99000000</color>
+
+    <!-- model 黑 70%不透明度 new-->
+    <color name="ck_black_70">#B3000000</color>
+
+    <!-- model 黑 80%不透明度-->
+    <color name="ck_black_80">#CC000000</color>
+
+
+
+
+    <!-- 2020 新色表 使用前参考颜色规范 旧色表已停用-->
+
+
+
+
+
+    <!-- model 白-->
+    <color name="ck_white">#FFFFFF</color>
+
+    <!-- model 白 0%透明度-->
+    <color name="ck_white_0">#00FFFFFF</color>
+
+    <!-- model 白 5%透明度-->
+    <color name="ck_white_05">#0DFFFFFF</color>
+
+    <!-- model 白 6%透明度-->
+    <color name="ck_white_06">#0FFFFFFF</color>
+
+    <!-- model 白 10%透明度-->
+    <color name="ck_white_10">#1AFFFFFF</color>
+
+    <!-- model 白 13%透明度-->
+    <color name="ck_white_13">#21FFFFFF</color>
+
+    <!-- model 白 20%不透明度-->
+    <color name="ck_white_20">#33FFFFFF</color>
+
+    <!-- model 白 25%不透明度-->
+    <color name="ck_white_25">#40FFFFFF</color>
+
+    <!-- model 白 30%不透明度-->
+    <color name="ck_white_30">#4DFFFFFF</color>
+
+    <!-- model 白-40%-->
+    <color name="ck_white_40">#66FFFFFF</color>
+
+    <!-- model 白 50%不透明度-->
+    <color name="ck_white_50">#80FFFFFF</color>
+
+    <!-- model 白 60%不透明度-->
+    <color name="ck_white_60">#99FFFFFF</color>
+
+    <!-- model 白 70%透明度 -->
+    <color name="ck_white_70">#B3FFFFFF</color>
+
+    <!-- model 白-74%不透明度-->
+    <color name="ck_white_74">#bdFFFFFF</color>
+
+    <!-- model 白-80%不透明度-->
+    <color name="ck_white_80">#CCFFFFFF</color>
+
+    <!-- model 白-84%不透明度-->
+    <color name="ck_white_84">#CCFFFFFF</color>
+
+    <!-- model 白-90%不透明度-->
+    <color name="ck_white_90">#E6FFFFFF</color>
+
+
+
+    <!-- 2020 新色表 旧色表已停用 以下为不推荐用色-->
+
+
+
+
+    <!-- model 鲑鱼色 300-->
+    <color name="ck_salmon300">#FF907A</color>
+
+    <!-- model 鲑鱼色 400-->
+    <color name="ck_salmon400">#FD7D64</color>
+
+
+
+
+
+    <!-- model 向日葵色 200-->
+    <color name="ck_sunflower200">#FFCE61</color>
+
+    <!-- model 向日葵色 300-->
+    <color name="ck_sunflower300">#FF9860</color>
+
+
+
+
+
+    <!-- model 杏色 100-->
+    <color name="ck_apricot100">#FFECCA</color>
+
+    <!-- model 杏色 150-->
+    <color name="ck_apricot150">#FFDFA5</color>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- 2018 旧色表已停用 不予使用-->
+
+    <!-- model 透明 -->
+    <color name="ck_transparent">#00000000</color>
+
+    <!-- model 富途橙 -->
+    <color name="ck_futuorange">#FF6900</color>
+
+    <!-- model 富途橙 60%透明度-->
+    <color name="ck_futuorange_60">#99FF5A00</color>
+
+    <!-- model 富途橙 30%透明度-->
+    <color name="ck_futuorange_30">#4DFF5A00</color>
+
+    <!-- model 富途橙 50%透明度-->
+    <color name="ck_futuorange_50">#80FF5A00</color>
+
+    <!-- model 富途蓝 60%透明度 -->
+    <color name="ck_futublue_60">#990A5ECB</color>
+
+    <!-- model 富途蓝 30%透明度 -->
+    <color name="ck_futublue_30">#4D0A5ECB</color>
+
+    <!-- model 富途蓝 -->
+    <color name="ck_futublue">#0A5ECB</color>
+
+    <!-- model 富途蓝 10%透明度 -->
+    <color name="ck_futublue_10">#1A0A5ECB</color>
+
+    <!-- model moomoo蓝 -->
+    <color name="ck_moomooblue">#04133C</color>
+
+    <!-- model 现金宝蓝_亮1 -->
+    <color name="ck_mpblue_light1">#38F5FF</color>
+
+    <!-- model 现金宝蓝_亮2 -->
+    <color name="ck_mpblue_light2">#0A78FF</color>
+
+    <!-- model 现金宝橙_亮1 -->
+    <color name="ck_mporange_light1">#F9BF3B</color>
+
+    <!-- model 现金宝橙_亮1_20%透明度 -->
+    <color name="ck_mporange_light1_20">#33F9BF3B</color>
+
+    <!-- model 现金宝橙_亮2 -->
+    <color name="ck_mporange_light2">#FD6D23</color>
+
+
+    <!-- 2018 旧色表已停用 不予使用-->
+
+    <!-- model moomoo经典出入金卡片背景色  -->
+    <color name="ck_moomootransfer_focuscard_bg">#04133C</color>
+
+    <!-- model moomoo经典出入金卡片字色  -->
+    <color name="ck_moomootransfer_focuscard_text">#FFFFFF</color>
+
+    <!-- model moomoo经典出入金账户背景色  -->
+    <color name="ck_moomootransfer_banking_tag_rejected_bg">#BEC3C9</color>
+
+    <!-- model moomoo经典出入金账户字色  -->
+    <color name="ck_moomootransfer_banking_tag_rejected_text">#FFFFFF</color>
+
+    <!-- model 资产分析收益率曲线香港 -->
+    <color name="ck_analyse_trend_hk">#A876FB</color>
+
+    <!-- model 资产分析收益率曲线香港12%不透明度 -->
+    <color name="ck_analyse_trend_hk_12">#1FA876FB</color>
+
+    <!-- model 资产分析收益率曲线美国 -->
+    <color name="ck_analyse_trend_us">#FFBF59</color>
+
+    <!-- model 资产分析收益率曲线美国12%不透明度 -->
+    <color name="ck_analyse_trend_us_12">#1FFFBF59</color>
+
+    <!-- model 资产分析收益率曲线中国 -->
+    <color name="ck_analyse_trend_ch">#FF6884</color>
+
+    <!-- model 资产分析收益率曲线中国12%不透明度 -->
+    <color name="ck_analyse_trend_ch_12">#1FFF6884</color>
+
+    <!-- model 基金宝快赎列表页标签 70%透明度 -->
+    <color name="ck_fund_blue_70">#B33891FF</color>
+
+    <!-- model 基金对比曲线1 -->
+    <color name="ck_line_quote_fundtab_analyse_trend1">#A876FB</color>
+
+    <!-- model 基金对比曲线2 -->
+    <color name="ck_line_quote_fundtab_analyse_trend2">#00A4FF</color>
+
+    <!-- model 基金对比曲线3 -->
+    <color name="ck_line_quote_fundtab_analyse_trend3">#FF6884</color>
+
+    <!-- model 基金对比曲线4 -->
+    <color name="ck_line_quote_fundtab_analyse_trend4">#5876D8</color>
+
+    <!-- model 基金对比曲线5 -->
+    <color name="ck_line_quote_fundtab_analyse_trend5">#FFBF59</color>
+
+
+
+    <!-- 2018 旧色表已停用 不予使用-->
+
+
+    <!-- model 表格 蓝-->
+    <color name="ck_sheet1_blue">#65A5FF</color>
+
+    <!-- model 表格 红-->
+    <color name="ck_sheet2_red">#EC7486</color>
+
+    <!-- model 选择卡券 展开项虚线 黑肤-->
+    <color name="ck_deepbrown_coupon">#473626</color>
+
+    <!-- model 黑色 错误写法-->
+    <color name="ck_black_dark6">#1A473626</color>
+
+
+    <!-- 2018 旧色表已停用 不予使用-->
+
+    <!-- model 新交易tab经典浅色皮肤展开背景色-->
+    <color name="ck_gray_newtrade_classic">#FAFBFC</color>
+
+    <!-- model 新交易tab经典浅色皮肤背景色-->
+    <color name="ck_gray_newtrade_bg_light">#F1F3F5</color>
+
+    <!-- model 新交易tab资产分析日期标签背景色-->
+    <color name="ck_gray_newtrade_analyse_tagdatebg">#C8D2DC</color>
+
+    <!-- model 新交易tab资产分析走势浮层背景色-->
+    <color name="ck_gray_newtrade_trend_pop">#F0F6FF</color>
+
+    <!-- model 新交易tab资产分析现金宝图表颜色-->
+    <color name="ck_yellow_newtrade_analyse_chart_moneyplus">#FFBF59</color>
+
+    <!-- model 新交易tab资产分析期货图表颜色-->
+    <color name="ck_green_newtrade_analyse_chart_futures">#5876D8</color>
+
+    <!-- model 新交易tab黑色皮肤展开背景色-->
+    <color name="ck_gray_newtrade_dark">#212121</color>
+
+    <!-- model 新交易tab黑色皮肤背景色-->
+    <color name="ck_gray_newtrade_bg_dark">#0F0F0F</color>
+
+    <!-- model 新交易tab白色皮肤展开背景色-->
+    <color name="ck_gray_newtrade_light">#FAFAFA</color>
+
+
+
+
+
+    <!-- 2018 旧色表已停用 不予使用-->
+
+    <!-- model 灰_亮 -->
+    <color name="ck_gray_light">#F9F9F9</color>
+
+    <!-- model 灰_亮7 -->
+    <color name="ck_gray_light8">#FBFBFB</color>
+
+    <!-- model 灰_亮2 -->
+    <color name="ck_gray_light2">#F6F7FA</color>
+
+    <!-- model 灰_亮3 -->
+    <color name="ck_gray_light3">#ECEFF5</color>
+
+    <!-- model 灰_亮4 -->
+    <color name="ck_gray_light4">#DCE2EA</color>
+
+    <!-- model 灰_亮4 30%-->
+    <color name="ck_gray_light4_30">#4DDCE2EA</color>
+
+    <!-- model 灰_亮5 -->
+    <color name="ck_gray_light5">#D7DBDE</color>
+
+    <!--model灰亮6 -->
+    <color name="ck_gray_light6">#DDE2EB</color>
+
+    <!--model灰亮7 -->
+    <color name="ck_gray_light7">#B3B3B3</color>
+
+    <!-- model 灰 -->
+    <color name="ck_gray">#F2F2F2</color>
+
+    <!-- model 灰_暗1 -->
+    <color name="ck_gray_dark1">#D5D2CE</color>
+
+    <!-- model 灰_暗1 80%透明度 -->
+    <color name="ck_gray_dark1_80">#CCD5D2CE</color>
+
+    <!-- model 灰_暗1 60%透明度 -->
+    <color name="ck_gray_dark1_60">#99D5D2CE</color>
+
+    <!-- model 灰_暗1 30%透明度 -->
+    <color name="ck_gray_dark1_30">#4DD5D2CE</color>
+
+    <!-- model 灰_暗2 -->
+    <color name="ck_gray_dark2">#ECECEC</color>
+
+    <!-- model 灰_暗2 60%透明度 -->
+    <color name="ck_gray_dark2_60">#99ECECEC</color>
+
+    <!-- model 灰_暗2 30%透明度 -->
+    <color name="ck_gray_dark2_30">#4DECECEC</color>
+
+    <!-- model 灰_暗3 -->
+    <color name="ck_gray_dark3">#E8E8E8</color>
+
+    <!-- model 灰_暗3 60%-->
+    <color name="ck_gray_dark3_60">#99E8E8E8</color>
+
+    <!-- model 灰_暗3 30%-->
+    <color name="ck_gray_dark3_30">#4cE8E8E8</color>
+
+    <!-- model 灰_暗4 -->
+    <color name="ck_gray_dark4">#F9F9F9</color>
+
+    <!-- model 灰_暗4 60% -->
+    <color name="ck_gray_dark4_60">#99F9F9F9</color>
+
+    <!-- model 灰_暗4 30%-->
+    <color name="ck_gray_dark4_30">#4cF9F9F9</color>
+
+    <!-- model 灰_暗5 -->
+    <color name="ck_gray_dark5">#284058</color>
+
+    <!-- model 灰_暗5 30% -->
+    <color name="ck_gray_dark5_30">#4c284058</color>
+
+    <!-- model 灰_暗5 60% -->
+    <color name="ck_gray_dark5_60">#99284058</color>
+
+    <!-- model 灰_暗6 -->
+    <color name="ck_gray_dark6">#C3C3C3</color>
+
+    <!-- model 灰_暗6 20% -->
+    <color name="ck_gray_dark6_20">#33C3C3C3</color>
+
+    <!-- model 灰_暗6 0% -->
+    <color name="ck_gray_dark6_00">#00C3C3C3</color>
+
+    <!-- model 灰_暗7 -->
+    <color name="ck_gray_dark7">#F0F0F0</color>
+
+    <!-- model 灰_暗8 -->
+    <color name="ck_gray_dark8">#F7F7F7</color>
+
+    <!-- model 灰_暗8 90%透明度-->
+    <color name="ck_gray_dark8_90">#E6F7F7F7</color>
+
+    <!-- model 灰_暗9 -->
+    <color name="ck_gray_dark9">#F2F2F2</color>
+
+    <!-- model 灰 分割线 -->
+    <color name="ck_gray_light_7">#DCE4EC</color>
+
+    <!-- model 灰 分割线 -->
+    <color name="ck_gray_light_6">#E8F0F8</color>
+
+    <!-- model 灰_暗1 -->
+    <color name="ck_gray_dark_2">#8094A8</color>
+
+    <!-- model 灰_暗2 -->
+    <color name="ck_gray_dark_3">#B0BAC4</color>
+
+    <!-- model 灰_暗3 -->
+    <color name="ck_gray_light_1">#F6F8FA</color>
+
+    <!-- model 灰_暗5 -->
+    <color name="ck_gray_light_4">#E4E7EB</color>
+
+    <!-- model 亮紫 -->
+    <color name="ck_gray_purple">#F3F1FF</color>
+
+    <!-- model 暗紫 -->
+    <color name="ck_gray_purple1">#E7E8F7</color>
+
+    <!-- model 灰色 背景渐变 -->
+    <color name="ck_gray_dark_4">#F2F4F6</color>
+
+
+    <!-- 2018 旧色表已停用 不予使用-->
+
+    <!-- model 深灰_亮 -->
+    <color name="ck_deepgray_light">#252832</color>
+
+    <!-- model 深灰_亮1 -->
+    <color name="ck_deepgray_light1">#3D3C3C</color>
+
+    <!-- model 深灰_亮1 80%透明度 -->
+    <color name="ck_deepgray_light1_80">#CC3D3C3C</color>
+
+    <!-- model 深灰_亮1 60%透明度 -->
+    <color name="ck_deepgray_light1_60">#993D3C3C</color>
+
+    <!-- model 深灰_亮1 30%透明度 -->
+    <color name="ck_deepgray_light1_30">#4D3D3C3C</color>
+
+    <!-- model 深灰_亮3 -->
+    <color name="ck_deepgray_light3">#5F5F5F</color>
+
+    <!-- model 深灰_亮4 -->
+    <color name="ck_deepgray_light4">#939393</color>
+
+    <!-- model 深灰_亮4 60%透明度 -->
+    <color name="ck_deepgray_light4_60">#99939393</color>
+
+    <!-- model 深灰_亮4 30%透明度 -->
+    <color name="ck_deepgray_light4_30">#4D939393</color>
+
+    <!-- model 深灰_亮4 6%透明度 -->
+    <color name="ck_deepgray_light4_06">#0F939393</color>
+
+    <!-- model 深灰_亮5 -->
+    <color name="ck_deepgray_light5">#858585</color>
+
+    <!-- model 深灰_亮5 60%透明度 -->
+    <color name="ck_deepgray_light5_60">#99858585</color>
+
+    <!-- model 深灰_亮5 30%透明度 -->
+    <color name="ck_deepgray_light5_30">#4D858585</color>
+
+    <!-- model 深灰_亮5 10%透明度 -->
+    <color name="ck_deepgray_light5_10">#1A858585</color>
+
+    <!-- model 深灰_亮6 -->
+    <color name="ck_deepgray_light6">#939393</color>
+
+    <!-- model 深灰_亮6 90%-->
+    <color name="ck_deepgray_light6_90">#E6939393</color>
+
+    <!-- model 深灰_亮7 90% -->
+    <color name="ck_deepgray_light7_90">#E6303030</color>
+
+    <!-- model 深灰 -->
+    <color name="ck_deepgray">#292929</color>
+
+    <!-- model 深灰_暗 -->
+    <color name="ck_deepgray_dark">#1F1F1F</color>
+
+    <!-- model 深灰_暗 90%透明度-->
+    <color name="ck_deepgray_dark_90">#E61F1F1F</color>
+
+    <!-- model 深灰_暗1 -->
+    <color name="ck_deepgray_dark1">#242424</color>
+
+    <!-- model 深灰_暗1 30% -->
+    <color name="ck_deepgray_dark1_30">#4D242424</color>
+
+    <!-- model 深灰_暗2 -->
+    <color name="ck_deepgray_dark2">#1A1C26</color>
+
+    <!-- model 深灰_暗3 -->
+    <color name="ck_deepgray_dark3">#121212</color>
+
+    <!-- model 深灰_暗4 -->
+    <color name="ck_deepgray_dark4">#0F1118</color>
+
+    <!-- model 深灰_暗5 -->
+    <color name="ck_deepgray_dark5">#1A1A1A</color>
+
+    <!-- model 深灰_暗5 80% 透明度 -->
+    <color name="ck_deepgray_dark5_80">#CC1A1A1A</color>
+
+    <!-- model 深灰_暗6 -->
+    <color name="ck_deepgray_dark6">#25272A</color>
+
+    <!-- model 深灰_暗7 -->
+    <color name="ck_deepgray_dark7">#505050</color>
+
+    <!-- model 深灰_暗8 -->
+    <color name="ck_deepgray_dark8">#1E1E1E</color>
+
+    <!-- model 深灰_暗9 -->
+    <color name="ck_deepgray_dark9">#424242</color>
+
+    <!-- model 深灰_暗10 -->
+    <color name="ck_deepgray_dark10">#333333</color>
+
+    <!-- model 深灰_暗11 -->
+    <color name="ck_deepgray_dark11">#424242</color>
+
+
+
+    <!-- 2018 旧色表已停用 不予使用-->
+
+    <!-- model 天蓝_亮1 -->
+    <color name="ck_skyblue_light1">#F0F6FF</color>
+
+    <!-- model 天蓝_亮5 -->
+    <color name="ck_skyblue_light5">#46CEFF</color>
+
+    <!-- model 天蓝 -->
+    <color name="ck_skyblue">#3891FF</color>
+
+    <!-- model 天蓝_50%透明度 -->
+    <color name="ck_skyblue_50">#803891FF</color>
+
+    <!-- model 天蓝_60%透明度 -->
+    <color name="ck_skyblue_60">#993891FF</color>
+
+    <!-- model 天蓝_亮2 -->
+    <color name="ck_skyblue_light2">#D1E9FF</color>
+
+    <!-- model 天蓝 10%-->
+    <color name="ck_skyblue_10">#1A3891FF</color>
+
+    <!-- model 天蓝 20%-->
+    <color name="ck_skyblue_20">#333891FF</color>
+
+    <!-- model 天蓝 30% -->
+    <color name="ck_skyblue_30">#733891FF</color>
+
+    <!-- model 天蓝_暗 -->
+    <color name="ck_skyblue_dark">#0A61CC</color>
+
+    <!-- model 天蓝_暗1 -->
+    <color name="ck_skyblue_dark1">#0964DB</color>
+
+    <!-- model 天蓝_暗2 -->
+    <color name="ck_skyblue_dark2">#1A89E7</color>
+
+    <!-- model 天蓝_亮3 -->
+    <color name="ck_skyblue_light3">#DDEFFF</color>
+
+    <!-- model 天蓝_亮4 -->
+    <color name="ck_skyblue_light4">#97BFE6</color>
+
+    <!-- model 天蓝_亮7-->
+    <color name="ck_skyblue_light7">#64ABFF</color>
+
+    <!-- model 天蓝_亮8-->
+    <color name="ck_skyblue_light8">#639DF0</color>
+
+
+    <!-- 2018 旧色表已停用 不予使用-->
+
+    <!-- model 蓝_亮5 -->
+    <color name="ck_blue_light5">#5694F0</color>
+
+    <!-- model 蓝_亮5 30% -->
+    <color name="ck_blue_light5_30">#735694F0</color>
+
+    <!-- model 蓝_亮5 50% -->
+    <color name="ck_blue_light5_50">#805694F0</color>
+
+    <!-- model 蓝_亮5 60% -->
+    <color name="ck_blue_light5_60">#995694F0</color>
+
+    <!-- model 蓝_亮5 12% -->
+    <color name="ck_blue_light5_12">#1F5694F0</color>
+
+    <!-- model 蓝_亮5 10%-->
+    <color name="ck_blue_light5_10">#1A5694F0</color>
+
+    <!-- model 蓝_亮6 -->
+    <color name="ck_blue_light6">#179BFF</color>
+
+    <!-- model 蓝_亮1 -->
+    <color name="ck_blue_light1">#0677E5</color>
+
+    <!-- model 蓝_亮2 -->
+    <color name="ck_blue_light2">#64ABFF</color>
+
+    <!-- model 蓝_暗1 -->
+    <color name="ck_blue_dark1">#1B60C4</color>
+
+    <!-- model 蓝_暗2 -->
+    <color name="ck_blue_dark2">#3364A2</color>
+
+    <!-- model 蓝_暗3 -->
+    <color name="ck_blue_dark3">#406EB1</color>
+
+    <!-- model 蓝_暗4 -->
+    <color name="ck_blue_dark4">#1A2940</color>
+
+    <!-- model 蓝 30%透明度-->
+    <color name="ck_blue_light3_30">#4D179BFF</color>
+
+    <!-- model 蓝 0%透明度-->
+    <color name="ck_blue_light3_0">#00179BFF</color>
+
+    <!-- model 蓝_暗 不透明度10%  -->
+    <color name="ck_blue_dark6">#1A3334E3</color>
+
+
+    <!-- 2018 旧色表已停用 不予使用-->
+
+    <!-- model 深蓝_亮3 -->
+    <color name="ck_navy_light3">#B1C0D6</color>
+
+    <!-- model 深蓝_亮3 30% -->
+    <color name="ck_navy_light3_30">#73B1C0D6</color>
+
+    <!-- model 深蓝_亮3 60% -->
+    <color name="ck_navy_light3_60">#99B1C0D6</color>
+
+    <!-- model 深蓝_亮4 -->
+    <color name="ck_navy_light4">#8E9AB7</color>
+
+    <!-- model 深蓝_亮4 0% -->
+    <color name="ck_navy_light4_0">#008E9AB7</color>
+
+    <!-- model 深蓝_亮4 10% -->
+    <color name="ck_navy_light4_10">#1A8E9AB7</color>
+
+    <!-- model 深蓝_亮4 20% -->
+    <color name="ck_navy_light4_20">#338E9AB7</color>
+
+    <!-- model 深蓝_亮4 90% -->
+    <color name="ck_navy_light4_90">#E68E9AB7</color>
+
+    <!-- model 深蓝_亮5 -->
+    <color name="ck_navy_light5">#727C8D</color>
+
+    <!-- model 深蓝_亮5 70% -->
+    <color name="ck_navy_light5_70">#B3727C8D</color>
+
+    <!-- model 深蓝 6 -->
+    <color name="ck_navy_light6">#535BEC</color>
+
+    <!-- model 深蓝 -->
+    <color name="ck_navy">#52668C</color>
+
+    <!-- model 深蓝 30% -->
+    <color name="ck_navy_30">#7352668C</color>
+
+    <!-- model 深蓝 60% -->
+    <color name="ck_navy_60">#9952668C</color>
+
+    <!-- model 深蓝_暗1 -->
+    <color name="ck_navy_dark1">#24375B</color>
+
+    <!-- model 深蓝_暗1 90%-->
+    <color name="ck_navy_dark1_90">#E624375B</color>
+
+
+    <!-- 2018 旧色表已停用 不予使用-->
+
+    <!-- model 蓝灰_亮3 -->
+    <color name="ck_grayblue_light3">#87A8CE</color>
+
+    <!-- model 蓝灰_亮3 50% -->
+    <color name="ck_grayblue_light3_50">#8087A8CE</color>
+
+    <!-- model 蓝灰_亮5 -->
+    <color name="ck_grayblue_light5">#5386D1</color>
+
+    <!-- model 蓝灰_亮6-->
+    <color name="ck_grayblue_light6">#60A1FF</color>
+
+    <!-- model 蓝灰_亮7-->
+    <color name="ck_grayblue_light7">#b4bdcb</color>
+
+    <!-- model 蓝灰_暗1 90%-->
+    <color name="ck_grayblue_dark1_90">#E637609B</color>
+
+
+
+
+    <!-- 2018 旧色表已停用 不予使用-->
+
+    <!-- model 邃蓝_亮1-->
+    <color name="ck_deepblue_light1">#CDF0FE</color>
+
+    <!-- model 邃蓝_亮2-->
+    <color name="ck_deepblue_light2">#7CC3F0</color>
+
+    <!-- model 邃蓝_亮3-->
+    <color name="ck_deepblue_light3">#358CE3</color>
+
+    <!-- model 邃蓝-->
+    <color name="ck_deepblue">#0F56C9</color>
+
+    <!-- model 邃蓝_暗5-->
+    <color name="ck_deepblue_dark5">#305285</color>
+
+    <!-- model 邃蓝 90%-->
+    <color name="ck_deepblue_90">#6E0F56C9</color>
+
+
+    <!-- 2018 旧色表已停用 不予使用-->
+
+    <!-- model 湖蓝 -->
+    <color name="ck_lakeblue">#0168FF</color>
+
+    <!-- model 湖蓝 60%透明度 -->
+    <color name="ck_lakeblue_60">#990168FF</color>
+
+    <!-- model 湖蓝 30%透明度 -->
+    <color name="ck_lakeblue_30">#4D0168FF</color>
+
+
+    <!-- 2018 旧色表已停用 不予使用-->
+
+    <!-- model 孔雀绿_亮6 90% -->
+    <color name="ck_teal_light6_90">#E64CA282</color>
+
+
+
+    <!-- 2018 旧色表已停用 不予使用-->
+
+    <!-- model 2019新设计语言 绿色 -->
+    <color name="ck_green_t100">#00C76F</color>
+
+    <!-- model 2019新设计语言 绿色 +30%白色 -->
+    <color name="ck_green_b30">#4DD79A</color>
+
+    <!-- model 绿_亮1 -->
+    <color name="ck_green_light1">#24B770</color>
+
+    <!-- model 绿_亮5 -->
+    <color name="ck_green_light5">#36C774</color>
+
+    <!-- model 绿_暗 90%-->
+    <color name="ck_green_dark1_90">#E6148E5C</color>
+
+
+    <!-- 2018 旧色表已停用 不予使用-->
+
+    <!-- model 金_亮2 -->
+    <color name="ck_gold_light2">#FEDF88</color>
+
+    <!-- model 金_亮3 -->
+    <color name="ck_gold_light3">#F1CA5B</color>
+
+    <!-- model 棕 -->
+    <color name="ck_brown_dark">#673E00</color>
+
+    <!-- model 金_暗2 -->
+    <color name="ck_gold_dark2">#E2BB73</color>
+
+    <!-- model 金 -->
+    <color name="ck_gold_light1">#EDC161</color>
+
+    <!-- model 金 50%透明度-->
+    <color name="ck_gold_light1_50">#80EDC161</color>
+
+    <!-- model 金 15%透明度-->
+    <color name="ck_gold_light1_15">#26EDC161</color>
+
+    <!-- model 金_亮2_90% -->
+    <color name="ck_gold_light2_90">#E6FEDF88</color>
+
+    <!-- model 金_亮3_90% -->
+    <color name="ck_gold_light3_90">#E6F1CA5B</color>
+
+    <!-- model 金_暗2_80% -->
+    <color name="ck_gold_dark2_80">#CCE2BB73</color>
+
+    <!-- model 金_暗 -->
+    <color name="ck_gold_dark1">#D3A646</color>
+
+    <!-- model 金_暗50%透明度 -->
+    <color name="ck_gold_dark1_50">#80D3A646</color>
+
+    <!-- model 金_暗15%透明度 -->
+    <color name="ck_gold_dark1_15">#26D3A646</color>
+
+
+    <!-- 2018 旧色表已停用 不予使用-->
+
+    <!-- model 黄 -->
+    <color name="ck_yellow">#FCA901</color>
+
+    <!-- model 黄_亮 -->
+    <color name="ck_yellow_light">#FFF4DC</color>
+
+    <!-- model 黄_亮2 -->
+    <color name="ck_yellow_light2">#FFCB2E</color>
+
+    <!-- model 黄_亮3 -->
+    <color name="ck_yellow_light3">#FFDD2E</color>
+
+    <!-- model 黄_亮4 -->
+    <color name="ck_yellow_light4">#FFEE2E</color>
+
+    <!-- model 黄_亮5 -->
+    <color name="ck_yellow_light5">#F8EBC6</color>
+
+    <!-- model 黄_亮6 -->
+    <color name="ck_yellow_light6">#D7AB77</color>
+
+    <!-- model 黄_亮6 50% -->
+    <color name="ck_yellow_light6_50">#80D7AB77</color>
+
+    <!-- model 黄_亮7 -->
+    <color name="ck_yellow_light7">#FFD15A</color>
+
+    <!-- model 黄-暗 -->
+    <color name="ck_yellow_dark">#AE6A1D</color>
+
+    <!-- model 黄-暗 40%-->
+    <color name="ck_yellow_dark_40">#66AE6A1D</color>
+
+    <!-- model 黄-暗 50%-->
+    <color name="ck_yellow_dark_50">#80AE6A1D</color>
+
+    <!-- model 黄-暗3 -->
+    <color name="ck_yellow_dark3">#332C25</color>
+
+    <!-- model 黄-暗4 -->
+    <color name="ck_yellow_dark4">#2A2624</color>
+
+    <!-- model 黄-暗5 -->
+    <color name="ck_yellow_dark5">#75461C</color>
+
+    <!-- model 黄-暗5 90%-->
+    <color name="ck_yellow_dark5_90">#E675461C</color>
+
+    <!-- model 黄-暗4 40%透明度-->
+    <color name="ck_yellow_dark4_40">#66AB8F7B</color>
+
+    <!-- model 黄-金 -->
+    <color name="ck_yellow_dark23">#D8AD68</color>
+
+    <!-- model 黄-金 8%透明度-->
+    <color name="ck_yellow_dark23_8">#14D8AD68</color>
+
+    <!-- model 黄-金 暗 渐变左-->
+    <color name="ck_yellow_dark24_left">#F2CB8C</color>
+
+    <!-- model 黄-金 暗 渐变右-->
+    <color name="ck_yellow_dark24_right">#E7B666</color>
+
+    <!-- model 黄-金 亮 渐变左-->
+    <color name="ck_yellow_dark25_left">#C38F3C</color>
+
+    <!-- model 黄-金 亮 渐变右-->
+    <color name="ck_yellow_dark25_right">#BE8E41</color>
+
+    <!-- model 黄_黑白通用30% -->
+    <color name="ck_yellow_light4_30">#4DFFD129</color>
+
+    <!-- model 黄_暗2 -->
+    <color name="ck_yellow_dark2">#AB8F7B</color>
+
+    <!-- model 黄_暗2 40%透明度-->
+    <color name="ck_yellow_dark2_40">#66AB8F7B</color>
+
+    <!-- model 黄_暗2 90%透明度-->
+    <color name="ck_yellow_dark2_90">#E6AB8F7B</color>
+
+    <!-- model 黄 暗1 -->
+    <color name="ck_yellow_dark1">#AE6A1D</color>
+
+    <!-- model 黄 暗1 40%透明度-->
+    <color name="ck_yellow_dark1_40">#66AE6A1D</color>
+
+    <!-- model 黄 暗1 50%透明度-->
+    <color name="ck_yellow_dark1_50">#80AE6A1D</color>
+
+    <!-- model 土黄色  -->
+    <color name="ck_yellow_dark6">#966843</color>
+
+
+    <!-- 2018 旧色表已停用 不予使用-->
+
+    <!-- model 深黄 -->
+    <color name="ck_mustard">#FF9B29</color>
+
+    <!-- model 深黄 10% -->
+    <color name="ck_mustard_10">#1AFF9B29</color>
+
+    <!-- model 深黄 30% -->
+    <color name="ck_mustard_30">#73FF9B29</color>
+
+    <!-- model 深黄-暗 -->
+    <color name="ck_mustard_dark">#D37203</color>
+
+    <!-- model 深黄-暗1 -->
+    <color name="ck_mustard_dark1">#FF810A</color>
+
+    <!-- model 深黄-暗1 30%透明度-->
+    <color name="ck_mustard_dark1_30">#4DFF810A</color>
+
+    <!-- model 深黄-暗1 0%透明度-->
+    <color name="ck_mustard_dark1_0">#00FF810A</color>
+
+    <!-- model 深黄-暗2 -->
+    <color name="ck_mustard_dark2">#F27A00</color>
+
+    <!-- model 深黄-暗3 -->
+    <color name="ck_mustard_dark3">#F05E1A</color>
+
+    <!-- model 深黄-暗3 30% -->
+    <color name="ck_mustard_dark3_30">#73F05E1A</color>
+
+    <!-- model 深黄-暗3 60% -->
+    <color name="ck_mustard_dark3_60">#99F05E1A</color>
+
+    <!-- model 深黄_亮6 -->
+    <color name="ck_mustard_light6">#FEAC2A</color>
+
+    <!-- model 深黄-暗1 90%透明度-->
+    <color name="ck_mustard_dark1_90">#E6FF810A</color>
+
+    <!-- model 深黄 90%透明度 -->
+    <color name="ck_mustard_90">#E6FF9B29</color>
+
+
+    <!-- 2018 旧色表已停用 不予使用-->
+
+    <!-- model 棕-->
+    <color name="ck_brown">#4C3002</color>
+
+    <!-- model 棕_亮-->
+    <color name="ck_brown_light">#76541F</color>
+
+    <!-- model 棕_亮 90%-->
+    <color name="ck_brown_light_90">#E676541F</color>
+
+
+    <!-- 2018 旧色表已停用 不予使用-->
+
+    <!-- model 橙_深1 -->
+    <color name="ck_orange_deep1">#E85901</color>
+
+    <!-- model 橙-亮6 60%透明度-->
+    <color name="ck_orange_light6_60">#99FFDCBE</color>
+
+    <!-- model 橙-亮6 0%透明度-->
+    <color name="ck_orange_light6_0">#00FFDCBE</color>
+
+    <!-- model 橙-亮7 -->
+    <color name="ck_orange_light9">#FFEEE2</color>
+
+    <!-- model 橙_亮1 -->
+    <color name="ck_orange_light1">#FF8920</color>
+
+    <!-- model 橙-亮 60%透明度 -->
+    <color name="ck_orange_light1_60">#99FF8920</color>
+
+    <!-- model 橙-亮 30%透明度 -->
+    <color name="ck_orange_light1_30">#4DFF8920</color>
+
+    <!-- model 橙-亮 12%透明度 -->
+    <color name="ck_orange_light1_12">#1FFF8920</color>
+
+    <!-- model 橙_亮1 10%透明度-->
+    <color name="ck_orange_light1_10">#1AFF742E</color>
+
+    <!-- model 橙-亮 8%透明度 -->
+    <color name="ck_orange_light1_8">#14FF8920</color>
+
+    <!-- model 橙-暗 -->
+    <color name="ck_orange_dark">#E7A13D</color>
+
+    <!-- model 橙 暗1 -->
+    <color name="ck_orange_dark1">#E57818</color>
+
+    <!-- model 橙-暗2 90% -->
+    <color name="ck_orange_dark2_90">#E6D56A1C</color>
+
+    <!-- model 橙-暗4 -->
+    <color name="ck_orange_dark4">#48342B</color>
+
+    <!-- model 橙-暗5 -->
+    <color name="ck_orange_dark5">#422B11</color>
+
+    <!-- model 橙-亮 -->
+    <color name="ck_orange_light">#FF7E00</color>
+
+    <!-- model 橙-亮2 -->
+    <color name="ck_orange_light2">#FE8557</color>
+
+    <!-- model 橙-亮3 -->
+    <color name="ck_orange_light3">#F3E4E2</color>
+
+    <!-- model 橙-亮4 -->
+    <color name="ck_orange_light4">#FF7226</color>
+
+    <!-- model 橙-亮5 -->
+    <color name="ck_orange_light5">#FF9240</color>
+
+    <!-- model 橙-亮6 -->
+    <color name="ck_orange_light6">#FFDCBE</color>
+
+    <!-- model 橙-亮7 -->
+    <color name="ck_orange_light7">#FF9946</color>
+
+    <!-- model 橙-亮8 -->
+    <color name="ck_orange_light8">#FE7D53</color>
+
+    <!-- model 橙-亮10 -->
+    <color name="ck_orange_light10">#FF6627</color>
+
+    <!--model 橙 灰亮-->
+    <color name="ck_orange_gray_light">#FF7E2C </color>
+
+    <!--model 橙 灰亮 20%透明度-->
+    <color name="ck_orange_gray_light_20">#33FF7E2C</color>
+
+    <!--model 橙 灰亮 6%透明度-->
+    <color name="ck_orange_gray_light_6">#0FEF7821</color>
+
+    <!--model 橙 灰亮1 12%透明度-->
+    <color name="ck_orange_gray_light1_12">#1FFF9A64</color>
+
+    <!--model 橙 灰亮2 12%透明度-->
+    <color name="ck_orange_gray_light2_12">#1FD79177</color>
+
+
+
+
+    <!-- 2018 旧色表已停用 不予使用-->
+
+    <!-- model 红_亮1 -->
+    <color name="ck_red_light1">#FF3F2E</color>
+
+    <!-- model 红_资讯独家 -->
+    <color name="ck_text_tips_red">#FF4C0D</color>
+
+    <!-- model 红 暗4 -->
+    <color name="ck_red_dark4">#40292D</color>
+
+    <!-- model 2019新设计语言 红色 +30%白色 -->
+    <color name="ck_red_b30">#FF7B7F</color>
+
+    <!-- model 红_亮2 -->
+    <color name="ck_red_light2">#FFE9E8</color>
+
+    <!-- model 红_亮2 20% -->
+    <color name="ck_red_light2_20">#33FFE9E8</color>
+
+    <!-- model 红_亮2 0% -->
+    <color name="ck_red_light2_00">#00FFE9E8</color>
+
+    <!-- model 红_亮2 30% -->
+    <color name="ck_red_light2_30">#4DFFE9E8</color>
+
+    <!-- model 红_亮2 80% -->
+    <color name="ck_red_light2_80">#CCFFE9E8</color>
+
+    <!-- model 红_亮3 -->
+    <color name="ck_red_light3">#E79397</color>
+
+    <!-- model 红_亮4 -->
+    <color name="ck_red_light4">#D86E73</color>
+
+    <!-- model 红_亮5-->
+    <color name="ck_red_light5">#FD454F</color>
+
+    <!-- model 红_亮6-->
+    <color name="ck_red_light6">#F5294B</color>
+
+    <!-- model 红_亮7 -->
+    <color name="ck_red_light7">#FF593D</color>
+
+    <!-- model 红_亮10 -->
+    <color name="ck_red_light10">#E97A58</color>
+
+    <!-- model 红 亮1 60%透明度 -->
+    <color name="ck_red_light1_60">#99FF4C43</color>
+
+    <!-- model 红 亮1 30%透明度 -->
+    <color name="ck_red_light1_30">#4DFF4C43</color>
+
+
+    <!-- 2018 旧色表已停用 不予使用-->
+
+    <!-- model 洋红-->
+    <color name="ck_magenta">#F62D8D</color>
+
+    <!-- model 洋红_亮1-->
+    <color name="ck_magenta_light1">#F738FF</color>
+
+
+    <!-- 2018 旧色表已停用 不予使用-->
+
+    <!-- model 紫色_亮1 -->
+    <color name="ck_purple_light1">#9744E0</color>
+
+    <!-- model 紫色_亮2 -->
+    <color name="ck_purple_light2">#FC5EAF</color>
+
+    <!-- model 紫色_暗1 -->
+    <color name="ck_purple_dark1">#9581EC</color>
+
+    <!-- model 紫色_暗3 -->
+    <color name="ck_purple_dark3">#AD51FA</color>
+
+    <!-- model 紫色_暗6 90% -->
+    <color name="ck_purple_dark6_90">#E6726C88</color>
+
+    <!-- model 紫色_暗7 90% -->
+    <color name="ck_purple_dark7_90">#E6DB5393</color>
+
+    <!-- model 紫色_暗8 90% -->
+    <color name="ck_purple_dark8_90">#E69146E0</color>
+
+    <!-- model 渐变紫 按钮左边颜色 -->
+    <color name="ck_purple_left">#7250FD</color>
+
+    <!-- model 蓝紫 -->
+    <color name="ck_purple_sky">#5144F6</color>
+
+    <!-- model 蓝紫 40%透明度 -->
+    <color name="ck_purple_futu_40">#665B4FF7</color>
+
+    <!-- model 暗紫 10%不透明度 -->
+    <color name="ck_purple_dark_10">#1A3334E3</color>
+
+    <!-- model 产品紫 按钮右边色 文字链 -->
+    <color name="ck_purple_futu">#5B4FF7</color>
+
+    <!-- model 蓝紫 10%透明度 -->
+    <color name="ck_purple_futu_10">#1A5B4FF7</color>
+
+    <!-- model 蓝紫 30%透明度 -->
+    <color name="ck_purple_futu_30">#4D5B4FF7</color>
+
+    <!-- model 蓝紫 50%透明度 -->
+    <color name="ck_purple_futu_50">#805B4FF7</color>
+
+    <!-- model 深紫 模块按压 -->
+    <color name="ck_purple_dark2">#4738F5</color>
+
+    <!-- model 浅紫色  -->
+    <color name="ck_purple_light">#F0F3FF</color>
+
+    <!-- model 私募基金头部背景渐变 左边 10%-->
+    <color name="ck_purple_light10_10">#1AB35BFF</color>
+
+    <!-- model 私募基金头部背景渐变 右边 10%-->
+    <color name="ck_purple_light11_10">#1AE9CFFF</color>
+
+    <!-- model 私募基金头部文字-->
+    <color name="ck_purple_dark4">#634E83</color>
+
+
+
+
+    <!-- 2018 旧色表已停用 不予使用-->
+
+    <!-- model 靛青-->
+    <color name="ck_indigo">#4A7CE8</color>
+
+    <!-- model 靛青_暗1-->
+    <color name="ck_indigo_dark1">#5876D8</color>
+
+
+
+
+    <!-- model 蓝 350 10%透明度-->
+    <color name="ck_blue350_10">#1A81B1FF</color>
+    <!-- model 紫 300 10%透明度-->
+    <color name="ck_purple300_10">#1ACFA2FF</color>
+    <!-- model 粉 300 10%透明度-->
+    <color name="ck_pink300_10">#1AFA85D2</color>
+    <!-- model 粉 300 8透明度-->
+    <color name="ck_pink300_8">#14FA85D2</color>
+
+    <!-- model 常规标签蓝-->
+    <color name="ck_blue_460">#3798e2</color>
+
+
+</resources>
