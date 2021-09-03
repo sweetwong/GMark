@@ -65,34 +65,34 @@ class RepoListViewModel : ViewModel() {
         val ssh = repo.ssh
 
         // TODO: 2021/9/3 添加进度条
-        if (ssh != null) {
-            Clone.cloneWithSsh(
-                repo.url,
-                repo.localPath,
-                ssh,
-                object : ProgressMonitor {
+        Clone.clone(
+            repo.url,
+            repo.localPath,
+            repo.username,
+            repo.password,
+            ssh,
+            object : ProgressMonitor {
 
-                    override fun start(totalTasks: Int) {
-                        log("start", totalTasks)
-                    }
+                override fun start(totalTasks: Int) {
+                    log("start", totalTasks)
+                }
 
-                    override fun beginTask(title: String?, totalWork: Int) {
-                        log("beginTask", title, totalWork)
-                    }
+                override fun beginTask(title: String?, totalWork: Int) {
+                    log("beginTask", title, totalWork)
+                }
 
-                    override fun update(completed: Int) {
-                        log("update", completed)
-                    }
+                override fun update(completed: Int) {
+                    log("update", completed)
+                }
 
-                    override fun endTask() {
-                        log("endTask")
-                    }
+                override fun endTask() {
+                    log("endTask")
+                }
 
-                    override fun isCancelled(): Boolean {
-                        return false
-                    }
-                })
-        }
+                override fun isCancelled(): Boolean {
+                    return false
+                }
+            })
     }
 
 }

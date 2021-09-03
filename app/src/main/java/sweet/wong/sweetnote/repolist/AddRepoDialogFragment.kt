@@ -68,11 +68,13 @@ class RepoAuthDialogFragment(private val viewModel: RepoListViewModel) :
                     inputUsername.isVisible = true
                     inputPassword.isVisible = true
                     inputSsh.isVisible = false
+                    inputPassphrase.isVisible = false
                 }
                 R.id.radio_ssh -> {
                     inputUsername.isVisible = false
                     inputPassword.isVisible = false
                     inputSsh.isVisible = true
+                    inputPassphrase.isVisible = true
                 }
             }
         }
@@ -88,6 +90,7 @@ class RepoAuthDialogFragment(private val viewModel: RepoListViewModel) :
         // When click clone button, modify view model's data then trigger git clone action and last save to local storage
         btnClone.setOnClickListener {
             createRepo()
+            dismiss()
         }
 
     }
@@ -111,7 +114,19 @@ class RepoAuthDialogFragment(private val viewModel: RepoListViewModel) :
     }
 
     private fun createHttpRepo(url: String) {
+        val username = binding.inputUsername.editText?.text?.toString()
+        val password = binding.inputPassword.editText?.text?.toString()
 
+        viewModel.addNewRepo(
+            Repo(
+                url,
+                Utils.getRepoPath(url),
+                Utils.getTitleByGitUrl(url),
+                username,
+                password,
+                null
+            )
+        )
     }
 
     private fun createSshRepo(url: String) {
@@ -120,6 +135,7 @@ class RepoAuthDialogFragment(private val viewModel: RepoListViewModel) :
             return toast("Please select ssh private key")
         }
 
+        // TODO: 2021/9/3 Support ssh passphrase
         viewModel.addNewRepo(
             Repo(
                 url,
