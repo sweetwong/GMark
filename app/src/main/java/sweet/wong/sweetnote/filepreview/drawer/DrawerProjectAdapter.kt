@@ -23,7 +23,7 @@ class DrawerProjectAdapter(private val viewModel: FilePreviewViewModel) :
         holder.bind(viewModel, getItem(position))
 
     fun onBackPressed(): Boolean {
-        if (viewModel.currentProjectFolder.value?.absolutePath == viewModel.repo.value?.localPath) {
+        if (viewModel.currentProjectFolder.value?.absolutePath == viewModel.repo?.localPath) {
             return false
         }
         viewModel.currentProjectFolder.value?.parentFile?.let {

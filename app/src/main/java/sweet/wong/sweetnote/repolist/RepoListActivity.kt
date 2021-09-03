@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import sweet.wong.sweetnote.R
 import sweet.wong.sweetnote.core.EventObserver
+import sweet.wong.sweetnote.core.postDelayed
 import sweet.wong.sweetnote.databinding.ActivityRepoListBinding
 import sweet.wong.sweetnote.filepreview.FilePreviewActivity
 import java.util.*

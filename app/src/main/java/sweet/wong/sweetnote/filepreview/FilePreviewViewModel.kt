@@ -6,24 +6,22 @@ import androidx.lifecycle.switchMap
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import sweet.wong.sweetnote.core.Event
 import sweet.wong.sweetnote.core.toast
 import sweet.wong.sweetnote.data.Repo
+import sweet.wong.sweetnote.filepreview.history.HistoryFile
 import sweet.wong.sweetnote.utils.LimitedDeque
 import java.io.File
 
 class FilePreviewViewModel : ViewModel() {
 
-    val repo = MutableLiveData<Repo>()
-
     /**
-     * Point to current selected File, must be a file not a directory
+     * File raw text, this data may be large
      */
-    val currentFile = MutableLiveData<File>()
-
-    val fileText = MutableLiveData<String>()
+    val raw = MutableLiveData<String>()
 
     /**
-     * Point to current drawer project folder, must be directory not a file
+     * Current drawer project folder, must be directory not a file
      */
     val currentProjectFolder = MutableLiveData<File>()
 
@@ -31,15 +29,40 @@ class FilePreviewViewModel : ViewModel() {
         MutableLiveData(getFileList(it))
     }
 
-    val historyStack = LimitedDeque<String>(5)
+    /**
+     * Current Repository, this data is get from argument
+     */
+    var repo: Repo? = null
+
+    /**
+     * Current selected File, must be a file not a directory
+     */
+    var currentFile: File? = null
+
+    var scrollY: Int = 0
+
+    val historyStack = LimitedDeque<HistoryFile>(5)
+
+    val selectFileEvent = MutableLiveData<Event<Unit>>()
 
     fun selectFile(file: File) {
+        if (!file.exists() || !file.isFile) {
+            return toast("File $file is not exist")
+        }
+
         Observable.fromCallable { file.readText() }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext {
-                fileText.value?.takeIf { value -> value.isNotBlank() }?.let { value -> historyStack.add(value) }
-                fileText.value = it
+                val oldData = raw.value
+                val oldFile = currentFile
+                if (!oldData.isNullOrBlank() && oldFile != null) {
+                    historyStack.add(HistoryFile(oldFile, oldData, scrollY))
+                }
+
+                raw.value = it
+                currentFile = file
+                selectFileEvent.value = Event(Unit)
             }
             .doOnError {
                 toast("Read text failed", it)
@@ -48,7 +71,7 @@ class FilePreviewViewModel : ViewModel() {
     }
 
     fun init(repo: Repo) {
-        this.repo.value = repo
+        this.repo = repo
 
         val file = File(repo.localPath)
         if (file.exists()) {
@@ -71,7 +94,7 @@ class FilePreviewViewModel : ViewModel() {
             childFiles.add(it)
         }
 
-        return childFiles
+        return childFiles.reversed()
     }
 
 }

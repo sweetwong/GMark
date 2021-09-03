@@ -5,24 +5,24 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
-import io.noties.markwon.Markwon
-import io.noties.markwon.html.HtmlPlugin
-import io.noties.markwon.image.glide.GlideImagesPlugin
+import androidx.transition.TransitionManager
 import sweet.wong.sweetnote.R
+import sweet.wong.sweetnote.core.log
+import sweet.wong.sweetnote.core.postDelayed
 import sweet.wong.sweetnote.data.Repo
 import sweet.wong.sweetnote.databinding.ActivityFilePreviewBinding
+import sweet.wong.sweetnote.filepreview.markdown.MarkdownDelegate
 
 class FilePreviewActivity : AppCompatActivity() {
 
     private val viewModel: FilePreviewViewModel by viewModels()
 
     private lateinit var binding: ActivityFilePreviewBinding
-
-    private lateinit var markwon: Markwon
+    private lateinit var markdown: MarkdownDelegate
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +37,6 @@ class FilePreviewActivity : AppCompatActivity() {
 
         // 工具栏
         setSupportActionBar(binding.toolbar)
-        binding.toolbar.isVisible = false
 
         // 抽屉栏
         val actionBarDrawerToggle = ActionBarDrawerToggle(
@@ -50,10 +49,11 @@ class FilePreviewActivity : AppCompatActivity() {
         actionBarDrawerToggle.drawerArrowDrawable.color = Color.WHITE
         actionBarDrawerToggle.syncState()
 
-        // Markdown
-        markwon = Markwon.builder(this)
-            .usePlugins(listOf(GlideImagesPlugin.create(this), HtmlPlugin.create()))
-            .build()
+        markdown = MarkdownDelegate(viewModel)
+
+        binding.scrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+            viewModel.scrollY = scrollY
+        }
 
         // 数据绑定
 //        viewModel.path.observe(this) {
@@ -63,9 +63,13 @@ class FilePreviewActivity : AppCompatActivity() {
 //            }
 //        }
 
-        viewModel.fileText.observe(this) {
-            markwon.setMarkdown(binding.markText, it)
+        viewModel.raw.observe(this) {
+            markdown.setMarkdown(binding.markText, it)
             binding.drawerLayout.closeDrawer(binding.navigationView)
+        }
+
+        viewModel.selectFileEvent.observe(this) {
+            changeFileAnim(0)
         }
 
         viewModel.init(repo)
@@ -83,7 +87,11 @@ class FilePreviewActivity : AppCompatActivity() {
             // Handle main text back stack
             val historyStack = viewModel.historyStack
             if (historyStack.isNotEmpty()) {
-                setText(historyStack.removeLast())
+                val historyFile = historyStack.removeLast()
+                viewModel.raw.value = historyFile.data
+                viewModel.currentFile = historyFile.file
+                changeFileAnim(historyFile.scrollY)
+                log("history file", historyFile.file)
                 return true
             }
         }
@@ -91,8 +99,13 @@ class FilePreviewActivity : AppCompatActivity() {
         return super.onKeyUp(keyCode, event)
     }
 
-    private fun setText(md: String) {
-        markwon.setMarkdown(binding.markText, md)
+    private fun changeFileAnim(scrollY: Int) {
+        binding.scrollView.visibility = View.INVISIBLE
+        postDelayed(30) {
+            TransitionManager.beginDelayedTransition(binding.scrollView)
+            binding.scrollView.visibility = View.VISIBLE
+            binding.scrollView.scrollY = scrollY
+        }
     }
 
     override fun finish() {
