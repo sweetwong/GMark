@@ -1,5 +1,6 @@
 package sweet.wong.gmark.core
 
+import android.content.res.Resources
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -42,3 +43,5 @@ internal inline fun <reified T : Any> noOpDelegate(): T {
 private val NO_OP_HANDLER = InvocationHandler { _, _, _ ->
     // no op
 }
+
+val resources: Resources = App.app.resources

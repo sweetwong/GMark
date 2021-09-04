@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import sweet.wong.gmark.R
+import sweet.wong.gmark.core.resources
 import sweet.wong.gmark.databinding.RecycleItemProjectBinding
 import sweet.wong.gmark.repo.RepoViewModel
 import java.io.File
@@ -42,12 +43,16 @@ class RepoDrawerProjectAdapter(private val viewModel: RepoViewModel) :
         fun bind(viewModel: RepoViewModel, childFile: File) {
             binding.file = childFile
             binding.executePendingBindings()
+            binding.text.setTextColor(resources.getColor(R.color.text_main, null))
 
             if (childFile.isDirectory) {
                 binding.icon.setImageResource(R.drawable.folder)
             }
             if (childFile.isFile) {
                 binding.icon.setImageResource(R.drawable.text)
+                if (childFile == viewModel.currentFile) {
+                    binding.text.setTextColor(resources.getColor(R.color.ck_skyblue, null))
+                }
             }
 
             itemView.setOnClickListener {

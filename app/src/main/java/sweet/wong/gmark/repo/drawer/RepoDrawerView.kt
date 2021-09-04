@@ -19,19 +19,23 @@ class RepoDrawerView @JvmOverloads constructor(
 
     private val activity: AppCompatActivity = context as AppCompatActivity
     private val viewModel: RepoViewModel by activity.viewModels()
-    private val adapter: RepoDrawerProjectAdapter = RepoDrawerProjectAdapter(viewModel)
+    private val projectAdapter: RepoDrawerProjectAdapter = RepoDrawerProjectAdapter(viewModel)
 
     init {
         binding.viewModel = viewModel
         binding.lifecycleOwner = activity
 
-        binding.recyclerView.adapter = adapter
+        binding.recyclerView.adapter = projectAdapter
 
         viewModel.projectChildFiles.observe(activity) {
-            adapter.submitList(it.toMutableList())
+            projectAdapter.submitList(it.toList())
         }
     }
 
-    fun onBackPressed() = adapter.onBackPressed()
+    fun onBackPressed() = projectAdapter.onBackPressed()
+
+    fun refreshProject() {
+        projectAdapter.notifyDataSetChanged()
+    }
 
 }

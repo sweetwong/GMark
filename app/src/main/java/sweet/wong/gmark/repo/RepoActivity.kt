@@ -74,6 +74,7 @@ class RepoActivity : AppCompatActivity() {
         viewModel.selectFileEvent.observe(this, EventObserver {
             binding.toolbar.title = it.name
             scrollY(0, true)
+            binding.drawerView.refreshProject()
         })
 
         viewModel.drawerEvent.observe(this, EventObserver { open ->

@@ -46,7 +46,7 @@ class RepoViewModel : ViewModel() {
 
     var scrollY: Int = 0
 
-    private val historyStack = LimitedDeque<HistoryFile>(5)
+    private val historyStack = LimitedDeque<HistoryFile>(3)
 
     val selectFileEvent = MutableLiveData<Event<File>>()
 
