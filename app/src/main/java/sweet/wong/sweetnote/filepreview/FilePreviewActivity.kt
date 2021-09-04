@@ -2,7 +2,6 @@ package sweet.wong.sweetnote.filepreview
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.Menu
@@ -10,6 +9,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionManager
 import sweet.wong.sweetnote.R
 import sweet.wong.sweetnote.core.EventObserver
@@ -52,26 +52,21 @@ class FilePreviewActivity : AppCompatActivity() {
 
         markdown = MarkdownDelegate(viewModel)
 
-        binding.scrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
-            viewModel.scrollY = scrollY
-        }
+        binding.markList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
-        // 数据绑定
-//        viewModel.path.observe(this) {
-//            binding.drawerLayout.closeDrawer(binding.navigationView)
-//            postDelayed(180) {
-//                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-//            }
-//        }
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                viewModel.scrollY += dy
+            }
+        })
 
         viewModel.raw.observe(this) {
-            markdown.setMarkdown(binding.markText, it)
+            markdown.setMarkdown(binding.markList, it)
             binding.drawerLayout.closeDrawer(binding.navigationView)
         }
 
         viewModel.selectFileEvent.observe(this, EventObserver {
             binding.toolbar.title = it.name
-            changeFileAnim(0)
+            scrollY(0, true)
         })
 
         viewModel.init(repo)
@@ -86,15 +81,12 @@ class FilePreviewActivity : AppCompatActivity() {
                 }
                 return true
             }
+
             // Handle main text back stack
-            val historyStack = viewModel.historyStack
-            if (historyStack.isNotEmpty()) {
-                val historyFile = historyStack.removeLast()
-                viewModel.raw.value = historyFile.data
-                viewModel.currentFile = historyFile.file
-                binding.toolbar.title = historyFile.file.name
-                changeFileAnim(historyFile.scrollY)
-                log("history file", historyFile.file)
+            viewModel.popHistoryStack()?.let {
+                binding.toolbar.title = it.file.name
+                scrollY(it.scrollY, false)
+                log("history file", it.file)
                 return true
             }
         }
@@ -107,12 +99,17 @@ class FilePreviewActivity : AppCompatActivity() {
         return true
     }
 
-    private fun changeFileAnim(scrollY: Int) {
-        binding.scrollView.visibility = View.INVISIBLE
-        postDelayed(30) {
-            TransitionManager.beginDelayedTransition(binding.scrollView)
-            binding.scrollView.visibility = View.VISIBLE
-            binding.scrollView.scrollY = scrollY
+    /**
+     * Restore scroll history
+     */
+    private fun scrollY(scrollY: Int, anim: Boolean) {
+        binding.markList.scrollBy(0, scrollY)
+        if (anim) {
+            binding.markList.visibility = View.INVISIBLE
+            postDelayed(60) {
+                TransitionManager.beginDelayedTransition(binding.markList)
+                binding.markList.visibility = View.VISIBLE
+            }
         }
     }
 

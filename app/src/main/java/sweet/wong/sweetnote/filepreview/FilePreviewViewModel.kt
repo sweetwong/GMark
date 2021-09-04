@@ -41,34 +41,9 @@ class FilePreviewViewModel : ViewModel() {
 
     var scrollY: Int = 0
 
-    val historyStack = LimitedDeque<HistoryFile>(5)
+    private val historyStack = LimitedDeque<HistoryFile>(5)
 
     val selectFileEvent = MutableLiveData<Event<File>>()
-
-    fun selectFile(file: File) {
-        if (!file.exists() || !file.isFile) {
-            return toast("File $file is not exist")
-        }
-
-        Observable.fromCallable { file.readText() }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext {
-                val oldData = raw.value
-                val oldFile = currentFile
-                if (!oldData.isNullOrBlank() && oldFile != null) {
-                    historyStack.add(HistoryFile(oldFile, oldData, scrollY))
-                }
-
-                raw.value = it
-                currentFile = file
-                selectFileEvent.value = Event(file)
-            }
-            .doOnError {
-                toast("Read text failed", it)
-            }
-            .subscribe()
-    }
 
     fun init(repo: Repo) {
         this.repo = repo
@@ -83,6 +58,46 @@ class FilePreviewViewModel : ViewModel() {
                 selectFile(it)
             }
         }
+    }
+
+    fun selectFile(file: File) {
+        if (!file.exists() || !file.isFile) {
+            return toast("File $file is not exist")
+        }
+
+        Observable.fromCallable { file.readText() }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext {
+                val oldData = raw.value
+                val oldFile = currentFile
+                if (!oldData.isNullOrBlank() && oldFile != null) {
+                    pushHistoryStack(HistoryFile(oldFile, oldData, scrollY))
+                }
+
+                raw.value = it
+                currentFile = file
+                scrollY = 0
+                selectFileEvent.value = Event(file)
+            }
+            .doOnError {
+                toast("Read text failed", it)
+            }
+            .subscribe()
+    }
+
+    fun pushHistoryStack(historyFile: HistoryFile) {
+        historyStack.add(historyFile)
+    }
+
+    fun popHistoryStack(): HistoryFile? {
+        if (historyStack.isNotEmpty()) {
+            return historyStack.removeLast()?.apply {
+                raw.value = data
+                currentFile = file
+            }
+        }
+        return null
     }
 
     private fun getFileList(folderFile: File): List<File> {

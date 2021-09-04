@@ -63,6 +63,8 @@ dependencies {
     implementation "io.noties.markwon:core:4.6.2"
     implementation "io.noties.markwon:html:4.6.2"
     implementation "io.noties.markwon:image-glide:4.6.2"
+    implementation "io.noties.markwon:ext-tables:4.6.2"
+    implementation "io.noties.markwon:recycler:4.6.2"
     // RxJava
     implementation "io.reactivex.rxjava3:rxjava:3.1.1"
     implementation "io.reactivex.rxjava3:rxkotlin:3.0.1"

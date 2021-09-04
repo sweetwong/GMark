@@ -24,26 +24,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/scroll_view"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mark_list"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:clipToPadding="false"
+                android:orientation="vertical"
                 android:overScrollMode="never"
                 android:padding="14dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar">
-
-                <TextView
-                    android:id="@+id/mark_text"
-                    android:textColor="#3C4043"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp" />
-
-            </androidx.core.widget.NestedScrollView>
+                app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
             <ProgressBar
                 android:id="@+id/progress_bar"
