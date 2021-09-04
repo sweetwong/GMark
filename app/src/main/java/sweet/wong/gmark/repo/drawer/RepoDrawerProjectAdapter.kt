@@ -9,6 +9,7 @@ import sweet.wong.gmark.R
 import sweet.wong.gmark.core.resources
 import sweet.wong.gmark.databinding.RecycleItemProjectBinding
 import sweet.wong.gmark.repo.RepoViewModel
+import sweet.wong.gmark.utils.Resources
 import java.io.File
 
 /**
@@ -47,12 +48,11 @@ class RepoDrawerProjectAdapter(private val viewModel: RepoViewModel) :
 
             if (childFile.isDirectory) {
                 binding.icon.setImageResource(R.drawable.folder)
+                setFolderHighlight(viewModel.currentFile, childFile, File(viewModel.repo.localPath))
             }
             if (childFile.isFile) {
                 binding.icon.setImageResource(R.drawable.text)
-                if (childFile == viewModel.currentFile) {
-                    binding.text.setTextColor(resources.getColor(R.color.ck_skyblue, null))
-                }
+                setFileHighlight(viewModel.currentFile, childFile)
             }
 
             itemView.setOnClickListener {
@@ -62,6 +62,28 @@ class RepoDrawerProjectAdapter(private val viewModel: RepoViewModel) :
                 if (childFile.isFile) {
                     viewModel.selectFile(childFile)
                 }
+            }
+        }
+
+        private fun setFolderHighlight(file: File?, targetFile: File, rootFile: File?) {
+            if (file == null || !file.exists() || file == rootFile) {
+                binding.text.setTextColor(Resources.COLOR_TEXT_MAIN)
+                return
+            }
+
+            if (file == targetFile) {
+                binding.text.setTextColor(Resources.COLOR_TEXT_HIGHLIGHT)
+                return
+            }
+
+            setFolderHighlight(file.parentFile, targetFile, rootFile)
+        }
+
+        private fun setFileHighlight(file: File?, targetFile: File) {
+            if (file == targetFile) {
+                binding.text.setTextColor(Resources.COLOR_TEXT_HIGHLIGHT)
+            } else {
+                binding.text.setTextColor(Resources.COLOR_TEXT_MAIN)
             }
         }
 

@@ -37,7 +37,7 @@ class RepoViewModel : ViewModel() {
     /**
      * Current Repository, this data is get from argument
      */
-    var repo: Repo? = null
+    lateinit var repo: Repo
 
     /**
      * Current selected File, must be a file not a directory
