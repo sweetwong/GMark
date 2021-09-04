@@ -28,30 +28,36 @@ class RepoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Binding View
         binding = ActivityFilePreviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Parse argument
         val repo = intent.getParcelableExtra<Repo>(EXTRA_REPO)
         if (repo == null) {
             finish()
             return
         }
 
-        // 工具栏
+        // Init toolbar
         setSupportActionBar(binding.toolbar)
 
-        // 抽屉栏
-        val actionBarDrawerToggle = ActionBarDrawerToggle(
+        // Init drawer toggle
+        val drawerToggle = ActionBarDrawerToggle(
             this,
             binding.drawerLayout,
             binding.toolbar,
             R.string.app_name,
             R.string.app_name
         )
-        actionBarDrawerToggle.syncState()
+        drawerToggle.syncState()
 
+        // Init Markdown
         markdown = MarkdownDelegate(viewModel)
 
+        // Record current page scroll Y
+        // Used for restore page
         binding.markList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -59,6 +65,7 @@ class RepoActivity : AppCompatActivity() {
             }
         })
 
+        // View model observers
         viewModel.raw.observe(this) {
             markdown.setMarkdown(binding.markList, it)
             binding.drawerLayout.closeDrawer(binding.navigationView)
@@ -69,17 +76,18 @@ class RepoActivity : AppCompatActivity() {
             scrollY(0, true)
         })
 
-        viewModel.drawerEvent.observe(this, EventObserver {
-            if (it) {
-                binding.drawerLayout.openDrawer(binding.navigationView)
-            } else {
-                binding.drawerLayout.closeDrawer(binding.navigationView)
-            }
+        viewModel.drawerEvent.observe(this, EventObserver { open ->
+            if (open) binding.drawerLayout.openDrawer(binding.navigationView)
+            else binding.drawerLayout.closeDrawer(binding.navigationView)
         })
 
+        // Start load data
         viewModel.init(repo)
     }
 
+    /**
+     * Intercept back pressed
+     */
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // Handle drawer view back
