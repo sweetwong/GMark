@@ -7,6 +7,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import sweet.wong.sweetnote.core.Event
+import sweet.wong.sweetnote.core.log
 import sweet.wong.sweetnote.core.toast
 import sweet.wong.sweetnote.data.Repo
 import sweet.wong.sweetnote.filepreview.history.HistoryFile
@@ -26,8 +27,10 @@ class FilePreviewViewModel : ViewModel() {
     val currentProjectFolder = MutableLiveData<File>()
 
     val projectChildFiles = currentProjectFolder.switchMap {
-        MutableLiveData(getFileList(it))
+        MutableLiveData(getFileChildren(it))
     }
+
+    val drawerEvent = MutableLiveData<Event<Boolean>>()
 
     /**
      * Current Repository, this data is get from argument
@@ -65,6 +68,11 @@ class FilePreviewViewModel : ViewModel() {
             return toast("File $file is not exist")
         }
 
+        if (file.absolutePath == currentFile?.absolutePath) {
+            drawerEvent.value = Event(false)
+            return log("Repeat selection")
+        }
+
         Observable.fromCallable { file.readText() }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -72,7 +80,7 @@ class FilePreviewViewModel : ViewModel() {
                 val oldData = raw.value
                 val oldFile = currentFile
                 if (!oldData.isNullOrBlank() && oldFile != null) {
-                    pushHistoryStack(HistoryFile(oldFile, oldData, scrollY))
+                    pushHistoryStack(HistoryFile(oldFile, oldData, scrollY), file)
                 }
 
                 raw.value = it
@@ -86,8 +94,18 @@ class FilePreviewViewModel : ViewModel() {
             .subscribe()
     }
 
-    fun pushHistoryStack(historyFile: HistoryFile) {
+    private fun pushHistoryStack(historyFile: HistoryFile, selectedFile: File) {
+        // First add to history stack
         historyStack.add(historyFile)
+
+        // Then remove duplicated history stack
+        var toRemoved: HistoryFile? = null
+        historyStack.forEach {
+            if (it.file.absolutePath == selectedFile.absolutePath) {
+                toRemoved = it
+            }
+        }
+        toRemoved?.let { historyStack.remove(it) }
     }
 
     fun popHistoryStack(): HistoryFile? {
@@ -100,16 +118,43 @@ class FilePreviewViewModel : ViewModel() {
         return null
     }
 
-    private fun getFileList(folderFile: File): List<File> {
-        if (!folderFile.exists()) return emptyList()
-        if (!folderFile.isDirectory) return emptyList()
+    private fun getFileChildren(folderFile: File): List<File> {
+        if (!folderFile.exists() || !folderFile.isDirectory) return emptyList()
 
-        val childFiles = mutableListOf<File>()
-        folderFile.listFiles()?.forEach {
-            childFiles.add(it)
+        val fileChildren = folderFile.listFiles()?.toMutableList() ?: return emptyList()
+
+        val sorted = mutableListOf<File>()
+        // First traversal add directories
+        fileChildren.forEach {
+            if (it.exists() && it.isDirectory && !filterFolder(it)) {
+                sorted.add(it)
+            }
+        }
+        // Second traversal add files
+        fileChildren.forEach {
+            if (it.exists() && it.isFile) {
+                sorted.add(it)
+            }
         }
 
-        return childFiles
+        return sorted
+    }
+
+    /**
+     * TODO: 2021/9/4 Add configuration plugin here
+     */
+    private fun filterFolder(file: File): Boolean {
+        if (file.exists() && file.isDirectory && file.name.equals(".git")) {
+            return true
+        }
+        return false
+    }
+
+    private fun filterFile(file: File): Boolean {
+        if (file.exists() && file.isDirectory && file.name.equals(".git")) {
+            return true
+        }
+        return false
     }
 
 }

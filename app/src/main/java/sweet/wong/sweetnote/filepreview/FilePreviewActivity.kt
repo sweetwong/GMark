@@ -69,6 +69,14 @@ class FilePreviewActivity : AppCompatActivity() {
             scrollY(0, true)
         })
 
+        viewModel.drawerEvent.observe(this, EventObserver {
+            if (it) {
+                binding.drawerLayout.openDrawer(binding.navigationView)
+            } else {
+                binding.drawerLayout.closeDrawer(binding.navigationView)
+            }
+        })
+
         viewModel.init(repo)
     }
 
