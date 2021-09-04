@@ -1,13 +1,13 @@
-package sweet.wong.gmark.filepreview.markdown
+package sweet.wong.gmark.repo.markdown
 
 import android.view.View
 import io.noties.markwon.LinkResolverDef
 import sweet.wong.gmark.core.log
 import sweet.wong.gmark.core.toast
-import sweet.wong.gmark.filepreview.FilePreviewViewModel
+import sweet.wong.gmark.repo.RepoViewModel
 import java.io.File
 
-class LinkResolver(private val viewModel: FilePreviewViewModel) : LinkResolverDef() {
+class LinkResolver(private val viewModel: RepoViewModel) : LinkResolverDef() {
 
     override fun resolve(view: View, link: String) {
         if (link.startsWith("http")) {

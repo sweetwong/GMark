@@ -1,4 +1,4 @@
-package sweet.wong.gmark.filepreview
+package sweet.wong.gmark.repo
 
 import android.content.Context
 import android.content.Intent
@@ -17,11 +17,11 @@ import sweet.wong.gmark.core.log
 import sweet.wong.gmark.core.postDelayed
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.databinding.ActivityFilePreviewBinding
-import sweet.wong.gmark.filepreview.markdown.MarkdownDelegate
+import sweet.wong.gmark.repo.markdown.MarkdownDelegate
 
-class FilePreviewActivity : AppCompatActivity() {
+class RepoActivity : AppCompatActivity() {
 
-    private val viewModel: FilePreviewViewModel by viewModels()
+    private val viewModel: RepoViewModel by viewModels()
 
     private lateinit var binding: ActivityFilePreviewBinding
     private lateinit var markdown: MarkdownDelegate
@@ -132,7 +132,7 @@ class FilePreviewActivity : AppCompatActivity() {
 
         fun start(context: Context, repo: Repo) {
             context.startActivity(
-                Intent(context, FilePreviewActivity::class.java).putExtra(EXTRA_REPO, repo)
+                Intent(context, RepoActivity::class.java).putExtra(EXTRA_REPO, repo)
             )
         }
 

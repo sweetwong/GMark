@@ -1,4 +1,4 @@
-package sweet.wong.gmark.filepreview.drawer
+package sweet.wong.gmark.repo.drawer
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import sweet.wong.gmark.R
 import sweet.wong.gmark.databinding.RecycleItemProjectBinding
-import sweet.wong.gmark.filepreview.FilePreviewViewModel
+import sweet.wong.gmark.repo.RepoViewModel
 import java.io.File
 
 /**
@@ -15,7 +15,7 @@ import java.io.File
  *
  * @author sweetwang 2021/9/1
  */
-class DrawerProjectAdapter(private val viewModel: FilePreviewViewModel) :
+class DrawerProjectAdapter(private val viewModel: RepoViewModel) :
     ListAdapter<File, DrawerProjectAdapter.VH>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = VH.from(parent)
@@ -39,7 +39,7 @@ class DrawerProjectAdapter(private val viewModel: FilePreviewViewModel) :
     class VH(private val binding: RecycleItemProjectBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: FilePreviewViewModel, childFile: File) {
+        fun bind(viewModel: RepoViewModel, childFile: File) {
             binding.file = childFile
             binding.executePendingBindings()
 

@@ -1,4 +1,4 @@
-package sweet.wong.gmark.filepreview.markdown
+package sweet.wong.gmark.repo.markdown
 
 import io.noties.markwon.MarkwonVisitor
 import org.commonmark.node.Heading

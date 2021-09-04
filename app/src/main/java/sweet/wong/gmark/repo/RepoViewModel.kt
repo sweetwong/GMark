@@ -1,4 +1,4 @@
-package sweet.wong.gmark.filepreview
+package sweet.wong.gmark.repo
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,11 +10,11 @@ import sweet.wong.gmark.core.Event
 import sweet.wong.gmark.core.log
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.Repo
-import sweet.wong.gmark.filepreview.history.HistoryFile
+import sweet.wong.gmark.repo.history.HistoryFile
 import sweet.wong.gmark.utils.LimitedDeque
 import java.io.File
 
-class FilePreviewViewModel : ViewModel() {
+class RepoViewModel : ViewModel() {
 
     /**
      * File raw text, this data may be large

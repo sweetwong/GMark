@@ -1,4 +1,4 @@
-package sweet.wong.gmark.filepreview.drawer
+package sweet.wong.gmark.repo.drawer
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,14 +8,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import sweet.wong.gmark.R
-import sweet.wong.gmark.filepreview.FilePreviewViewModel
+import sweet.wong.gmark.repo.RepoViewModel
 
 class DrawerView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     private val activity: AppCompatActivity = context as AppCompatActivity
-    private val viewModel: FilePreviewViewModel by activity.viewModels()
+    private val viewModel: RepoViewModel by activity.viewModels()
 
     private val recyclerView: RecyclerView
     private val adapter: DrawerProjectAdapter

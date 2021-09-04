@@ -1,11 +1,11 @@
-package sweet.wong.gmark.filepreview.markdown
+package sweet.wong.gmark.repo.markdown
 
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.MarkwonConfiguration
 import io.noties.markwon.MarkwonVisitor
-import sweet.wong.gmark.filepreview.FilePreviewViewModel
+import sweet.wong.gmark.repo.RepoViewModel
 
-class LinkPlugin(private val viewModel: FilePreviewViewModel) : AbstractMarkwonPlugin() {
+class LinkPlugin(private val viewModel: RepoViewModel) : AbstractMarkwonPlugin() {
 
     override fun configureConfiguration(builder: MarkwonConfiguration.Builder) {
         builder.linkResolver(LinkResolver(viewModel))
@@ -17,7 +17,7 @@ class LinkPlugin(private val viewModel: FilePreviewViewModel) : AbstractMarkwonP
 
     companion object {
 
-        fun create(viewModel: FilePreviewViewModel): LinkPlugin {
+        fun create(viewModel: RepoViewModel): LinkPlugin {
             return LinkPlugin(viewModel)
         }
 

@@ -1,4 +1,4 @@
-package sweet.wong.gmark.filepreview.markdown
+package sweet.wong.gmark.repo.markdown
 
 import androidx.recyclerview.widget.RecyclerView
 import io.noties.markwon.Markwon
@@ -8,9 +8,9 @@ import io.noties.markwon.image.glide.GlideImagesPlugin
 import io.noties.markwon.recycler.MarkwonAdapter
 import sweet.wong.gmark.R
 import sweet.wong.gmark.core.App
-import sweet.wong.gmark.filepreview.FilePreviewViewModel
+import sweet.wong.gmark.repo.RepoViewModel
 
-class MarkdownDelegate(viewModel: FilePreviewViewModel) {
+class MarkdownDelegate(viewModel: RepoViewModel) {
 
     private val markwon: Markwon = Markwon.builder(App.app)
         .usePlugins(
