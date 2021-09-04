@@ -15,8 +15,8 @@ import java.io.File
  *
  * @author sweetwang 2021/9/1
  */
-class DrawerProjectAdapter(private val viewModel: RepoViewModel) :
-    ListAdapter<File, DrawerProjectAdapter.VH>(diffCallback) {
+class RepoDrawerProjectAdapter(private val viewModel: RepoViewModel) :
+    ListAdapter<File, RepoDrawerProjectAdapter.VH>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = VH.from(parent)
 

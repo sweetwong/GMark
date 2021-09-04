@@ -21,11 +21,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
             android:text="@{state.repo.name}"
-            android:textSize="24dp"
+            android:textSize="24sp"
+            android:textColor="@color/text_main"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.333"
             tools:text="GMark" />
 
         <TextView
@@ -33,24 +33,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{state.statusText}"
+            android:textColor="@color/text_sub"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/repo_name_text"
             app:layout_constraintTop_toBottomOf="@+id/repo_name_text"
             tools:text="relve reference" />
-
-        <TextView
-            android:id="@+id/progress_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="28dp"
-            android:text="@{state.progress}"
-            android:textSize="30dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.508"
-            tools:text="0" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

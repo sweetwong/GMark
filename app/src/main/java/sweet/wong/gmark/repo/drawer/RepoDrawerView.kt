@@ -9,7 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import sweet.wong.gmark.databinding.LayoutDrawerBinding
 import sweet.wong.gmark.repo.RepoViewModel
 
-class DrawerView @JvmOverloads constructor(
+class RepoDrawerView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -19,7 +19,7 @@ class DrawerView @JvmOverloads constructor(
 
     private val activity: AppCompatActivity = context as AppCompatActivity
     private val viewModel: RepoViewModel by activity.viewModels()
-    private val adapter: DrawerProjectAdapter = DrawerProjectAdapter(viewModel)
+    private val adapter: RepoDrawerProjectAdapter = RepoDrawerProjectAdapter(viewModel)
 
     init {
         binding.viewModel = viewModel

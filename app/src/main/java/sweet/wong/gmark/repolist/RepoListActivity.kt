@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import sweet.wong.gmark.R
 import sweet.wong.gmark.core.EventObserver
 import sweet.wong.gmark.databinding.ActivityRepoListBinding
@@ -31,6 +32,7 @@ class RepoListActivity : AppCompatActivity() {
         supportActionBar?.title = "Repository List"
 
         // When click fab
+        binding.fab.imageTintList = ResourcesCompat.getColorStateList(resources, R.color.ck_red, null)
         binding.fab.setOnClickListener {
             binding.fab.isEnabled = false
             val dialogFragment = RepoAuthDialogFragment(viewModel)

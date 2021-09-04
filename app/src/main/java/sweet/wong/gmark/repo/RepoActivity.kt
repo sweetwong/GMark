@@ -16,21 +16,21 @@ import sweet.wong.gmark.core.EventObserver
 import sweet.wong.gmark.core.log
 import sweet.wong.gmark.core.postDelayed
 import sweet.wong.gmark.data.Repo
-import sweet.wong.gmark.databinding.ActivityFilePreviewBinding
+import sweet.wong.gmark.databinding.ActivityRepoBinding
 import sweet.wong.gmark.repo.markdown.MarkdownDelegate
 
 class RepoActivity : AppCompatActivity() {
 
     private val viewModel: RepoViewModel by viewModels()
 
-    private lateinit var binding: ActivityFilePreviewBinding
+    private lateinit var binding: ActivityRepoBinding
     private lateinit var markdown: MarkdownDelegate
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Binding View
-        binding = ActivityFilePreviewBinding.inflate(layoutInflater)
+        binding = ActivityRepoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Parse argument
