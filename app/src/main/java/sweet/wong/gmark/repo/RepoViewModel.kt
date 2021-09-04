@@ -90,6 +90,7 @@ class RepoViewModel : ViewModel() {
                 currentFile = file
                 scrollY = 0
                 selectFileEvent.value = Event(file)
+                currentProjectFolder.value = file.parentFile
             }
             .doOnError {
                 toast("Read text failed", it)

@@ -13,8 +13,6 @@
     <merge
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
         tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
         <TextView
@@ -24,6 +22,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
+            android:background="?selectableItemBackground"
             android:text="@{viewModel.drawerTitle}"
             android:textColor="@color/black"
             android:textSize="24sp"
@@ -35,15 +34,59 @@
             android:id="@+id/recycler_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="6dp"
             android:orientation="vertical"
             android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/project_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title_text"
             tools:listitem="@layout/recycle_item_project" />
+
+        <View
+            style="@style/Divider"
+            app:layout_constraintBottom_toTopOf="@+id/project_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/project_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackground"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="Project"
+            android:textColor="@color/text_main"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/outline_text"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/outline_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackground"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="Outline"
+            android:textColor="@color/text_main"
+            app:layout_constraintEnd_toStartOf="@id/history_text"
+            app:layout_constraintStart_toEndOf="@id/project_text"
+            app:layout_constraintTop_toTopOf="@+id/project_text" />
+
+        <TextView
+            android:id="@+id/history_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackground"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="History"
+            android:textColor="@color/text_main"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/outline_text"
+            app:layout_constraintTop_toTopOf="@+id/project_text" />
 
     </merge>
 

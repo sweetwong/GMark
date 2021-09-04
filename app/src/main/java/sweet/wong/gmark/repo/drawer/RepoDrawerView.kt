@@ -27,6 +27,18 @@ class RepoDrawerView @JvmOverloads constructor(
 
         binding.recyclerView.adapter = projectAdapter
 
+        binding.projectText.setOnClickListener {
+            viewModel.currentFile?.parentFile?.let {
+                viewModel.currentProjectFolder.value = it
+            }
+        }
+
+        binding.outlineText.setOnClickListener {
+        }
+
+        binding.historyText.setOnClickListener {
+        }
+
         viewModel.projectChildFiles.observe(activity) {
             projectAdapter.submitList(it.toList())
         }
