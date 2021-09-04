@@ -6,26 +6,26 @@ import android.view.LayoutInflater
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.RecyclerView
-import sweet.wong.gmark.R
+import sweet.wong.gmark.databinding.LayoutDrawerBinding
 import sweet.wong.gmark.repo.RepoViewModel
 
 class DrawerView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
+
+    private val binding = LayoutDrawerBinding.inflate(LayoutInflater.from(context), this, true)
 
     private val activity: AppCompatActivity = context as AppCompatActivity
     private val viewModel: RepoViewModel by activity.viewModels()
-
-    private val recyclerView: RecyclerView
-    private val adapter: DrawerProjectAdapter
+    private val adapter: DrawerProjectAdapter = DrawerProjectAdapter(viewModel)
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.layout_drawer, this)
-        recyclerView = findViewById(R.id.recycler_view)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = activity
 
-        adapter = DrawerProjectAdapter(viewModel)
-        recyclerView.adapter = adapter
+        binding.recyclerView.adapter = adapter
 
         viewModel.projectChildFiles.observe(activity) {
             adapter.submitList(it.toMutableList())

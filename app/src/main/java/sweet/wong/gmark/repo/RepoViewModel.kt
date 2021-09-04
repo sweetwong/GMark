@@ -32,6 +32,8 @@ class RepoViewModel : ViewModel() {
 
     val drawerEvent = MutableLiveData<Event<Boolean>>()
 
+    val drawerTitle = MutableLiveData<String>()
+
     /**
      * Current Repository, this data is get from argument
      */
@@ -50,6 +52,7 @@ class RepoViewModel : ViewModel() {
 
     fun init(repo: Repo) {
         this.repo = repo
+        drawerTitle.value = repo.name
 
         val file = File(repo.localPath)
         if (file.exists()) {
