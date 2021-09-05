@@ -62,13 +62,13 @@ class ProjectFragment : Fragment() {
 
     private fun updateNavigationBar(uiState: ProjectUIState) {
         val list = mutableListOf<ProjectUIState>()
-        var current: File? = uiState.drawerFile
-        while (current != null) {
-            list.add(ProjectUIState(current, uiState.currentFile, uiState.rootFile))
-            if (current == uiState.rootFile) {
+        var file: File? = uiState.drawerFile
+        while (file != null) {
+            list.add(ProjectUIState(file, uiState.currentFile, uiState.rootFile))
+            if (file == uiState.rootFile) {
                 break
             }
-            current = current.parentFile
+            file = file.parentFile
         }
         barAdapter.submitList(list.reversed())
     }
