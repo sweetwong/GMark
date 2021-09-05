@@ -10,7 +10,7 @@ import sweet.wong.gmark.core.log
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.repo.drawer.project.ProjectUIState
-import sweet.wong.gmark.repo.history.HistoryFile
+import sweet.wong.gmark.repo.drawer.history.HistoryFile
 import sweet.wong.gmark.utils.LimitedDeque
 import java.io.File
 
