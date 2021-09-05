@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="file"
-            type="java.io.File" />
+            name="uiState"
+            type="sweet.wong.gmark.repo.drawer.project.ProjectUIState" />
     </data>
 
     <LinearLayout
@@ -33,7 +33,7 @@
             android:layout_weight="1"
             android:gravity="start"
             android:padding="3dp"
-            android:text="@{file.name}"
+            android:text="@{uiState.navigateBack ? @string/back_folder : uiState.drawerFile.name}"
             android:textColor="@color/text_main"
             android:textSize="18sp"
             tools:text="目录" />

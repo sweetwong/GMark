@@ -7,6 +7,6 @@ object Resources {
 
     val COLOR_TEXT_MAIN = resources.getColor(R.color.text_main, null)
 
-    val COLOR_TEXT_HIGHLIGHT = resources.getColor(R.color.ck_skyblue, null)
+    val COLOR_TEXT_HIGHLIGHT = resources.getColor(R.color.blue_main, null)
 
 }

@@ -28,27 +28,27 @@ class FileBrowserAdapter(private val onItemClick: (ProjectUIState) -> Unit) :
     inner class VH(private val binding: RecycleItemProjectBinding) : ViewHolder(binding.root) {
 
         fun bind(uiState: ProjectUIState) {
-            binding.file = uiState.drawerFile
+            binding.uiState = uiState
             binding.executePendingBindings()
             binding.text.setTextColor(resources.getColor(R.color.text_main, null))
 
-            if (uiState.drawerFile.isDirectory) {
-                binding.icon.setImageResource(R.drawable.folder)
-                setFolderHighlight(uiState.currentFile, uiState.drawerFile, uiState.rootFile)
-            }
-            if (uiState.drawerFile.isFile) {
-                binding.icon.setImageResource(R.drawable.text)
-                setFileHighlight(uiState.currentFile, uiState.drawerFile)
+            when {
+                uiState.navigateBack -> {
+                    binding.icon.setImageResource(R.drawable.folder)
+                    binding.text.setTextColor(Resources.COLOR_TEXT_MAIN)
+                }
+                uiState.drawerFile.isDirectory -> {
+                    binding.icon.setImageResource(R.drawable.folder)
+                    setFolderHighlight(uiState.currentFile, uiState.drawerFile, uiState.rootFile)
+                }
+                uiState.drawerFile.isFile -> {
+                    binding.icon.setImageResource(R.drawable.text)
+                    setFileHighlight(uiState.currentFile, uiState.drawerFile)
+                }
             }
 
             itemView.setOnClickListener {
-                onItemClick(
-                    ProjectUIState(
-                        uiState.drawerFile,
-                        uiState.currentFile,
-                        uiState.rootFile
-                    )
-                )
+                onItemClick(uiState)
             }
         }
 

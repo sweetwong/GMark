@@ -18,7 +18,6 @@ import com.blankj.utilcode.util.ScreenUtils
 import sweet.wong.gmark.R
 import sweet.wong.gmark.core.EventObserver
 import sweet.wong.gmark.core.noOpDelegate
-import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.databinding.ActivityRepoBinding
 import sweet.wong.gmark.repo.drawer.project.ProjectFragment
@@ -74,6 +73,7 @@ class RepoActivity : AppCompatActivity() {
                 viewModel.updateDrawer()
             }
         })
+        // Navigation bar show 90% width
         binding.navigationView.layoutParams = binding.navigationView.layoutParams.apply {
             width = (ScreenUtils.getScreenWidth() * 0.9).toInt()
         }
@@ -91,7 +91,7 @@ class RepoActivity : AppCompatActivity() {
         })
 
         binding.drawerToolbar.setNavigationOnClickListener {
-            toast("针不辍")
+            binding.drawerLayout.closeDrawer(binding.navigationView)
         }
 
         // View model observers
