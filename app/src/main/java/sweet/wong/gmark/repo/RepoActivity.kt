@@ -10,6 +10,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionManager
 import sweet.wong.gmark.R
@@ -19,6 +21,7 @@ import sweet.wong.gmark.core.noOpDelegate
 import sweet.wong.gmark.core.postDelayed
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.databinding.ActivityRepoBinding
+import sweet.wong.gmark.repo.drawer.project.ProjectFragment
 import sweet.wong.gmark.repo.markdown.MarkdownDelegate
 
 class RepoActivity : AppCompatActivity() {
@@ -31,15 +34,21 @@ class RepoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Binding View
-        binding = ActivityRepoBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
         // Parse argument
         val repo = intent.getParcelableExtra<Repo>(EXTRA_REPO)
         if (repo == null) {
             finish()
             return
+        }
+
+        // Binding View
+        binding = ActivityRepoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        if (savedInstanceState == null) {
+            supportFragmentManager.commit {
+                add<ProjectFragment>(R.id.fragment_container_view)
+            }
         }
 
         // Init toolbar
@@ -60,7 +69,7 @@ class RepoActivity : AppCompatActivity() {
 
         binding.drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener by noOpDelegate() {
             override fun onDrawerOpened(drawerView: View) {
-                binding.drawerView.refreshProject()
+                viewModel.updateDrawer()
             }
         })
 
@@ -74,7 +83,7 @@ class RepoActivity : AppCompatActivity() {
         })
 
         // View model observers
-        viewModel.raw.observe(this) {
+        viewModel.rawText.observe(this) {
             markdown.setMarkdown(binding.markList, it)
             binding.drawerLayout.closeDrawer(binding.navigationView)
         }
@@ -82,10 +91,10 @@ class RepoActivity : AppCompatActivity() {
         viewModel.selectFileEvent.observe(this, EventObserver {
             binding.toolbar.title = it.name
             scrollY(0, true)
-            binding.drawerView.refreshProject()
+            viewModel.updateDrawer()
         })
 
-        viewModel.drawerEvent.observe(this, EventObserver { open ->
+        viewModel.drawerShowEvent.observe(this, EventObserver { open ->
             if (open) binding.drawerLayout.openDrawer(binding.navigationView)
             else binding.drawerLayout.closeDrawer(binding.navigationView)
         })
@@ -99,14 +108,6 @@ class RepoActivity : AppCompatActivity() {
      */
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            // Handle drawer view back
-            if (binding.drawerLayout.isDrawerOpen(binding.navigationView)) {
-                if (!binding.drawerView.onBackPressed()) {
-                    binding.drawerLayout.closeDrawer(binding.navigationView)
-                }
-                return true
-            }
-
             // Handle main text back stack
             viewModel.popHistoryStack()?.let {
                 binding.toolbar.title = it.file.name

@@ -57,10 +57,10 @@
             android:layout_height="match_parent"
             android:layout_gravity="start">
 
-            <sweet.wong.gmark.repo.drawer.DrawerView
-                android:id="@+id/drawer_view"
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragment_container_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"/>
 
         </com.google.android.material.navigation.NavigationView>
 

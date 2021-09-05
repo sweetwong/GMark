@@ -8,5 +8,5 @@ import androidx.lifecycle.LifecycleOwner
 val View.lifecycleOwner: LifecycleOwner
     get() = (context as AppCompatActivity)
 
-val View.layoutInflater: LayoutInflater
+val View.inflater: LayoutInflater
     get() = LayoutInflater.from(context)
