@@ -31,7 +31,7 @@ interface RepoDao {
     fun update(repo: Repo)
 }
 
-@Database(entities = [Repo::class], version = 1)
+@Database(entities = [Repo::class], version = 1, exportSchema = false)
 abstract class RepoDatabase : RoomDatabase() {
 
     abstract fun repoDao(): RepoDao
