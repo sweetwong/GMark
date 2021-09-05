@@ -131,11 +131,13 @@ class RepoActivity : AppCompatActivity() {
      * Restore scroll history
      */
     private fun scrollY(scrollY: Int) {
+        // Scroll
         binding.markList.scrollBy(0, scrollY)
+
+        // If it is new page, run animation
         if (scrollY == 0) {
-            binding.markList.startAnimation(
-                AnimationUtils.loadAnimation(this, android.R.anim.fade_in)
-            )
+            val animation = AnimationUtils.loadAnimation(this, android.R.anim.fade_in)
+            binding.markList.startAnimation(animation)
         }
     }
 
