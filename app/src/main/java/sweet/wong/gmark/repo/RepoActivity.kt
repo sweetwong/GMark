@@ -103,13 +103,20 @@ class RepoActivity : AppCompatActivity() {
         // View model observers
         viewModel.rawText.observe(this) {
             markdown.setMarkdown(binding.markList, it)
-            binding.drawerLayout.closeDrawer(binding.navigationView)
         }
 
         viewModel.selectFileEvent.observe(this, EventObserver {
             binding.toolbar.title = it.file.name
             scrollY(it.scrollY)
-            viewModel.updateDrawer()
+            // If drawer is visible, we close drawer
+            // Note that close drawer will trigger update drawer
+            if (binding.drawerLayout.isDrawerVisible(binding.navigationView)) {
+                binding.drawerLayout.closeDrawer(binding.navigationView)
+            }
+            // If drawer is not visible, we just need update drawer
+            else {
+                viewModel.updateDrawer()
+            }
         })
 
         viewModel.drawerShowEvent.observe(this, EventObserver { open ->
@@ -173,7 +180,7 @@ class RepoActivity : AppCompatActivity() {
         // Scroll
         binding.markList.scrollBy(0, scrollY)
 
-        // If it is new page, run animation
+        // If it's new page, run animation
         if (scrollY == 0) {
             val animation = AnimationUtils.loadAnimation(this, android.R.anim.fade_in)
             binding.markList.startAnimation(animation)

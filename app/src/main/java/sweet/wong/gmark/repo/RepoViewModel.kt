@@ -25,8 +25,6 @@ class RepoViewModel : ViewModel() {
 
     val selectFileEvent = MutableLiveData<Event<Page>>()
 
-    val drawerTitle = MutableLiveData<String>()
-
     val updateDrawerEvent = MutableLiveData<Event<ProjectUIState>>()
 
     /**
@@ -48,12 +46,7 @@ class RepoViewModel : ViewModel() {
     fun init(repo: Repo) {
         this.repo = repo
         rootFile = File(repo.localPath)
-
-        drawerTitle.value = repo.name
-
-        val file = File(repo.localPath)
-
-        file.listFiles()?.forEach {
+        rootFile.listFiles()?.forEach {
             if (it.name == "README.md") {
                 selectFile(it)
             }
