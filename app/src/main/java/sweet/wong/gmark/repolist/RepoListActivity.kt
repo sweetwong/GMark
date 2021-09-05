@@ -32,7 +32,8 @@ class RepoListActivity : AppCompatActivity() {
         supportActionBar?.title = "Repository List"
 
         // When click fab
-        binding.fab.imageTintList = ResourcesCompat.getColorStateList(resources, R.color.ck_red, null)
+        binding.fab.imageTintList =
+            ResourcesCompat.getColorStateList(resources, R.color.ck_red, null)
         binding.fab.setOnClickListener {
             binding.fab.isEnabled = false
             val dialogFragment = RepoAuthDialogFragment(viewModel)
@@ -52,10 +53,7 @@ class RepoListActivity : AppCompatActivity() {
 
         viewModel.repoSelectEvent.observe(this, EventObserver {
             RepoActivity.start(this, it)
-            overridePendingTransition(
-                android.R.anim.fade_in,
-                android.R.anim.fade_out
-            )
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         })
 
         viewModel.repoUpdateEvent.observe(this, EventObserver {

@@ -2,11 +2,9 @@ package sweet.wong.gmark.repolist
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import sweet.wong.gmark.core.Event
-import sweet.wong.gmark.core.NonNullLiveData
-import sweet.wong.gmark.core.toast
+import sweet.wong.gmark.core.*
+import sweet.wong.gmark.data.DaoManager
 import sweet.wong.gmark.data.Repo
-import sweet.wong.gmark.data.RepoModel
 import sweet.wong.gmark.git.Clone
 
 /**
@@ -21,42 +19,48 @@ class RepoListViewModel : ViewModel() {
 
     fun refreshRepoList() {
         // FIXME: 2021/9/2 这里刷新可能会导致丢失UI状态
-        RepoModel.getAll()
-            .doOnNext {
-                val repoUtiStatesValue = mutableListOf<RepoUIState>()
-                it.forEach { repo ->
-                    repoUtiStatesValue.add(RepoUIState(repo))
+        io {
+            try {
+                val repos = DaoManager.repoDao.getAll()
+                ui {
+                    val repoUtiStatesValue = mutableListOf<RepoUIState>()
+                    repos.forEach { repo ->
+                        repoUtiStatesValue.add(RepoUIState(repo))
+                    }
+                    repoUIStates.value = repoUtiStatesValue
                 }
-                repoUIStates.value = repoUtiStatesValue
+            } catch (e: Exception) {
+                toast("Refresh repo list failed", e)
             }
-            .doOnError {
-                toast("Refresh repo list failed", it)
-            }
-            .subscribe()
+        }
     }
 
     fun addNewRepo(repo: Repo) {
-        RepoModel.insertAll(repo)
-            .doOnNext {
-                val repoUIState = RepoUIState(repo)
-                repoUIStates.value = repoUIStates.value.apply { add(repoUIState) }
-                startClone(repoUIState)
+        io {
+            try {
+                DaoManager.repoDao.insertAll(repo)
+                ui {
+                    val repoUIState = RepoUIState(repo)
+                    repoUIStates.value = repoUIStates.value.apply { add(repoUIState) }
+                    startClone(repoUIState)
+                }
+            } catch (e: Exception) {
+                toast("Add new repo failed", e)
             }
-            .doOnError {
-                toast("Add new repo failed", it)
-            }
-            .subscribe()
+        }
     }
 
     fun deleteRepo(repo: Repo) {
-        RepoModel.delete(repo)
-            .doOnNext {
-                refreshRepoList()
+        io {
+            try {
+                DaoManager.repoDao.delete(repo)
+                ui {
+                    refreshRepoList()
+                }
+            } catch (e: Exception) {
+                toast("Delete repo failed", e)
             }
-            .doOnError {
-                toast("Delete repo failed", it)
-            }
-            .subscribe()
+        }
     }
 
     private fun startClone(repoUIState: RepoUIState) {
@@ -69,7 +73,8 @@ class RepoListViewModel : ViewModel() {
             repo.username,
             repo.password,
             repo.ssh,
-            RepoCloneMonitor(this, repoUIState))
+            RepoCloneMonitor(this, repoUIState)
+        )
     }
 
 }

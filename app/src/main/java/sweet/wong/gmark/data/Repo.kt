@@ -1,9 +1,7 @@
 package sweet.wong.gmark.data
 
 import android.os.Parcelable
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 import kotlinx.parcelize.Parcelize
 
 @Entity
@@ -17,3 +15,25 @@ data class Repo(
     @ColumnInfo(name = "ssh") var ssh: String?,
     @PrimaryKey(autoGenerate = true) var uid: Int = 0
 ) : Parcelable
+
+@Dao
+interface RepoDao {
+    @Query("SELECT * FROM repo")
+    fun getAll(): List<Repo>
+
+    @Insert
+    fun insertAll(vararg repos: Repo)
+
+    @Delete
+    fun delete(repo: Repo)
+
+    @Update
+    fun update(repo: Repo)
+}
+
+@Database(entities = [Repo::class], version = 1)
+abstract class RepoDatabase : RoomDatabase() {
+
+    abstract fun repoDao(): RepoDao
+
+}
