@@ -1,15 +1,13 @@
 package sweet.wong.gmark.repo.drawer.project
 
-import android.os.FileUtils
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import sweet.wong.gmark.R
-import sweet.wong.gmark.core.log
 import sweet.wong.gmark.core.resources
 import sweet.wong.gmark.databinding.RecycleItemProjectBinding
 import sweet.wong.gmark.ext.inflater
+import sweet.wong.gmark.utils.DefaultDiffUtilCallback
 import sweet.wong.gmark.utils.Resources
 import java.io.File
 
@@ -19,7 +17,7 @@ import java.io.File
  * @author sweetwang 2021/9/1
  */
 class FileBrowserAdapter(private val onItemClick: (ProjectUIState) -> Unit) :
-    ListAdapter<ProjectUIState, FileBrowserAdapter.VH>(diffCallback) {
+    ListAdapter<ProjectUIState, FileBrowserAdapter.VH>(DefaultDiffUtilCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = VH(
         RecycleItemProjectBinding.inflate(parent.inflater, parent, false)
@@ -44,7 +42,13 @@ class FileBrowserAdapter(private val onItemClick: (ProjectUIState) -> Unit) :
             }
 
             itemView.setOnClickListener {
-                onItemClick(ProjectUIState(uiState.drawerFile, uiState.currentFile, uiState.rootFile))
+                onItemClick(
+                    ProjectUIState(
+                        uiState.drawerFile,
+                        uiState.currentFile,
+                        uiState.rootFile
+                    )
+                )
             }
         }
 
@@ -67,23 +71,6 @@ class FileBrowserAdapter(private val onItemClick: (ProjectUIState) -> Unit) :
                 binding.text.setTextColor(Resources.COLOR_TEXT_HIGHLIGHT)
             } else {
                 binding.text.setTextColor(Resources.COLOR_TEXT_MAIN)
-            }
-        }
-
-    }
-
-    companion object {
-
-        private val diffCallback = object : DiffUtil.ItemCallback<ProjectUIState>() {
-
-            override fun areItemsTheSame(old: ProjectUIState, new: ProjectUIState): Boolean {
-                log("FileBrowserAdapter", "old.drawerFile === new.drawerFile", old.drawerFile === new.drawerFile)
-                return old.drawerFile.path == new.drawerFile.path
-            }
-
-            override fun areContentsTheSame(old: ProjectUIState, new: ProjectUIState): Boolean {
-                log("FileBrowserAdapter", "old.drawerFile == new.drawerFile", old.drawerFile == new.drawerFile)
-                return old.drawerFile.path == new.drawerFile.path
             }
         }
 

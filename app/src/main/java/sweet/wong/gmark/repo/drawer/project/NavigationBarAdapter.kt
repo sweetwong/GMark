@@ -1,16 +1,14 @@
 package sweet.wong.gmark.repo.drawer.project
 
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import sweet.wong.gmark.core.log
 import sweet.wong.gmark.databinding.RecycleNavigationBarBinding
 import sweet.wong.gmark.ext.inflater
-import java.io.File
+import sweet.wong.gmark.utils.DefaultDiffUtilCallback
 
 class NavigationBarAdapter(private val onItemClick: (ProjectUIState) -> Unit) :
-    ListAdapter<ProjectUIState, NavigationBarAdapter.VH>(diffCallback) {
+    ListAdapter<ProjectUIState, NavigationBarAdapter.VH>(DefaultDiffUtilCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         VH(RecycleNavigationBarBinding.inflate(parent.inflater, parent, false))
@@ -26,28 +24,16 @@ class NavigationBarAdapter(private val onItemClick: (ProjectUIState) -> Unit) :
             binding.executePendingBindings()
 
             itemView.setOnClickListener {
-                onItemClick(ProjectUIState(uiState.drawerFile, uiState.currentFile, uiState.rootFile))
+                onItemClick(
+                    ProjectUIState(
+                        uiState.drawerFile,
+                        uiState.currentFile,
+                        uiState.rootFile
+                    )
+                )
             }
         }
 
     }
-
-    companion object {
-
-        private val diffCallback = object : DiffUtil.ItemCallback<ProjectUIState>() {
-
-            override fun areItemsTheSame(old: ProjectUIState, new: ProjectUIState): Boolean {
-                log("NavigationBarAdapter", "old.drawerFile.path == new.drawerFile.path", old.drawerFile === new.drawerFile)
-                return old.drawerFile.path == new.drawerFile.path
-            }
-
-            override fun areContentsTheSame(old: ProjectUIState, new: ProjectUIState): Boolean {
-                log("NavigationBarAdapter", "old.drawerFile == new.drawerFile", old.drawerFile == new.drawerFile)
-                return old.drawerFile.path == new.drawerFile.path
-            }
-        }
-
-    }
-
 
 }

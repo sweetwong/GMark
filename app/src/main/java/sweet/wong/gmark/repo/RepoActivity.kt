@@ -67,8 +67,10 @@ class RepoActivity : AppCompatActivity() {
         // Init Markdown
         markdown = MarkdownDelegate(viewModel)
 
-        binding.drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener by noOpDelegate() {
-            override fun onDrawerOpened(drawerView: View) {
+        binding.drawerLayout.addDrawerListener(object :
+            DrawerLayout.DrawerListener by noOpDelegate() {
+
+            override fun onDrawerClosed(drawerView: View) {
                 viewModel.updateDrawer()
             }
         })
@@ -108,6 +110,11 @@ class RepoActivity : AppCompatActivity() {
      */
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (binding.drawerLayout.isDrawerVisible(binding.navigationView)) {
+                binding.drawerLayout.closeDrawer(binding.navigationView)
+                return true
+            }
+
             // Handle main text back stack
             viewModel.popHistoryStack()?.let {
                 binding.toolbar.title = it.file.name

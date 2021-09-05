@@ -17,6 +17,8 @@ class ProjectFragment : Fragment() {
     private lateinit var viewModel: RepoViewModel
     private lateinit var binding: FragmentProjectBinding
 
+    private lateinit var uiState: ProjectUIState
+
     private val browserAdapter = FileBrowserAdapter {
         if (it.drawerFile.isDirectory) {
             updateFileBrowser(it)
@@ -52,6 +54,7 @@ class ProjectFragment : Fragment() {
         binding.navigationBar.adapter = barAdapter
 
         viewModel.updateDrawerEvent.observe(viewLifecycleOwner, EventObserver {
+            uiState = it
             updateNavigationBar(it)
             updateFileBrowser(it)
         })
@@ -60,8 +63,11 @@ class ProjectFragment : Fragment() {
     private fun updateNavigationBar(uiState: ProjectUIState) {
         val list = mutableListOf<ProjectUIState>()
         var current: File? = uiState.drawerFile
-        while (current != uiState.rootFile && current != null) {
+        while (current != null) {
             list.add(ProjectUIState(current, uiState.currentFile, uiState.rootFile))
+            if (current == uiState.rootFile) {
+                break
+            }
             current = current.parentFile
         }
         barAdapter.submitList(list.reversed())

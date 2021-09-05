@@ -9,8 +9,8 @@ import sweet.wong.gmark.core.Event
 import sweet.wong.gmark.core.log
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.Repo
-import sweet.wong.gmark.repo.drawer.project.ProjectUIState
 import sweet.wong.gmark.repo.drawer.history.HistoryFile
+import sweet.wong.gmark.repo.drawer.project.ProjectUIState
 import sweet.wong.gmark.utils.LimitedDeque
 import java.io.File
 
@@ -68,7 +68,7 @@ class RepoViewModel : ViewModel() {
         updateDrawerEvent.value = Event(uiState)
     }
 
-    fun selectFile(file: File) {
+    fun selectFile(file: File, pushToHistoryStack: Boolean = true) {
         if (!file.exists() || !file.isFile) {
             return toast("File $file is not exist")
         }
@@ -84,8 +84,8 @@ class RepoViewModel : ViewModel() {
             .doOnNext {
                 val oldData = rawText.value
                 val oldFile = currentFile
-                if (!oldData.isNullOrBlank() && oldFile != null) {
-                    pushHistoryStack(HistoryFile(oldFile, oldData, scrollY), file)
+                if (!oldData.isNullOrBlank() && oldFile != null && pushToHistoryStack) {
+                    pushToHistoryStack(HistoryFile(oldFile, oldData, scrollY), file)
                 }
 
                 rawText.value = it
@@ -99,14 +99,14 @@ class RepoViewModel : ViewModel() {
             .subscribe()
     }
 
-    private fun pushHistoryStack(historyFile: HistoryFile, selectedFile: File) {
+    private fun pushToHistoryStack(historyFile: HistoryFile, selectedFile: File) {
         // First add to history stack
         historyStack.add(historyFile)
 
         // Then remove duplicated history stack
         var toRemoved: HistoryFile? = null
         historyStack.forEach {
-            if (it.file.absolutePath == selectedFile.absolutePath) {
+            if (it.file == selectedFile) {
                 toRemoved = it
             }
         }
@@ -114,13 +114,13 @@ class RepoViewModel : ViewModel() {
     }
 
     fun popHistoryStack(): HistoryFile? {
-        if (historyStack.isNotEmpty()) {
-            return historyStack.removeLast()?.apply {
-                rawText.value = data
-                currentFile = file
-            }
+        if (historyStack.isEmpty()) {
+            return null
         }
-        return null
+
+        val historyFile = historyStack.removeLast()
+        historyFile?.let { selectFile(it.file, false) }
+        return historyFile
     }
 
 }
