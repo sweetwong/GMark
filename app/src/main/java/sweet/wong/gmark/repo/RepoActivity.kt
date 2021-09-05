@@ -9,11 +9,13 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionManager
 import sweet.wong.gmark.R
 import sweet.wong.gmark.core.EventObserver
 import sweet.wong.gmark.core.log
+import sweet.wong.gmark.core.noOpDelegate
 import sweet.wong.gmark.core.postDelayed
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.databinding.ActivityRepoBinding
@@ -55,6 +57,12 @@ class RepoActivity : AppCompatActivity() {
 
         // Init Markdown
         markdown = MarkdownDelegate(viewModel)
+
+        binding.drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener by noOpDelegate() {
+            override fun onDrawerOpened(drawerView: View) {
+                binding.drawerView.refreshProject()
+            }
+        })
 
         // Record current page scroll Y
         // Used for restore page

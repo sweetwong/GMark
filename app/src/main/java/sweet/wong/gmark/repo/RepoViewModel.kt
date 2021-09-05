@@ -39,6 +39,8 @@ class RepoViewModel : ViewModel() {
      */
     lateinit var repo: Repo
 
+    lateinit var rootFile: File
+
     /**
      * Current selected File, must be a file not a directory
      */
@@ -52,6 +54,8 @@ class RepoViewModel : ViewModel() {
 
     fun init(repo: Repo) {
         this.repo = repo
+        rootFile = File(repo.localPath)
+
         drawerTitle.value = repo.name
 
         val file = File(repo.localPath)

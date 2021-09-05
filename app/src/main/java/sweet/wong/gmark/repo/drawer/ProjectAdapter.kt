@@ -17,8 +17,8 @@ import java.io.File
  *
  * @author sweetwang 2021/9/1
  */
-class RepoDrawerProjectAdapter(private val viewModel: RepoViewModel) :
-    ListAdapter<File, RepoDrawerProjectAdapter.VH>(diffCallback) {
+class ProjectAdapter(private val viewModel: RepoViewModel) :
+    ListAdapter<File, ProjectAdapter.VH>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = VH.from(parent)
 
@@ -102,18 +102,14 @@ class RepoDrawerProjectAdapter(private val viewModel: RepoViewModel) :
     }
 
     companion object {
+
         private val diffCallback = object : DiffUtil.ItemCallback<File>() {
-            override fun areItemsTheSame(
-                oldItem: File,
-                newItem: File
-            ): Boolean {
+
+            override fun areItemsTheSame(oldItem: File, newItem: File): Boolean {
                 return oldItem === newItem
             }
 
-            override fun areContentsTheSame(
-                oldItem: File,
-                newItem: File
-            ): Boolean {
+            override fun areContentsTheSame(oldItem: File, newItem: File): Boolean {
                 return oldItem.absolutePath == newItem.absolutePath
             }
         }

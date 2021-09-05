@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="showArrow"
+            type="Boolean" />
+
+        <variable
+            name="file"
+            type="java.io.File" />
+    </data>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@{showArrow ? @drawable/more : null}"
+        android:drawablePadding="6dp"
+        android:drawableTint="@color/black"
+        android:padding="3dp"
+        android:text="@{file.name}"
+        android:textColor="@color/text_main"
+        android:textSize="12sp"
+        tools:drawableStart="@drawable/more"
+        tools:ignore="UseCompatTextViewDrawableXml"
+        tools:text="RxJava" />
+
+</layout>

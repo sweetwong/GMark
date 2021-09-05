@@ -30,6 +30,18 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="RxJava" />
 
+        <sweet.wong.gmark.repo.drawer.NavigationBar
+            android:id="@+id/navigation_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_text"
+            tools:listitem="@layout/recycle_navigation_bar" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="0dp"
@@ -40,10 +52,11 @@
             app:layout_constraintBottom_toTopOf="@+id/project_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_text"
+            app:layout_constraintTop_toBottomOf="@+id/navigation_bar"
             tools:listitem="@layout/recycle_item_project" />
 
         <View
+            android:id="@+id/view"
             style="@style/Divider"
             app:layout_constraintBottom_toTopOf="@+id/project_text"
             app:layout_constraintEnd_toEndOf="parent"

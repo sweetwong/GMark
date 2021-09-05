@@ -6,10 +6,11 @@ import android.view.LayoutInflater
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import sweet.wong.gmark.core.EventObserver
 import sweet.wong.gmark.databinding.LayoutDrawerBinding
 import sweet.wong.gmark.repo.RepoViewModel
 
-class RepoDrawerView @JvmOverloads constructor(
+class DrawerView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -19,7 +20,7 @@ class RepoDrawerView @JvmOverloads constructor(
 
     private val activity: AppCompatActivity = context as AppCompatActivity
     private val viewModel: RepoViewModel by activity.viewModels()
-    private val projectAdapter: RepoDrawerProjectAdapter = RepoDrawerProjectAdapter(viewModel)
+    private val projectAdapter: ProjectAdapter = ProjectAdapter(viewModel)
 
     init {
         binding.viewModel = viewModel
@@ -39,9 +40,18 @@ class RepoDrawerView @JvmOverloads constructor(
         binding.historyText.setOnClickListener {
         }
 
+        binding.navigationBar.onItemClick = {
+            viewModel.currentProjectFolder.value = it
+        }
+
         viewModel.projectChildFiles.observe(activity) {
             projectAdapter.submitList(it.toList())
+            binding.navigationBar.updateFile(viewModel.currentProjectFolder.value!!, viewModel.rootFile)
         }
+
+        viewModel.selectFileEvent.observe(activity, EventObserver {
+            binding.navigationBar.updateFile(it, viewModel.rootFile)
+        })
     }
 
     fun onBackPressed() = projectAdapter.onBackPressed()
