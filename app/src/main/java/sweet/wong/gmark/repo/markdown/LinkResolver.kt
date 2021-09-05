@@ -15,11 +15,11 @@ class LinkResolver(private val viewModel: RepoViewModel) : LinkResolverDef() {
             return
         }
 
-        val currentFile = viewModel.currentFile ?: return toast("Current file is null")
+        val showingFile = viewModel.showingFile ?: return toast("Current file is null")
 
-        log("link is $link", "currentFile is $currentFile")
+        log("link is $link", "showingFile is $showingFile")
 
-        val folder = currentFile.parentFile
+        val folder = showingFile.parentFile
         if (folder == null || !folder.exists()) return toast("Folder is null")
 
         val resolved = when {

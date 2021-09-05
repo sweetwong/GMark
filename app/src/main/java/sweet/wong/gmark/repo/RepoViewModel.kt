@@ -35,9 +35,9 @@ class RepoViewModel : ViewModel() {
     lateinit var rootFile: File
 
     /**
-     * Current selected File, must be a file not a directory
+     * Current showing File, must be a file not a directory
      */
-    var currentFile: File? = null
+    var showingFile: File? = null
 
     var scrollY: Int = 0
 
@@ -54,10 +54,10 @@ class RepoViewModel : ViewModel() {
     }
 
     fun updateDrawer() {
-        val currentFile = this.currentFile ?: return
-        val drawerFile = currentFile.parentFile ?: return
+        val showingFile = this.showingFile ?: return
+        val drawerFile = showingFile.parentFile ?: return
 
-        val uiState = ProjectUIState(drawerFile, currentFile, rootFile)
+        val uiState = ProjectUIState(drawerFile, showingFile, rootFile)
         updateDrawerEvent.value = Event(uiState)
     }
 
@@ -72,7 +72,7 @@ class RepoViewModel : ViewModel() {
             return toast("File $file is not exist")
         }
 
-        if (file == currentFile) {
+        if (file == showingFile) {
             drawerShowEvent.value = Event(false)
             return log("Repeat selection")
         }
@@ -82,13 +82,13 @@ class RepoViewModel : ViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext {
                 val oldData = rawText.value
-                val oldFile = currentFile
+                val oldFile = showingFile
                 if (!oldData.isNullOrBlank() && oldFile != null && pushToHistoryStack) {
                     savePage(Page(oldFile, scrollY), file)
                 }
 
                 rawText.value = it
-                currentFile = file
+                showingFile = file
                 selectFileEvent.value = Event(page)
                 scrollY = page.scrollY
             }

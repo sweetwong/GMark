@@ -74,16 +74,16 @@ class ProjectFragment : Fragment() {
         // If has showing file, add to navigation bar end
         var hasShowingFile = false
         file?.listFiles()?.forEach {
-            if (it == uiState.currentFile) {
+            if (it == uiState.showingFile) {
                 hasShowingFile = true
             }
         }
         if (hasShowingFile) {
-            list.add(ProjectUIState(uiState.currentFile, uiState.currentFile, uiState.rootFile))
+            list.add(ProjectUIState(uiState.showingFile, uiState.showingFile, uiState.rootFile))
         }
         // Add traversal parent file, then should navigation bar
         while (file != null) {
-            list.add(ProjectUIState(file, uiState.currentFile, uiState.rootFile))
+            list.add(ProjectUIState(file, uiState.showingFile, uiState.rootFile))
             if (file == uiState.rootFile) {
                 break
             }
@@ -105,20 +105,20 @@ class ProjectFragment : Fragment() {
         // First show back folder
         if (uiState.drawerFile != uiState.rootFile) {
             sorted.add(
-                ProjectUIState(uiState.drawerFile, uiState.currentFile, uiState.rootFile, true)
+                ProjectUIState(uiState.drawerFile, uiState.showingFile, uiState.rootFile, true)
             )
         }
 
         // Second traversal add directories
         fileChildren.forEach {
             if (it.exists() && it.isDirectory && !filterFolder(it)) {
-                sorted.add(ProjectUIState(it, uiState.currentFile, uiState.rootFile))
+                sorted.add(ProjectUIState(it, uiState.showingFile, uiState.rootFile))
             }
         }
         // Thrid traversal add files
         fileChildren.forEach {
             if (it.exists() && it.isFile) {
-                sorted.add(ProjectUIState(it, uiState.currentFile, uiState.rootFile))
+                sorted.add(ProjectUIState(it, uiState.showingFile, uiState.rootFile))
             }
         }
 

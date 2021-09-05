@@ -39,11 +39,11 @@ class FileBrowserAdapter(private val onItemClick: (ProjectUIState) -> Unit) :
                 }
                 uiState.drawerFile.isDirectory -> {
                     binding.icon.setImageResource(R.drawable.folder)
-                    setFolderHighlight(uiState.currentFile, uiState.drawerFile, uiState.rootFile)
+                    setFolderHighlight(uiState.showingFile, uiState.drawerFile, uiState.rootFile)
                 }
                 uiState.drawerFile.isFile -> {
                     binding.icon.setImageResource(R.drawable.text)
-                    setFileHighlight(uiState.currentFile, uiState.drawerFile)
+                    setFileHighlight(uiState.showingFile, uiState.drawerFile)
                 }
             }
 

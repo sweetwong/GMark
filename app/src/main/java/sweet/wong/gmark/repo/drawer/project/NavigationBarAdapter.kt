@@ -27,7 +27,7 @@ class NavigationBarAdapter(private val onItemClick: (ProjectUIState) -> Unit) :
                 onItemClick(
                     ProjectUIState(
                         uiState.drawerFile,
-                        uiState.currentFile,
+                        uiState.showingFile,
                         uiState.rootFile
                     )
                 )
