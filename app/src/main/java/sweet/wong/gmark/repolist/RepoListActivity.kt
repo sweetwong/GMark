@@ -29,7 +29,6 @@ class RepoListActivity : AppCompatActivity() {
 
         // Init ActionBar
         setSupportActionBar(binding.toolbar)
-        supportActionBar?.title = "Repository List"
 
         // When click fab
         binding.fab.imageTintList =

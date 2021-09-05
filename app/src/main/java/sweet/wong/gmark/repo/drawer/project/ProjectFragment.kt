@@ -63,6 +63,7 @@ class ProjectFragment : Fragment() {
     private fun updateNavigationBar(uiState: ProjectUIState) {
         val list = mutableListOf<ProjectUIState>()
         var file: File? = uiState.drawerFile
+        list.add(ProjectUIState(uiState.currentFile, uiState.currentFile, uiState.rootFile))
         while (file != null) {
             list.add(ProjectUIState(file, uiState.currentFile, uiState.rootFile))
             if (file == uiState.rootFile) {

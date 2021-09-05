@@ -14,9 +14,11 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.ScreenUtils
 import sweet.wong.gmark.R
 import sweet.wong.gmark.core.EventObserver
 import sweet.wong.gmark.core.noOpDelegate
+import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.databinding.ActivityRepoBinding
 import sweet.wong.gmark.repo.drawer.project.ProjectFragment
@@ -43,6 +45,9 @@ class RepoActivity : AppCompatActivity() {
         binding = ActivityRepoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 add<ProjectFragment>(R.id.fragment_container_view)
@@ -62,9 +67,6 @@ class RepoActivity : AppCompatActivity() {
         )
         drawerToggle.syncState()
 
-        // Init Markdown
-        markdown = MarkdownDelegate(viewModel)
-
         binding.drawerLayout.addDrawerListener(object :
             DrawerLayout.DrawerListener by noOpDelegate() {
 
@@ -72,6 +74,12 @@ class RepoActivity : AppCompatActivity() {
                 viewModel.updateDrawer()
             }
         })
+        binding.navigationView.layoutParams = binding.navigationView.layoutParams.apply {
+            width = (ScreenUtils.getScreenWidth() * 0.9).toInt()
+        }
+
+        // Init Markdown
+        markdown = MarkdownDelegate(viewModel)
 
         // Record current page scroll Y
         // Used for restore page
@@ -81,6 +89,10 @@ class RepoActivity : AppCompatActivity() {
                 viewModel.scrollY += dy
             }
         })
+
+        binding.drawerToolbar.setNavigationOnClickListener {
+            toast("针不辍")
+        }
 
         // View model observers
         viewModel.rawText.observe(this) {

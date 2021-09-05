@@ -14,20 +14,6 @@
         tools:parentTag="android.widget.LinearLayout">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/navigation_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal"
-            android:paddingStart="20dp"
-            android:paddingEnd="12dp"
-            app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_text"
-            tools:listitem="@layout/recycle_navigation_bar" />
-
-        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/file_browser"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -40,6 +26,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/navigation_bar"
             tools:listitem="@layout/recycle_item_project" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/navigation_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:orientation="horizontal"
+            android:paddingStart="6dp"
+            android:paddingEnd="12dp"
+            app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_text"
+            tools:listitem="@layout/recycle_navigation_bar" />
 
     </LinearLayout>
 </layout>
