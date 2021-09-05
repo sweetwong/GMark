@@ -7,6 +7,7 @@ import android.view.KeyEvent
 import android.view.Menu
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.ImageButton
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -78,6 +79,11 @@ class RepoActivity : AppCompatActivity() {
             width = (ScreenUtils.getScreenWidth() * 0.9).toInt()
         }
 
+        binding.btnProject.setOnClickListener(::onClickDrawerButton)
+        binding.btnGit.setOnClickListener(::onClickDrawerButton)
+        binding.btnHistory.setOnClickListener(::onClickDrawerButton)
+        binding.btnHistory.setOnClickListener(::onClickDrawerButton)
+
         // Init Markdown
         markdown = MarkdownDelegate(viewModel)
 
@@ -137,6 +143,27 @@ class RepoActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_repo_list, menu)
         return true
+    }
+
+    private fun onClickDrawerButton(button: View) {
+        if (button !is ImageButton) {
+            return
+        }
+
+        when (button) {
+            binding.btnProject -> {
+
+            }
+            binding.btnGit -> {
+
+            }
+            binding.btnHistory -> {
+
+            }
+            binding.btnOutline -> {
+
+            }
+        }
     }
 
     /**
