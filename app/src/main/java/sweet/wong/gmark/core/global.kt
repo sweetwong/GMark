@@ -10,7 +10,13 @@ import java.lang.reflect.Proxy
 
 private val handler = Handler(Looper.getMainLooper())
 
-fun runOnMainThread(action: () -> Unit) {
+private val appExecutors = AppExecutors()
+
+fun io(action: () -> Unit) {
+    appExecutors.networkIO().execute(action)
+}
+
+fun ui(action: () -> Unit) {
     if (Looper.myLooper() == Looper.getMainLooper()) {
         action()
         return
@@ -27,7 +33,7 @@ fun log(vararg any: Any?) {
 }
 
 fun toast(vararg any: Any?) {
-    runOnMainThread {
+    ui {
         Toast.makeText(App.app, any.joinToString(", "), Toast.LENGTH_SHORT).show()
         log(*any)
     }

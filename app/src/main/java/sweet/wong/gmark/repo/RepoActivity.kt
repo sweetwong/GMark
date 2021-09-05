@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -13,12 +14,9 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.TransitionManager
 import sweet.wong.gmark.R
 import sweet.wong.gmark.core.EventObserver
-import sweet.wong.gmark.core.log
 import sweet.wong.gmark.core.noOpDelegate
-import sweet.wong.gmark.core.postDelayed
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.databinding.ActivityRepoBinding
 import sweet.wong.gmark.repo.drawer.project.ProjectFragment
@@ -91,8 +89,8 @@ class RepoActivity : AppCompatActivity() {
         }
 
         viewModel.selectFileEvent.observe(this, EventObserver {
-            binding.toolbar.title = it.name
-            scrollY(0, true)
+            binding.toolbar.title = it.file.name
+            scrollY(it.scrollY)
             viewModel.updateDrawer()
         })
 
@@ -116,10 +114,7 @@ class RepoActivity : AppCompatActivity() {
             }
 
             // Handle main text back stack
-            viewModel.popHistoryStack()?.let {
-                binding.toolbar.title = it.file.name
-                scrollY(it.scrollY, false)
-                log("history file", it.file)
+            if (viewModel.restorePage()) {
                 return true
             }
         }
@@ -135,14 +130,12 @@ class RepoActivity : AppCompatActivity() {
     /**
      * Restore scroll history
      */
-    private fun scrollY(scrollY: Int, anim: Boolean) {
+    private fun scrollY(scrollY: Int) {
         binding.markList.scrollBy(0, scrollY)
-        if (anim) {
-            binding.markList.visibility = View.INVISIBLE
-            postDelayed(60) {
-                TransitionManager.beginDelayedTransition(binding.markList)
-                binding.markList.visibility = View.VISIBLE
-            }
+        if (scrollY == 0) {
+            binding.markList.startAnimation(
+                AnimationUtils.loadAnimation(this, android.R.anim.fade_in)
+            )
         }
     }
 

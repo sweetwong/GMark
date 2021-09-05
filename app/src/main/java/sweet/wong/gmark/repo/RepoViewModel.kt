@@ -9,7 +9,7 @@ import sweet.wong.gmark.core.Event
 import sweet.wong.gmark.core.log
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.Repo
-import sweet.wong.gmark.repo.drawer.history.HistoryFile
+import sweet.wong.gmark.repo.drawer.history.Page
 import sweet.wong.gmark.repo.drawer.project.ProjectUIState
 import sweet.wong.gmark.utils.LimitedDeque
 import java.io.File
@@ -23,7 +23,7 @@ class RepoViewModel : ViewModel() {
 
     val drawerShowEvent = MutableLiveData<Event<Boolean>>()
 
-    val selectFileEvent = MutableLiveData<Event<File>>()
+    val selectFileEvent = MutableLiveData<Event<Page>>()
 
     val drawerTitle = MutableLiveData<String>()
 
@@ -43,7 +43,7 @@ class RepoViewModel : ViewModel() {
 
     var scrollY: Int = 0
 
-    private val historyStack = LimitedDeque<HistoryFile>(3)
+    private val historyStack = LimitedDeque<Page>(3)
 
     fun init(repo: Repo) {
         this.repo = repo
@@ -69,11 +69,17 @@ class RepoViewModel : ViewModel() {
     }
 
     fun selectFile(file: File, pushToHistoryStack: Boolean = true) {
+        selectFile(Page(file, 0), pushToHistoryStack)
+    }
+
+    fun selectFile(page: Page, pushToHistoryStack: Boolean = true) {
+        val file = page.file
+
         if (!file.exists() || !file.isFile) {
             return toast("File $file is not exist")
         }
 
-        if (file.absolutePath == currentFile?.absolutePath) {
+        if (file == currentFile) {
             drawerShowEvent.value = Event(false)
             return log("Repeat selection")
         }
@@ -85,13 +91,13 @@ class RepoViewModel : ViewModel() {
                 val oldData = rawText.value
                 val oldFile = currentFile
                 if (!oldData.isNullOrBlank() && oldFile != null && pushToHistoryStack) {
-                    pushToHistoryStack(HistoryFile(oldFile, oldData, scrollY), file)
+                    savePage(Page(oldFile, scrollY), file)
                 }
 
                 rawText.value = it
                 currentFile = file
-                scrollY = 0
-                selectFileEvent.value = Event(file)
+                selectFileEvent.value = Event(page)
+                scrollY = page.scrollY
             }
             .doOnError {
                 toast("Read text failed", it)
@@ -99,28 +105,28 @@ class RepoViewModel : ViewModel() {
             .subscribe()
     }
 
-    private fun pushToHistoryStack(historyFile: HistoryFile, selectedFile: File) {
+    fun restorePage(): Boolean {
+        if (historyStack.isEmpty()) {
+            return false
+        }
+
+        val historyFile = historyStack.removeLast()
+        historyFile?.let { selectFile(it, false) }
+        return true
+    }
+
+    private fun savePage(page: Page, selectedFile: File) {
         // First add to history stack
-        historyStack.add(historyFile)
+        historyStack.add(page)
 
         // Then remove duplicated history stack
-        var toRemoved: HistoryFile? = null
+        var toRemoved: Page? = null
         historyStack.forEach {
             if (it.file == selectedFile) {
                 toRemoved = it
             }
         }
         toRemoved?.let { historyStack.remove(it) }
-    }
-
-    fun popHistoryStack(): HistoryFile? {
-        if (historyStack.isEmpty()) {
-            return null
-        }
-
-        val historyFile = historyStack.removeLast()
-        historyFile?.let { selectFile(it.file, false) }
-        return historyFile
     }
 
 }
