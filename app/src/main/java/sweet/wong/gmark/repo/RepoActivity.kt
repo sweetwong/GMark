@@ -102,7 +102,9 @@ class RepoActivity : AppCompatActivity() {
 
         // View model observers
         viewModel.rawText.observe(this) {
-            markdown.setMarkdown(binding.markList, it)
+            // FIXME: 2021/9/7 这里这个时机是错误的
+            val fileName = viewModel.showingFile?.name ?: ""
+            markdown.setMarkdown(fileName, binding.markList, it)
         }
 
         viewModel.selectFileEvent.observe(this, EventObserver {

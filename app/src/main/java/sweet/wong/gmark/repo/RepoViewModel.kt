@@ -19,6 +19,7 @@ class RepoViewModel : ViewModel() {
     /**
      * File raw text, this data may be large
      */
+    // TODO: 2021/9/7 这里需要封装一个数据结构
     val rawText = MutableLiveData<String>()
 
     val drawerShowEvent = MutableLiveData<Event<Boolean>>()
