@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import sweet.wong.gmark.core.EventObserver
 import sweet.wong.gmark.databinding.FragmentProjectBinding
 import sweet.wong.gmark.repo.RepoViewModel
+import sweet.wong.gmark.utils.EventObserver
 import java.io.File
 
 class ProjectFragment : Fragment() {

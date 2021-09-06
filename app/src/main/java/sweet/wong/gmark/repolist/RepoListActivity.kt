@@ -6,9 +6,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import sweet.wong.gmark.R
-import sweet.wong.gmark.core.EventObserver
 import sweet.wong.gmark.databinding.ActivityRepoListBinding
 import sweet.wong.gmark.repo.RepoActivity
+import sweet.wong.gmark.utils.EventObserver
 import java.util.*
 
 /**

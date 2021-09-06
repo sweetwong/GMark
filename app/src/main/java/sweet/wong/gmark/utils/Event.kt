@@ -1,4 +1,4 @@
-package sweet.wong.gmark.core
+package sweet.wong.gmark.utils
 
 import androidx.lifecycle.Observer
 

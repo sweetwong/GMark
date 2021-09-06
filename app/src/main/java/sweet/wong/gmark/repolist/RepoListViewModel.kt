@@ -2,10 +2,14 @@ package sweet.wong.gmark.repolist
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import sweet.wong.gmark.core.*
+import sweet.wong.gmark.core.io
+import sweet.wong.gmark.core.toast
+import sweet.wong.gmark.core.ui
 import sweet.wong.gmark.data.DaoManager
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.git.Clone
+import sweet.wong.gmark.utils.Event
+import sweet.wong.gmark.utils.NonNullLiveData
 
 /**
  * Git repository list view model

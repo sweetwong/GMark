@@ -1,7 +1,8 @@
-package sweet.wong.gmark.core
+package sweet.wong.gmark.utils
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import sweet.wong.gmark.core.toast
 
 /**
  * A [MutableLiveData] which it's value must not be null, this class is more friendly when interacts with Kotlin

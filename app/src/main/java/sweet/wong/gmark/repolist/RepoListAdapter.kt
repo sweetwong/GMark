@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import sweet.wong.gmark.core.Event
 import sweet.wong.gmark.databinding.RecycleItemRepoBinding
+import sweet.wong.gmark.utils.Event
 
 /**
  * TODO: Add Description

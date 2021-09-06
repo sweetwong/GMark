@@ -1,7 +1,7 @@
 package sweet.wong.gmark.repolist
 
 import org.eclipse.jgit.lib.ProgressMonitor
-import sweet.wong.gmark.core.Event
+import sweet.wong.gmark.utils.Event
 import java.util.*
 
 /**
