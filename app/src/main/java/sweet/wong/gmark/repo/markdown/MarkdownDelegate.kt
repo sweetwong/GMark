@@ -1,5 +1,6 @@
 package sweet.wong.gmark.repo.markdown
 
+import android.content.res.Configuration
 import android.graphics.Color
 import androidx.recyclerview.widget.RecyclerView
 import io.noties.markwon.Markwon
@@ -16,7 +17,7 @@ import io.noties.prism4j.annotations.PrismBundle
 import org.commonmark.node.FencedCodeBlock
 import org.commonmark.node.Node
 import sweet.wong.gmark.R
-import sweet.wong.gmark.core.*
+import sweet.wong.gmark.core.App
 import sweet.wong.gmark.repo.RepoViewModel
 
 
@@ -24,7 +25,7 @@ import sweet.wong.gmark.repo.RepoViewModel
 class MarkdownDelegate(viewModel: RepoViewModel) {
 
     private val prism4j = Prism4j(GrammarLocatorSourceCode())
-    private val prism4jTheme = Prism4jThemeDefault.create(Color.WHITE)
+    private val prism4jTheme = Prism4jThemeDefault.create(getCodeBlockColor())
     private val reducer = MarkwonReducer.directChildren()
 
     internal lateinit var nodes: List<Node>
@@ -66,6 +67,19 @@ class MarkdownDelegate(viewModel: RepoViewModel) {
         if (fileName.endsWith(".kt")) return "kotlin"
         if (fileName.endsWith(".java")) return "java"
         return ""
+    }
+
+    private fun getCodeBlockColor(): Int {
+        return if (isDarkMode()) 0xFF1B1B1B.toInt() else Color.WHITE
+    }
+
+    private fun isDarkMode(): Boolean {
+        return when (App.app.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
+            Configuration.UI_MODE_NIGHT_YES -> true
+            Configuration.UI_MODE_NIGHT_NO -> false
+            Configuration.UI_MODE_NIGHT_UNDEFINED -> false
+            else -> false
+        }
     }
 
 }

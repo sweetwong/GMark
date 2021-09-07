@@ -2,6 +2,7 @@ package sweet.wong.gmark.repo
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.Menu
@@ -20,8 +21,8 @@ import sweet.wong.gmark.R
 import sweet.wong.gmark.core.noOpDelegate
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.databinding.ActivityRepoBinding
-import sweet.wong.gmark.repo.project.ProjectFragment
 import sweet.wong.gmark.repo.markdown.MarkdownDelegate
+import sweet.wong.gmark.repo.project.ProjectFragment
 import sweet.wong.gmark.utils.EventObserver
 import sweet.wong.gmark.utils.SnappingLinearLayoutManager
 
@@ -91,6 +92,9 @@ class RepoActivity : AppCompatActivity() {
         // Record current page scroll Y
         // Used for restore page
         binding.markList.layoutManager = SnappingLinearLayoutManager(this)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            binding.markList.isForceDarkAllowed = false
+        }
         binding.markList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

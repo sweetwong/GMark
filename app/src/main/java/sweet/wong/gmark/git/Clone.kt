@@ -10,10 +10,10 @@ import org.eclipse.jgit.transport.OpenSshConfig.Host
 import org.eclipse.jgit.transport.SshTransport
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider
 import org.eclipse.jgit.util.FS
+import sweet.wong.gmark.core.io
 import sweet.wong.gmark.core.noOpDelegate
 import sweet.wong.gmark.core.toast
 import java.io.File
-import kotlin.concurrent.thread
 
 object Clone {
 
@@ -55,7 +55,7 @@ object Clone {
             }
         }
 
-        thread(true) {
+        io {
             try {
                 // Delete local repository
                 File(localPath).deleteRecursively()
