@@ -23,6 +23,7 @@ import sweet.wong.gmark.databinding.ActivityRepoBinding
 import sweet.wong.gmark.repo.drawer.project.ProjectFragment
 import sweet.wong.gmark.repo.markdown.MarkdownDelegate
 import sweet.wong.gmark.utils.EventObserver
+import sweet.wong.gmark.utils.SnappingLinearLayoutManager
 
 class RepoActivity : AppCompatActivity() {
 
@@ -89,6 +90,7 @@ class RepoActivity : AppCompatActivity() {
 
         // Record current page scroll Y
         // Used for restore page
+        binding.markList.layoutManager = SnappingLinearLayoutManager(this)
         binding.markList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

@@ -3,6 +3,7 @@ package sweet.wong.gmark.repo.markdown
 import android.graphics.Color
 import androidx.recyclerview.widget.RecyclerView
 import io.noties.markwon.Markwon
+import io.noties.markwon.MarkwonReducer
 import io.noties.markwon.ext.tables.TablePlugin
 import io.noties.markwon.html.HtmlPlugin
 import io.noties.markwon.image.coil.CoilImagesPlugin
@@ -13,8 +14,9 @@ import io.noties.markwon.syntax.SyntaxHighlightPlugin
 import io.noties.prism4j.Prism4j
 import io.noties.prism4j.annotations.PrismBundle
 import org.commonmark.node.FencedCodeBlock
+import org.commonmark.node.Node
 import sweet.wong.gmark.R
-import sweet.wong.gmark.core.App
+import sweet.wong.gmark.core.*
 import sweet.wong.gmark.repo.RepoViewModel
 
 
@@ -23,6 +25,10 @@ class MarkdownDelegate(viewModel: RepoViewModel) {
 
     private val prism4j = Prism4j(GrammarLocatorSourceCode())
     private val prism4jTheme = Prism4jThemeDefault.create(Color.WHITE)
+    private val reducer = MarkwonReducer.directChildren()
+
+    internal lateinit var nodes: List<Node>
+    internal lateinit var markList: RecyclerView
 
     private val markwon: Markwon = Markwon.builder(App.app)
         .usePlugins(
@@ -32,7 +38,7 @@ class MarkdownDelegate(viewModel: RepoViewModel) {
                 TablePlugin.create(App.app),
                 SyntaxHighlightPlugin.create(prism4j, prism4jTheme),
                 GmarkImagePlugin(),
-                LinkPlugin(viewModel)
+                LinkPlugin(this, viewModel)
             )
         )
         .build()
@@ -46,11 +52,13 @@ class MarkdownDelegate(viewModel: RepoViewModel) {
 
 
     fun setMarkdown(fileName: String, markList: RecyclerView, markdown: String) {
+        this.markList = markList
+
         val template = if (fileName.endsWith(".md")) markdown
         else "```${getFileType(fileName)}\n$markdown\n```"
         markList.adapter = adapter
-        val node = markwon.parse(template)
-        adapter.setParsedMarkdown(markwon, node)
+        nodes = reducer.reduce(markwon.parse(template))
+        adapter.setParsedMarkdown(markwon, nodes)
         adapter.notifyDataSetChanged()
     }
 

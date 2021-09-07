@@ -4,13 +4,17 @@ import android.view.View
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.LinkResolverDef
 import io.noties.markwon.MarkwonConfiguration
-import io.noties.markwon.MarkwonVisitor
+import org.commonmark.node.Heading
+import org.commonmark.node.Text
 import sweet.wong.gmark.core.log
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.repo.RepoViewModel
 import java.io.File
 
-class LinkPlugin(private val viewModel: RepoViewModel) : AbstractMarkwonPlugin() {
+class LinkPlugin(
+    private val delegate: MarkdownDelegate,
+    private val viewModel: RepoViewModel
+) : AbstractMarkwonPlugin() {
 
     override fun configureConfiguration(builder: MarkwonConfiguration.Builder) {
 
@@ -27,6 +31,20 @@ class LinkPlugin(private val viewModel: RepoViewModel) : AbstractMarkwonPlugin()
 
                 val folder = showingFile.parentFile
                 if (folder == null || !folder.exists()) return toast("Folder is null")
+
+                if (link.startsWith("#")) {
+                    val head = link.replace("#", "")
+                    val nodes = delegate.nodes
+                    val recyclerView = delegate.markList
+                    repeat(delegate.nodes.size) { i ->
+                        val node = nodes[i]
+                        val firstChild = node.firstChild
+                        if (node is Heading && firstChild is Text && firstChild.literal == head) {
+                            recyclerView.smoothScrollToPosition(i)
+                        }
+                    }
+                    return
+                }
 
                 val resolved = when {
                     link.startsWith("./") -> {
