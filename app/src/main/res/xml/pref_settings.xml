@@ -1,8 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="General" />
+
     <Preference
-        app:title="不错"
-        app:icon="@drawable/file" />
+        app:iconSpaceReserved="false"
+        app:key="language"
+        app:summary="English"
+        app:title="Language" />
+
+    <Preference
+        app:iconSpaceReserved="false"
+        app:key="theme_color"
+        app:summary="Blue"
+        app:title="Theme color" />
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="Repository" />
+
+    <EditTextPreference
+        app:iconSpaceReserved="false"
+        app:key="text_size"
+        app:summary="16sp"
+        app:title="Text size" />
+
+    <SwitchPreference
+        app:iconSpaceReserved="false"
+        app:key="hide_toolbar"
+        app:summary="You can open settings by drawer layout again"
+        app:title="Hide toolbar" />
+
+    <SwitchPreference
+        app:iconSpaceReserved="false"
+        app:key="hide_breadcrumbs"
+        app:summary="For example: GMark > app > src > main"
+        app:title="Hide breadcrumbs" />
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="Git Profile" />
+
+    <Preference
+        app:iconSpaceReserved="false"
+        app:key="user_name"
+        app:summary="null"
+        app:title="User name" />
+
+    <Preference
+        app:iconSpaceReserved="false"
+        app:key="user_email\"
+        app:summary="null"
+        app:title="User Email" />
 
 </PreferenceScreen>
