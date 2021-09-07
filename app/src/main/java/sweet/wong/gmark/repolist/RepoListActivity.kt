@@ -2,12 +2,15 @@ package sweet.wong.gmark.repolist
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import sweet.wong.gmark.R
+import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.databinding.ActivityRepoListBinding
 import sweet.wong.gmark.repo.RepoActivity
+import sweet.wong.gmark.settings.SettingsActivity
 import sweet.wong.gmark.utils.EventObserver
 import java.util.*
 
@@ -52,7 +55,6 @@ class RepoListActivity : AppCompatActivity() {
 
         viewModel.repoSelectEvent.observe(this, EventObserver {
             RepoActivity.start(this, it)
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         })
 
         viewModel.repoUpdateEvent.observe(this, EventObserver {
@@ -67,5 +69,18 @@ class RepoListActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.menu_sync -> {
+                toast("Sync")
+                return true
+            }
+            R.id.menu_settings -> {
+                SettingsActivity.start(this)
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
 }

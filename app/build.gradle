@@ -74,6 +74,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.fragment:fragment-ktx:1.3.6'
+    implementation 'androidx.preference:preference-ktx:1.1.1'
     // Git
     implementation "org.eclipse.jgit:org.eclipse.jgit:4.5.0.201609210915-r"
     // AndroidUtilCode

@@ -3,6 +3,11 @@
 
     <item
         android:id="@+id/menu_sync"
-        android:title="sync" />
+        android:title="Sync" />
+
+    <item
+        android:id="@+id/menu_settings"
+        android:title="Settings" />
+
 
 </menu>

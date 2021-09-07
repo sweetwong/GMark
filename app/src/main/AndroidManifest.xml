@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name="sweet.wong.gmark.core.App"
+        android:name=".core.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SweetNote">
 
-        <activity android:name="sweet.wong.gmark.repolist.RepoListActivity" >
+        <activity android:name=".repolist.RepoListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,9 +25,11 @@
 
         </activity>
 
-        <activity android:name="sweet.wong.gmark.repo.RepoActivity" />
+        <activity android:name=".repo.RepoActivity" />
 
         <activity android:name=".photoview.PhotoViewActivity" />
+
+        <activity android:name=".settings.SettingsActivity" />
 
     </application>
 

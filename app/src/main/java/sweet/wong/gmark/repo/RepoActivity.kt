@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.ImageButton
@@ -19,10 +20,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ScreenUtils
 import sweet.wong.gmark.R
 import sweet.wong.gmark.core.noOpDelegate
+import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.databinding.ActivityRepoBinding
 import sweet.wong.gmark.repo.markdown.MarkdownDelegate
 import sweet.wong.gmark.repo.project.ProjectFragment
+import sweet.wong.gmark.settings.SettingsActivity
 import sweet.wong.gmark.utils.EventObserver
 import sweet.wong.gmark.utils.SnappingLinearLayoutManager
 
@@ -158,6 +161,20 @@ class RepoActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.menu_sync -> {
+                toast("Sync")
+                return true
+            }
+            R.id.menu_settings -> {
+                SettingsActivity.start(this)
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun onClickDrawerButton(button: View) {
         if (button !is ImageButton) {
             return
@@ -191,11 +208,6 @@ class RepoActivity : AppCompatActivity() {
             val animation = AnimationUtils.loadAnimation(this, android.R.anim.fade_in)
             binding.markList.startAnimation(animation)
         }
-    }
-
-    override fun finish() {
-        super.finish()
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 
     companion object {
