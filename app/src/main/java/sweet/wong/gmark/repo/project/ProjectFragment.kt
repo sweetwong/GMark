@@ -1,4 +1,4 @@
-package sweet.wong.gmark.repo.drawer.project
+package sweet.wong.gmark.repo.project
 
 import android.content.Context
 import android.os.Bundle

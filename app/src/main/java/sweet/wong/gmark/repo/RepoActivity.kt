@@ -20,7 +20,7 @@ import sweet.wong.gmark.R
 import sweet.wong.gmark.core.noOpDelegate
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.databinding.ActivityRepoBinding
-import sweet.wong.gmark.repo.drawer.project.ProjectFragment
+import sweet.wong.gmark.repo.project.ProjectFragment
 import sweet.wong.gmark.repo.markdown.MarkdownDelegate
 import sweet.wong.gmark.utils.EventObserver
 import sweet.wong.gmark.utils.SnappingLinearLayoutManager

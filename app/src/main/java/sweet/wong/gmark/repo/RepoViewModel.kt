@@ -8,8 +8,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import sweet.wong.gmark.core.log
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.Repo
-import sweet.wong.gmark.repo.drawer.history.Page
-import sweet.wong.gmark.repo.drawer.project.ProjectUIState
+import sweet.wong.gmark.repo.history.Page
+import sweet.wong.gmark.repo.project.ProjectUIState
 import sweet.wong.gmark.utils.Event
 import sweet.wong.gmark.utils.LimitedDeque
 import java.io.File
