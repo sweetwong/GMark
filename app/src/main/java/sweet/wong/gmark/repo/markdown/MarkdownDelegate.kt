@@ -52,8 +52,8 @@ class MarkdownDelegate(viewModel: RepoViewModel) {
 
 
     fun setMarkdown(fileName: String, markList: RecyclerView, markdown: String) {
+        // FIXME: 2021/9/7 这里会ANR
         this.markList = markList
-
         val template = if (fileName.endsWith(".md")) markdown
         else "```${getFileType(fileName)}\n$markdown\n```"
         markList.adapter = adapter

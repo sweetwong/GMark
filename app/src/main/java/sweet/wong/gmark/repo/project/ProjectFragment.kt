@@ -115,7 +115,7 @@ class ProjectFragment : Fragment() {
                 sorted.add(ProjectUIState(it, uiState.showingFile, uiState.rootFile))
             }
         }
-        // Thrid traversal add files
+        // Third traversal add files
         fileChildren.forEach {
             if (it.exists() && it.isFile) {
                 sorted.add(ProjectUIState(it, uiState.showingFile, uiState.rootFile))

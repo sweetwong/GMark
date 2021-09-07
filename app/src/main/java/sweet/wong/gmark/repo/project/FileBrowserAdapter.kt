@@ -1,6 +1,8 @@
 package sweet.wong.gmark.repo.project
 
+import android.view.Gravity
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import sweet.wong.gmark.R
@@ -49,6 +51,13 @@ class FileBrowserAdapter(private val onItemClick: (ProjectUIState) -> Unit) :
 
             itemView.setOnClickListener {
                 onItemClick(uiState)
+            }
+
+            itemView.setOnLongClickListener {
+                val popupMenu = PopupMenu(it.context, it, Gravity.END)
+                popupMenu.inflate(R.menu.menu_project_browser)
+                popupMenu.show()
+                true
             }
         }
 
