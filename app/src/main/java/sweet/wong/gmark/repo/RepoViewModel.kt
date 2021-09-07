@@ -18,8 +18,7 @@ class RepoViewModel : ViewModel() {
     /**
      * File raw text, this data may be large
      */
-    // TODO: 2021/9/7 这里需要封装一个数据结构
-    val rawText = MutableLiveData<String>()
+    val fileRaw = MutableLiveData<FileRaw>()
 
     val drawerShowEvent = MutableLiveData<Event<Boolean>>()
 
@@ -81,13 +80,13 @@ class RepoViewModel : ViewModel() {
             try {
                 val raw = file.readText()
                 ui {
-                    val oldData = rawText.value
+                    val oldData = fileRaw.value
                     val oldFile = showingFile
-                    if (!oldData.isNullOrBlank() && oldFile != null && pushToHistoryStack) {
+                    if (oldData != null && oldFile != null && pushToHistoryStack) {
                         savePage(Page(oldFile, scrollY), file)
                     }
 
-                    rawText.value = raw
+                    fileRaw.value = FileRaw(file, raw)
                     showingFile = file
                     selectFileEvent.value = Event(page)
                     scrollY = page.scrollY
