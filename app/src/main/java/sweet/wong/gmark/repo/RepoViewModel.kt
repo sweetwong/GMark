@@ -2,11 +2,10 @@ package sweet.wong.gmark.repo
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import sweet.wong.gmark.core.io
 import sweet.wong.gmark.core.log
 import sweet.wong.gmark.core.toast
+import sweet.wong.gmark.core.ui
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.repo.history.Page
 import sweet.wong.gmark.repo.project.ProjectUIState
@@ -66,7 +65,7 @@ class RepoViewModel : ViewModel() {
         selectFile(Page(file, 0), pushToHistoryStack)
     }
 
-    fun selectFile(page: Page, pushToHistoryStack: Boolean = true) {
+    private fun selectFile(page: Page, pushToHistoryStack: Boolean = true) {
         val file = page.file
 
         if (!file.exists() || !file.isFile) {
@@ -78,25 +77,25 @@ class RepoViewModel : ViewModel() {
             return log("Repeat selection")
         }
 
-        Observable.fromCallable { file.readText() }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext {
-                val oldData = rawText.value
-                val oldFile = showingFile
-                if (!oldData.isNullOrBlank() && oldFile != null && pushToHistoryStack) {
-                    savePage(Page(oldFile, scrollY), file)
-                }
+        io {
+            try {
+                val raw = file.readText()
+                ui {
+                    val oldData = rawText.value
+                    val oldFile = showingFile
+                    if (!oldData.isNullOrBlank() && oldFile != null && pushToHistoryStack) {
+                        savePage(Page(oldFile, scrollY), file)
+                    }
 
-                rawText.value = it
-                showingFile = file
-                selectFileEvent.value = Event(page)
-                scrollY = page.scrollY
+                    rawText.value = raw
+                    showingFile = file
+                    selectFileEvent.value = Event(page)
+                    scrollY = page.scrollY
+                }
+            } catch (e: Exception) {
+                toast("Read file failed", e)
             }
-            .doOnError {
-                toast("Read text failed", it)
-            }
-            .subscribe()
+        }
     }
 
     fun restorePage(): Boolean {
