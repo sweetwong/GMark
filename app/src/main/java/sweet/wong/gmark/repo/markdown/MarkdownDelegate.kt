@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import io.noties.markwon.Markwon
 import io.noties.markwon.ext.tables.TablePlugin
 import io.noties.markwon.html.HtmlPlugin
-import io.noties.markwon.image.glide.GlideImagesPlugin
+import io.noties.markwon.image.coil.CoilImagesPlugin
 import io.noties.markwon.recycler.MarkwonAdapter
 import io.noties.markwon.recycler.SimpleEntry
 import io.noties.markwon.syntax.Prism4jThemeDefault
@@ -27,11 +27,12 @@ class MarkdownDelegate(viewModel: RepoViewModel) {
     private val markwon: Markwon = Markwon.builder(App.app)
         .usePlugins(
             listOf(
-                GlideImagesPlugin.create(App.app),
+                CoilImagesPlugin.create(App.app),
                 HtmlPlugin.create(),
                 TablePlugin.create(App.app),
                 SyntaxHighlightPlugin.create(prism4j, prism4jTheme),
-                LinkPlugin.create(viewModel)
+                GmarkImagePlugin(),
+                LinkPlugin(viewModel)
             )
         )
         .build()
