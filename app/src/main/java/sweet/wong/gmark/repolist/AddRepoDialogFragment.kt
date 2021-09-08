@@ -1,5 +1,6 @@
 package sweet.wong.gmark.repolist
 
+import android.Manifest
 import android.content.DialogInterface
 import android.net.Uri
 import android.os.Bundle
@@ -7,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import androidx.activity.result.contract.ActivityResultContracts.GetContent
+import androidx.activity.result.contract.ActivityResultContracts.*
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import sweet.wong.gmark.R
@@ -32,6 +33,30 @@ class RepoAuthDialogFragment(private val viewModel: RepoListViewModel) :
 
         binding.editSsh.setText(uri.path ?: return@registerForActivityResult)
     }
+
+    private val requestPermissionThenChooseFileLauncher =
+        registerForActivityResult(RequestMultiplePermissions()) { grantState ->
+            grantState.values.forEach { isGranted ->
+                if (!isGranted) {
+                    toast("Don't have permissions to access external files")
+                    return@registerForActivityResult
+                }
+            }
+            fileChooseLauncher.launch("file/*")
+        }
+
+    private val requestPermissionThenStartCloneLauncher =
+        registerForActivityResult(RequestMultiplePermissions()) { grantState ->
+            grantState.values.forEach { isGranted ->
+                if (!isGranted) {
+                    toast("Don't have permissions to access external files")
+                    dismiss()
+                    return@registerForActivityResult
+                }
+            }
+            createRepo()
+            dismiss()
+        }
 
     /**
      * Interface to listen dialog dismiss
@@ -82,15 +107,24 @@ class RepoAuthDialogFragment(private val viewModel: RepoListViewModel) :
         // Default is hhtp
         radioGroup.check(R.id.radio_http)
 
-        // When click ssh edit text end icon, we should open file chooser and select ssh private key
+        // Choose ssh private key
         inputSsh.setEndIconOnClickListener {
-            fileChooseLauncher.launch("file/*")
+            requestPermissionThenChooseFileLauncher.launch(
+                arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+            )
         }
 
-        // When click clone button, modify view model's data then trigger git clone action and last save to local storage
+        // Start clone
         btnClone.setOnClickListener {
-            createRepo()
-            dismiss()
+            requestPermissionThenStartCloneLauncher.launch(
+                arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+            )
         }
 
     }
