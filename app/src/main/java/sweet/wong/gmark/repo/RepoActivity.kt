@@ -9,13 +9,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.ImageButton
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.add
-import androidx.fragment.app.commit
+import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ScreenUtils
 import sweet.wong.gmark.R
@@ -24,7 +21,6 @@ import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.databinding.ActivityRepoBinding
 import sweet.wong.gmark.repo.markdown.MarkdownDelegate
-import sweet.wong.gmark.repo.project.ProjectFragment
 import sweet.wong.gmark.settings.SettingsActivity
 import sweet.wong.gmark.utils.EventObserver
 import sweet.wong.gmark.utils.SnappingLinearLayoutManager
@@ -34,7 +30,9 @@ class RepoActivity : AppCompatActivity() {
     private val viewModel: RepoViewModel by viewModels()
 
     private lateinit var binding: ActivityRepoBinding
-    private lateinit var markdown: MarkdownDelegate
+
+    private lateinit var drawerDelegate: DrawerDelegate
+    private lateinit var markdownDelegate: MarkdownDelegate
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,20 +45,37 @@ class RepoActivity : AppCompatActivity() {
         }
 
         // Binding View
-        binding = ActivityRepoBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = this
-
-        if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                add<ProjectFragment>(R.id.fragment_container_view)
-            }
+        binding = ActivityRepoBinding.inflate(layoutInflater).apply {
+            setContentView(root)
+            viewModel = this@RepoActivity.viewModel
+            lifecycleOwner = this@RepoActivity
         }
+
+        // Init markdown
+        markdownDelegate = MarkdownDelegate(viewModel)
 
         // Init toolbar
         setSupportActionBar(binding.toolbar)
+        initDrawer(savedInstanceState)
+        initMarkList()
+        initObservers()
+
+        // Start load data
+        viewModel.init(repo)
+    }
+
+    private fun initDrawer(savedInstanceState: Bundle?) {
+        binding.drawerLayout.addDrawerListener(object : DrawerListener by noOpDelegate() {
+
+            override fun onDrawerClosed(drawerView: View) {
+                viewModel.updateDrawer()
+            }
+        })
+
+        // Navigation bar show 90% width
+        binding.navigationView.layoutParams = binding.navigationView.layoutParams.apply {
+            width = (ScreenUtils.getScreenWidth() * 0.9).toInt()
+        }
 
         // Init drawer toggle
         val drawerToggle = ActionBarDrawerToggle(
@@ -72,46 +87,32 @@ class RepoActivity : AppCompatActivity() {
         )
         drawerToggle.syncState()
 
-        binding.drawerLayout.addDrawerListener(object :
-            DrawerLayout.DrawerListener by noOpDelegate() {
+        drawerDelegate = DrawerDelegate(this, viewModel, binding.includeLayoutDrawer)
+        drawerDelegate.onCreate(savedInstanceState)
+    }
 
-            override fun onDrawerClosed(drawerView: View) {
-                viewModel.updateDrawer()
-            }
-        })
-        // Navigation bar show 90% width
-        binding.navigationView.layoutParams = binding.navigationView.layoutParams.apply {
-            width = (ScreenUtils.getScreenWidth() * 0.9).toInt()
-        }
 
-        binding.btnProject.setOnClickListener(::onClickDrawerButton)
-        binding.btnGit.setOnClickListener(::onClickDrawerButton)
-        binding.btnHistory.setOnClickListener(::onClickDrawerButton)
-        binding.btnHistory.setOnClickListener(::onClickDrawerButton)
-
-        // Init Markdown
-        markdown = MarkdownDelegate(viewModel)
-
-        // Record current page scroll Y
-        // Used for restore page
+    private fun initMarkList() {
         binding.markList.layoutManager = SnappingLinearLayoutManager(this)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             binding.markList.isForceDarkAllowed = false
         }
+        // Record current page scroll Y
+        // Used for restore page
         binding.markList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 viewModel.scrollY += dy
             }
         })
+    }
 
-        binding.drawerToolbar.setNavigationOnClickListener {
-            binding.drawerLayout.closeDrawer(binding.navigationView)
-        }
-
-        // View model observers
+    /**
+     * View model observers
+     */
+    private fun initObservers() {
         viewModel.fileRaw.observe(this) {
-            markdown.setMarkdown(it.file.name, binding.markList, it.raw)
+            markdownDelegate.setMarkdown(it.file.name, binding.markList, it.raw)
         }
 
         viewModel.selectFileEvent.observe(this, EventObserver {
@@ -132,9 +133,20 @@ class RepoActivity : AppCompatActivity() {
             if (open) binding.drawerLayout.openDrawer(binding.navigationView)
             else binding.drawerLayout.closeDrawer(binding.navigationView)
         })
+    }
 
-        // Start load data
-        viewModel.init(repo)
+    /**
+     * Restore scroll history
+     */
+    private fun scrollY(scrollY: Int) {
+        // Scroll
+        binding.markList.scrollBy(0, scrollY)
+
+        // If it's new page, run animation
+        if (scrollY == 0) {
+            val animation = AnimationUtils.loadAnimation(this, android.R.anim.fade_in)
+            binding.markList.startAnimation(animation)
+        }
     }
 
     /**
@@ -162,7 +174,7 @@ class RepoActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.menu_sync -> {
                 toast("Sync")
                 return true
@@ -173,41 +185,6 @@ class RepoActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun onClickDrawerButton(button: View) {
-        if (button !is ImageButton) {
-            return
-        }
-
-        when (button) {
-            binding.btnProject -> {
-
-            }
-            binding.btnGit -> {
-
-            }
-            binding.btnHistory -> {
-
-            }
-            binding.btnOutline -> {
-
-            }
-        }
-    }
-
-    /**
-     * Restore scroll history
-     */
-    private fun scrollY(scrollY: Int) {
-        // Scroll
-        binding.markList.scrollBy(0, scrollY)
-
-        // If it's new page, run animation
-        if (scrollY == 0) {
-            val animation = AnimationUtils.loadAnimation(this, android.R.anim.fade_in)
-            binding.markList.startAnimation(animation)
-        }
     }
 
     companion object {

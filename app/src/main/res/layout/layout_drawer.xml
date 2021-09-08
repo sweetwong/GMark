@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="sweet.wong.gmark.repo.RepoViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/drawer_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="?actionBarSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/back"
+            app:title="@{viewModel.repo.name}" />
+
+        <LinearLayout
+            android:id="@+id/drawer_btn_container"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="@color/ck_gray100"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/drawer_toolbar">
+
+            <ImageButton
+                android:id="@+id/btn_project"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="12dp"
+                android:background="?selectableItemBackground"
+                android:padding="6dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/file"
+                app:tint="@color/blue_main"
+                tools:ignore="ContentDescription" />
+
+            <ImageButton
+                android:id="@+id/btn_outline"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:background="?selectableItemBackground"
+                android:padding="6dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/outline"
+                tools:ignore="ContentDescription" />
+
+            <ImageButton
+                android:id="@+id/btn_history"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:background="?selectableItemBackground"
+                android:padding="6dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/history"
+                tools:ignore="ContentDescription" />
+
+            <ImageButton
+                android:id="@+id/btn_git"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:background="?selectableItemBackground"
+                android:padding="6dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/git"
+                tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_container_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/drawer_btn_container"
+            app:layout_constraintTop_toBottomOf="@id/drawer_toolbar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
