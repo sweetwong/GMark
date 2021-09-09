@@ -12,17 +12,21 @@ import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.ObservableList
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ScreenUtils
+import com.google.android.material.tabs.TabLayout
 import sweet.wong.gmark.R
 import sweet.wong.gmark.core.noOpDelegate
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.databinding.ActivityRepoBinding
+import sweet.wong.gmark.repo.history.Page
 import sweet.wong.gmark.repo.markdown.MarkdownDelegate
 import sweet.wong.gmark.settings.SettingsActivity
 import sweet.wong.gmark.utils.EventObserver
+import sweet.wong.gmark.utils.OnListChangedCallback
 import sweet.wong.gmark.utils.SnappingLinearLayoutManager
 
 class RepoActivity : AppCompatActivity() {
@@ -57,6 +61,7 @@ class RepoActivity : AppCompatActivity() {
         // Init toolbar
         setSupportActionBar(binding.toolbar)
         initDrawer(savedInstanceState)
+        initTabLayout()
         initMarkList()
         initObservers()
 
@@ -91,6 +96,25 @@ class RepoActivity : AppCompatActivity() {
         drawerDelegate.onCreate(savedInstanceState)
     }
 
+    private fun initTabLayout() = with(binding.tabLayout) {
+        addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener by noOpDelegate() {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                viewModel.currentTabPosition = tab.position
+            }
+        })
+
+        viewModel.tabs.addOnListChangedCallback(object : OnListChangedCallback<ObservableList<Page>>() {
+            override fun onItemRangeInserted(sender: ObservableList<Page>, positionStart: Int, itemCount: Int) {
+                val tab = newTab().apply { text = sender[positionStart].file.name }
+                addTab(tab)
+                selectTab(tab)
+            }
+
+            override fun onItemRangeRemoved(sender: ObservableList<Page>, positionStart: Int, itemCount: Int) {
+//                binding.tabLayout.removeTabAt(positionStart)
+            }
+        })
+    }
 
     private fun initMarkList() {
         binding.markList.layoutManager = SnappingLinearLayoutManager(this)
@@ -159,6 +183,11 @@ class RepoActivity : AppCompatActivity() {
                 return true
             }
 
+            if (viewModel.currentTabPosition != -1) {
+                viewModel.showingPage?.let {
+                    viewModel.tabs.remove(it)
+                }
+            }
             // Handle main text back stack
             if (viewModel.restorePage()) {
                 return true

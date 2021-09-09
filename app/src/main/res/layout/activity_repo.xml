@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/tools">
 
     <data>
@@ -21,14 +22,23 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
+                android:layout_height="46dp"
                 android:background="@color/white" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_below="@id/toolbar"
+                app:tabMode="scrollable"
+                app:tabTextAppearance="@style/TabTextAppearance"
+                app:tabUnboundedRipple="false" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/mark_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/toolbar"
+                android:layout_below="@id/tab_layout"
                 android:orientation="vertical"
                 android:overScrollMode="never" />
 

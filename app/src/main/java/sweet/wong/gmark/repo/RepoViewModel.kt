@@ -1,5 +1,7 @@
 package sweet.wong.gmark.repo
 
+import androidx.databinding.ObservableArrayList
+import androidx.databinding.ObservableList
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import sweet.wong.gmark.core.io
@@ -26,6 +28,10 @@ class RepoViewModel : ViewModel() {
 
     val updateDrawerEvent = MutableLiveData<Event<ProjectUIState>>()
 
+    val tabs: ObservableList<Page> = ObservableArrayList()
+
+    var currentTabPosition = -1
+
     /**
      * Current Repository, this data is get from argument
      */
@@ -37,6 +43,8 @@ class RepoViewModel : ViewModel() {
      * Current showing File, must be a file not a directory
      */
     var showingFile: File? = null
+
+    var showingPage: Page? = null
 
     var scrollY: Int = 0
 
@@ -86,8 +94,10 @@ class RepoViewModel : ViewModel() {
                         savePage(Page(oldFile, scrollY), file)
                     }
 
+                    tabs.add(page)
                     fileRaw.value = FileRaw(file, raw)
                     showingFile = file
+                    showingPage = page
                     selectFileEvent.value = Event(page)
                     scrollY = page.scrollY
                 }
