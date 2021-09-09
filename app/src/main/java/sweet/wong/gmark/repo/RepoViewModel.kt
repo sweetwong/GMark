@@ -40,14 +40,6 @@ class RepoViewModel : ViewModel() {
 
     var scrollY: Int = 0
 
-    var currentPagePosition = 0
-
-    var tabLimit = 5
-
-    var livingTab = 0
-
-    val pages = mutableListOf<Page>()
-
     private val historyStack = LimitedDeque<Page>(3)
 
     fun init(repo: Repo) {
@@ -88,27 +80,21 @@ class RepoViewModel : ViewModel() {
             try {
                 val raw = file.readText()
                 ui {
-                    onPageReady(page, raw, pushToHistoryStack)
+                    val oldData = fileRaw.value
+                    val oldFile = showingFile
+                    if (oldData != null && oldFile != null && pushToHistoryStack) {
+                        savePage(Page(oldFile, scrollY), file)
+                    }
+
+                    fileRaw.value = FileRaw(file, raw)
+                    showingFile = file
+                    selectFileEvent.value = Event(page)
+                    scrollY = page.scrollY
                 }
             } catch (e: Exception) {
                 toast("Read file failed", e)
             }
         }
-    }
-
-    private fun onPageReady(page: Page, raw: String, pushToHistoryStack: Boolean) {
-        val file = page.file
-
-        val oldData = fileRaw.value
-        val oldFile = showingFile
-        if (oldData != null && oldFile != null && pushToHistoryStack) {
-            savePage(Page(oldFile, scrollY), file)
-        }
-
-        fileRaw.value = FileRaw(file, raw)
-        showingFile = file
-        selectFileEvent.value = Event(page)
-        scrollY = page.scrollY
     }
 
     fun restorePage(): Boolean {
