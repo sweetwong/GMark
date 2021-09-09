@@ -24,12 +24,12 @@
                 android:layout_height="?actionBarSize"
                 android:background="@color/white" />
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/view_pager"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mark_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/toolbar"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:overScrollMode="never" />
 
         </RelativeLayout>
