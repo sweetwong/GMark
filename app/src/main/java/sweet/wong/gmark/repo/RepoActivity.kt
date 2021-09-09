@@ -11,7 +11,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
+import androidx.viewpager2.widget.ViewPager2
 import com.blankj.utilcode.util.ScreenUtils
+import com.google.android.material.tabs.TabLayoutMediator
 import sweet.wong.gmark.R
 import sweet.wong.gmark.core.noOpDelegate
 import sweet.wong.gmark.core.toast
@@ -25,8 +27,10 @@ class RepoActivity : AppCompatActivity() {
     private val viewModel: RepoViewModel by viewModels()
 
     private lateinit var binding: ActivityRepoBinding
-
     private lateinit var drawerDelegate: DrawerDelegate
+
+    private lateinit var viewPagerAdapter: RepoPagerAdapter
+    private val fragments: MutableList<RepoFragment> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +52,9 @@ class RepoActivity : AppCompatActivity() {
         // Init toolbar
         setSupportActionBar(binding.toolbar)
         initDrawer(savedInstanceState)
+        initFragments()
         initViewPager()
+        initTabs()
         initObservers()
 
         // Start load data
@@ -82,9 +88,39 @@ class RepoActivity : AppCompatActivity() {
         drawerDelegate.onCreate(savedInstanceState)
     }
 
-    private fun initViewPager() {
-        binding.viewPager.adapter = RepoPagerAdapter(this)
-        binding.viewPager.offscreenPageLimit = 5
+    private fun initFragments() {
+        repeat(viewModel.tabLimit) {
+            fragments.add(RepoFragment(it))
+        }
+    }
+
+    private fun initViewPager() = with(binding.viewPager) {
+        viewPagerAdapter = RepoPagerAdapter(this@RepoActivity, fragments)
+        adapter = viewPagerAdapter
+        registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+            }
+
+            override fun onPageSelected(position: Int) {
+                viewModel.currentPagePosition = position
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+        })
+    }
+
+    private fun initTabs() = with(binding) {
+        TabLayoutMediator(tabLayout, viewPager, true, true) { tab, position ->
+            val pages = viewModel.pages
+            if (position < pages.size) {
+                tab.text = pages[position].title
+            }
+        }.attach()
     }
 
     /**

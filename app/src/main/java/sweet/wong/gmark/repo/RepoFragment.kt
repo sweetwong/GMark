@@ -15,7 +15,7 @@ import sweet.wong.gmark.repo.markdown.MarkdownDelegate
 import sweet.wong.gmark.utils.EventObserver
 import sweet.wong.gmark.utils.SnappingLinearLayoutManager
 
-class RepoFragment : Fragment() {
+class RepoFragment(private val position: Int) : Fragment() {
 
     private lateinit var binding: FragmentRepoBinding
     private lateinit var viewModel: RepoViewModel
@@ -59,11 +59,15 @@ class RepoFragment : Fragment() {
 
     private fun initObservers() {
         viewModel.fileRaw.observe(viewLifecycleOwner) {
-            markdownDelegate.setMarkdown(it.file.name, binding.markList, it.raw)
+            if (isShowing()) {
+                markdownDelegate.setMarkdown(it.file.name, binding.markList, it.raw)
+            }
         }
 
         viewModel.selectFileEvent.observe(viewLifecycleOwner, EventObserver {
-            scrollY(it.scrollY)
+            if (isShowing()) {
+                scrollY(it.scrollY)
+            }
         })
     }
 
@@ -79,6 +83,10 @@ class RepoFragment : Fragment() {
             val animation = AnimationUtils.loadAnimation(requireContext(), android.R.anim.fade_in)
             binding.markList.startAnimation(animation)
         }
+    }
+
+    private fun isShowing(): Boolean {
+        return position == viewModel.currentPagePosition
     }
 
 }
