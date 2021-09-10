@@ -34,13 +34,11 @@
                 app:tabTextAppearance="@style/TabTextAppearance"
                 app:tabUnboundedRipple="false" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/mark_list"
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/markdown_fragment_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/tab_layout"
-                android:orientation="vertical"
-                android:overScrollMode="never" />
+                android:layout_below="@id/tab_layout" />
 
         </RelativeLayout>
 
