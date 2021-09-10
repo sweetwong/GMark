@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ScreenUtils
 import com.google.android.material.tabs.TabLayout
 import sweet.wong.gmark.R
+import sweet.wong.gmark.core.delay
 import sweet.wong.gmark.core.noOpDelegate
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.Repo
@@ -86,9 +87,9 @@ class RepoActivity : AppCompatActivity() {
         val drawerToggle = ActionBarDrawerToggle(
             this,
             binding.drawerLayout,
-                binding.toolbar,
-                R.string.app_name,
-                R.string.app_name
+            binding.toolbar,
+            R.string.app_name,
+            R.string.app_name
         )
         drawerToggle.syncState()
 
@@ -100,18 +101,41 @@ class RepoActivity : AppCompatActivity() {
         addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener by noOpDelegate() {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 viewModel.currentTabPosition = tab.position
+                if (tab.position < viewModel.pages.size) {
+                    val page = viewModel.pages[tab.position]
+                    if (page.firstSelect) {
+                        page.firstSelect = false
+                        return
+                    }
+                    viewModel.selectPage(viewModel.pages[tab.position], false)
+                }
             }
         })
 
-        viewModel.tabs.addOnListChangedCallback(object : OnListChangedCallback<ObservableList<Page>>() {
-            override fun onItemRangeInserted(sender: ObservableList<Page>, positionStart: Int, itemCount: Int) {
+        viewModel.pages.addOnListChangedCallback(object :
+            OnListChangedCallback<ObservableList<Page>>() {
+            override fun onItemRangeInserted(
+                sender: ObservableList<Page>,
+                positionStart: Int,
+                itemCount: Int
+            ) {
                 val tab = newTab().apply { text = sender[positionStart].file.name }
                 addTab(tab)
-                selectTab(tab)
+                delay(10) {
+                    selectTab(tab)
+                }
             }
 
-            override fun onItemRangeRemoved(sender: ObservableList<Page>, positionStart: Int, itemCount: Int) {
-//                binding.tabLayout.removeTabAt(positionStart)
+            override fun onItemRangeRemoved(
+                sender: ObservableList<Page>,
+                positionStart: Int,
+                itemCount: Int
+            ) {
+                binding.tabLayout.removeTabAt(positionStart)
+                if (sender.isEmpty()) {
+                    viewModel.fileRaw.value = FileRaw(viewModel.rootFile, "", true)
+                    binding.toolbar.title = viewModel.repo.name
+                }
             }
         })
     }
@@ -126,7 +150,11 @@ class RepoActivity : AppCompatActivity() {
         binding.markList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                viewModel.scrollY += dy
+                val position = viewModel.currentTabPosition
+                val tabs = viewModel.pages
+                if (position != -1 && position < tabs.size) {
+                    tabs[viewModel.currentTabPosition].scrollY += dy
+                }
             }
         })
     }
@@ -136,7 +164,11 @@ class RepoActivity : AppCompatActivity() {
      */
     private fun initObservers() {
         viewModel.fileRaw.observe(this) {
-            markdownDelegate.setMarkdown(it.file.name, binding.markList, it.raw)
+            if (it.empty) {
+                markdownDelegate.setMarkdown("README.md", binding.markList, "")
+            } else {
+                markdownDelegate.setMarkdown(it.file.name, binding.markList, it.raw)
+            }
         }
 
         viewModel.selectFileEvent.observe(this, EventObserver {
@@ -185,9 +217,12 @@ class RepoActivity : AppCompatActivity() {
 
             if (viewModel.currentTabPosition != -1) {
                 viewModel.showingPage?.let {
-                    viewModel.tabs.remove(it)
+                    if (viewModel.pages.remove(it)) {
+                        return true
+                    }
                 }
             }
+
             // Handle main text back stack
             if (viewModel.restorePage()) {
                 return true

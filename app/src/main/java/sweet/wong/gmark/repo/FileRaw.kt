@@ -7,4 +7,4 @@ import java.io.File
  *
  * @author sweetwang 2021/9/7
  */
-data class FileRaw(val file: File, val raw: String)
+data class FileRaw(val file: File, val raw: String, val empty: Boolean = false)

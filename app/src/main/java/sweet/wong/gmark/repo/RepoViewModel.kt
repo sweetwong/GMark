@@ -28,7 +28,7 @@ class RepoViewModel : ViewModel() {
 
     val updateDrawerEvent = MutableLiveData<Event<ProjectUIState>>()
 
-    val tabs: ObservableList<Page> = ObservableArrayList()
+    val pages: ObservableList<Page> = ObservableArrayList()
 
     var currentTabPosition = -1
 
@@ -42,11 +42,10 @@ class RepoViewModel : ViewModel() {
     /**
      * Current showing File, must be a file not a directory
      */
-    var showingFile: File? = null
+    val showingFile: File?
+        get() = showingPage?.file
 
     var showingPage: Page? = null
-
-    var scrollY: Int = 0
 
     private val historyStack = LimitedDeque<Page>(3)
 
@@ -68,11 +67,11 @@ class RepoViewModel : ViewModel() {
         updateDrawerEvent.value = Event(uiState)
     }
 
-    fun selectFile(file: File, pushToHistoryStack: Boolean = true) {
-        selectFile(Page(file, 0), pushToHistoryStack)
+    fun selectFile(file: File) {
+        selectPage(Page(file, 0))
     }
 
-    private fun selectFile(page: Page, pushToHistoryStack: Boolean = true) {
+    fun selectPage(page: Page, newFile: Boolean = true) {
         val file = page.file
 
         if (!file.exists() || !file.isFile) {
@@ -88,18 +87,12 @@ class RepoViewModel : ViewModel() {
             try {
                 val raw = file.readText()
                 ui {
-                    val oldData = fileRaw.value
-                    val oldFile = showingFile
-                    if (oldData != null && oldFile != null && pushToHistoryStack) {
-                        savePage(Page(oldFile, scrollY), file)
+                    if (newFile) {
+                        pages.add(page)
                     }
-
-                    tabs.add(page)
                     fileRaw.value = FileRaw(file, raw)
-                    showingFile = file
                     showingPage = page
                     selectFileEvent.value = Event(page)
-                    scrollY = page.scrollY
                 }
             } catch (e: Exception) {
                 toast("Read file failed", e)
@@ -113,7 +106,7 @@ class RepoViewModel : ViewModel() {
         }
 
         val historyFile = historyStack.removeLast()
-        historyFile?.let { selectFile(it, false) }
+        historyFile?.let { selectPage(it, false) }
         return true
     }
 
