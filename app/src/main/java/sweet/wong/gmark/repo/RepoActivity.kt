@@ -61,6 +61,8 @@ class RepoActivity : AppCompatActivity() {
 
         // Init toolbar
         setSupportActionBar(binding.toolbar)
+        supportActionBar?.title = repo.name
+
         initDrawer(savedInstanceState)
         initTabLayout()
         initMarkList()
@@ -134,12 +136,13 @@ class RepoActivity : AppCompatActivity() {
                 binding.tabLayout.removeTabAt(positionStart)
                 if (sender.isEmpty()) {
                     viewModel.fileRaw.value = FileRaw(viewModel.rootFile, "", true)
-                    binding.toolbar.title = viewModel.repo.name
+//                    binding.toolbar.title = viewModel.repo.name
                 }
             }
         })
     }
 
+    // TODO: 2021/9/10 把这个逻辑移到Fragment
     private fun initMarkList() {
         binding.markList.layoutManager = SnappingLinearLayoutManager(this)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -172,7 +175,7 @@ class RepoActivity : AppCompatActivity() {
         }
 
         viewModel.selectFileEvent.observe(this, EventObserver {
-            binding.toolbar.title = it.file.name
+//            binding.toolbar.title = it.file.name
             scrollY(it.scrollY)
             // If drawer is visible, we close drawer
             // Note that close drawer will trigger update drawer

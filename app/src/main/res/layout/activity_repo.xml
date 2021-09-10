@@ -28,7 +28,7 @@
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout"
                 android:layout_width="wrap_content"
-                android:layout_height="32dp"
+                android:layout_height="36dp"
                 android:layout_below="@id/toolbar"
                 app:tabMode="scrollable"
                 app:tabTextAppearance="@style/TabTextAppearance"

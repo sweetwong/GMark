@@ -24,6 +24,7 @@
     <style name="TabTextAppearance" parent="TextAppearance.MaterialComponents.Caption">
         <item name="android:textColor">@color/text_main</item>
         <item name="textAllCaps">false</item>
+        <item name="android:textSize">13sp</item>
         <item name="android:textAllCaps">false</item>
     </style>
 
