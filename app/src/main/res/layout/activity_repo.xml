@@ -22,16 +22,20 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="46dp"
+                android:layout_height="42dp"
                 android:background="@color/white" />
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
                 android:layout_below="@id/toolbar"
+                app:tabIndicatorColor="@color/blue_main"
+                app:tabMaxWidth="180dp"
                 app:tabMode="scrollable"
+                app:tabSelectedTextColor="@color/blue_main"
                 app:tabTextAppearance="@style/TabTextAppearance"
+                app:tabTextColor="@color/text_main"
                 app:tabUnboundedRipple="false" />
 
             <androidx.fragment.app.FragmentContainerView

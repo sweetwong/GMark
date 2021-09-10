@@ -164,6 +164,7 @@ class RepoActivity : AppCompatActivity() {
                 positionStart: Int,
                 itemCount: Int
             ) {
+                // This will trigger onTabSelected
                 binding.tabLayout.removeTabAt(positionStart)
                 if (sender.isEmpty()) {
                     viewModel.fileRaw.value = FileRaw(viewModel.rootFile, "", true)

@@ -12,6 +12,7 @@
     <color name="text_sub">#5F6368</color>
 
     <color name="blue_main">@color/ck_blue600</color>
+    <color name="blue_accent">@color/ck_blue800</color>
 
     <color name="red_main">#D93025</color>
     <color name="red_sub">#FCE8E6</color>
