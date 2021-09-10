@@ -96,4 +96,8 @@ class RepoViewModel : ViewModel() {
         }
     }
 
+    fun removeShowingPage(): Boolean = isPositionValid() && pages.remove(showingPage.value)
+
+    private fun isPositionValid() = currentTabPosition != -1 && currentTabPosition < pages.size
+
 }

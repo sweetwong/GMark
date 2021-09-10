@@ -30,6 +30,7 @@ import sweet.wong.gmark.repo.viewmodel.RepoViewModel
 import sweet.wong.gmark.settings.SettingsActivity
 import sweet.wong.gmark.utils.EventObserver
 import sweet.wong.gmark.utils.OnListChangedCallback
+import kotlin.math.min
 
 class RepoActivity : AppCompatActivity() {
 
@@ -109,7 +110,10 @@ class RepoActivity : AppCompatActivity() {
 
         // Navigation bar show 90% width
         binding.navigationView.layoutParams = binding.navigationView.layoutParams.apply {
-            width = (ScreenUtils.getScreenWidth() * 0.9).toInt()
+            width = (min(
+                ScreenUtils.getAppScreenWidth(),
+                ScreenUtils.getAppScreenHeight()
+            ) * 0.9).toInt()
         }
 
         // Init drawer toggle
@@ -200,12 +204,8 @@ class RepoActivity : AppCompatActivity() {
                 return true
             }
 
-            if (viewModel.currentTabPosition != -1) {
-                viewModel.showingPage.let {
-                    if (viewModel.pages.remove(it.value)) {
-                        return true
-                    }
-                }
+            if (viewModel.removeShowingPage()) {
+                return true
             }
         }
 
