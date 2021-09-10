@@ -1,4 +1,4 @@
-package sweet.wong.gmark.repo
+package sweet.wong.gmark.repo.drawer
 
 import android.os.Bundle
 import android.view.View
@@ -8,7 +8,9 @@ import androidx.fragment.app.commit
 import sweet.wong.gmark.R
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.databinding.LayoutDrawerBinding
-import sweet.wong.gmark.repo.project.ProjectFragment
+import sweet.wong.gmark.repo.RepoActivity
+import sweet.wong.gmark.repo.drawer.project.ProjectFragment
+import sweet.wong.gmark.repo.viewmodel.RepoViewModel
 import sweet.wong.gmark.utils.Event
 
 class DrawerDelegate(

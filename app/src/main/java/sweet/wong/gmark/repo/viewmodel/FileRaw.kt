@@ -1,4 +1,4 @@
-package sweet.wong.gmark.repo
+package sweet.wong.gmark.repo.viewmodel
 
 import java.io.File
 

@@ -1,4 +1,4 @@
-package sweet.wong.gmark.repo
+package sweet.wong.gmark.repo.markdown
 
 import android.os.Build
 import android.os.Bundle
@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import sweet.wong.gmark.databinding.FragmentMarkdownBinding
-import sweet.wong.gmark.repo.markdown.MarkdownDelegate
+import sweet.wong.gmark.repo.viewmodel.RepoViewModel
 import sweet.wong.gmark.utils.EventObserver
 import sweet.wong.gmark.utils.SnappingLinearLayoutManager
 

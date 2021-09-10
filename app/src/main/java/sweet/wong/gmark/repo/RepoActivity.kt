@@ -22,7 +22,11 @@ import sweet.wong.gmark.core.noOpDelegate
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.databinding.ActivityRepoBinding
-import sweet.wong.gmark.repo.history.Page
+import sweet.wong.gmark.repo.drawer.DrawerDelegate
+import sweet.wong.gmark.repo.drawer.history.Page
+import sweet.wong.gmark.repo.markdown.MarkdownFragment
+import sweet.wong.gmark.repo.viewmodel.FileRaw
+import sweet.wong.gmark.repo.viewmodel.RepoViewModel
 import sweet.wong.gmark.settings.SettingsActivity
 import sweet.wong.gmark.utils.EventObserver
 import sweet.wong.gmark.utils.OnListChangedCallback

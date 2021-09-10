@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="sweet.wong.gmark.repo.RepoViewModel" />
+            type="sweet.wong.gmark.repo.viewmodel.RepoViewModel" />
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout

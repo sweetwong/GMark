@@ -1,4 +1,4 @@
-package sweet.wong.gmark.repo.markdown;
+package sweet.wong.gmark.repo.markdown.plugins;
 
 import android.text.Spannable;
 import android.text.Spanned;

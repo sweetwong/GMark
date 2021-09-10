@@ -18,7 +18,9 @@ import org.commonmark.node.FencedCodeBlock
 import org.commonmark.node.Node
 import sweet.wong.gmark.R
 import sweet.wong.gmark.core.App
-import sweet.wong.gmark.repo.RepoViewModel
+import sweet.wong.gmark.repo.markdown.plugins.GmarkImagePlugin
+import sweet.wong.gmark.repo.markdown.plugins.LinkPlugin
+import sweet.wong.gmark.repo.viewmodel.RepoViewModel
 
 
 @PrismBundle(include = ["java", "kotlin"], grammarLocatorClassName = ".GrammarLocatorSourceCode")
