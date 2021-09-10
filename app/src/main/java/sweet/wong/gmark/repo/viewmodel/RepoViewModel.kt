@@ -52,6 +52,9 @@ class RepoViewModel : ViewModel() {
     fun init(repo: Repo) {
         this.repo = repo
         rootFile = File(repo.localPath)
+    }
+
+    fun loadREADME() {
         rootFile.listFiles()?.forEach {
             if (it.name == "README.md") {
                 selectFile(it)

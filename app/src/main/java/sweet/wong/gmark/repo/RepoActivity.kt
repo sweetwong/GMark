@@ -62,8 +62,28 @@ class RepoActivity : AppCompatActivity() {
         initTabLayout()
         initObservers()
 
-        // Start load data
         viewModel.init(repo)
+
+        // load README.md
+        if (savedInstanceState == null) {
+            viewModel.loadREADME()
+        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        binding.tabLayout.apply {
+            viewModel.pages.forEach {
+                val tab = newTab().apply { text = it.file.name }
+                addTab(tab)
+                if (it == viewModel.showingPage) {
+                    delay(10) {
+                        selectTab(tab)
+                    }
+                }
+            }
+        }
+        viewModel.updateDrawer()
     }
 
     private fun initToolbar(title: String) {
