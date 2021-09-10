@@ -1,7 +1,6 @@
 package sweet.wong.gmark.repo.viewmodel
 
 import androidx.databinding.ObservableArrayList
-import androidx.databinding.ObservableList
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import sweet.wong.gmark.core.io
@@ -12,7 +11,6 @@ import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.repo.drawer.history.Page
 import sweet.wong.gmark.repo.drawer.project.ProjectUIState
 import sweet.wong.gmark.utils.Event
-import sweet.wong.gmark.utils.LimitedDeque
 import java.io.File
 
 class RepoViewModel : ViewModel() {
@@ -24,11 +22,11 @@ class RepoViewModel : ViewModel() {
 
     val drawerShowEvent = MutableLiveData<Event<Boolean>>()
 
-    val selectFileEvent = MutableLiveData<Event<Page>>()
+    val showingPage = MutableLiveData<Page>()
 
     val updateDrawerEvent = MutableLiveData<Event<ProjectUIState>>()
 
-    val pages: ObservableList<Page> = ObservableArrayList()
+    val pages = ObservableArrayList<Page>()
 
     var currentTabPosition = -1
 
@@ -43,11 +41,7 @@ class RepoViewModel : ViewModel() {
      * Current showing File, must be a file not a directory
      */
     val showingFile: File?
-        get() = showingPage?.file
-
-    var showingPage: Page? = null
-
-    private val historyStack = LimitedDeque<Page>(3)
+        get() = showingPage.value?.file
 
     fun init(repo: Repo) {
         this.repo = repo
@@ -94,37 +88,12 @@ class RepoViewModel : ViewModel() {
                         pages.add(page)
                     }
                     fileRaw.value = FileRaw(file, raw)
-                    showingPage = page
-                    selectFileEvent.value = Event(page)
+                    showingPage.value = page
                 }
             } catch (e: Exception) {
                 toast("Read file failed", e)
             }
         }
-    }
-
-    fun restorePage(): Boolean {
-        if (historyStack.isEmpty()) {
-            return false
-        }
-
-        val historyFile = historyStack.removeLast()
-        historyFile?.let { selectPage(it, false) }
-        return true
-    }
-
-    private fun savePage(page: Page, selectedFile: File) {
-        // First add to history stack
-        historyStack.add(page)
-
-        // Then remove duplicated history stack
-        var toRemoved: Page? = null
-        historyStack.forEach {
-            if (it.file == selectedFile) {
-                toRemoved = it
-            }
-        }
-        toRemoved?.let { historyStack.remove(it) }
     }
 
 }

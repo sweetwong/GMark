@@ -76,7 +76,7 @@ class RepoActivity : AppCompatActivity() {
             viewModel.pages.forEach {
                 val tab = newTab().apply { text = it.file.name }
                 addTab(tab)
-                if (it == viewModel.showingPage) {
+                if (it == viewModel.showingPage.value) {
                     delay(10) {
                         selectTab(tab)
                     }
@@ -172,7 +172,7 @@ class RepoActivity : AppCompatActivity() {
      * View model observers
      */
     private fun initObservers() {
-        viewModel.selectFileEvent.observe(this, EventObserver {
+        viewModel.showingPage.observe(this) {
             // If drawer is visible, we close drawer
             // Note that close drawer will trigger update drawer
             if (binding.drawerLayout.isDrawerVisible(binding.navigationView)) {
@@ -182,7 +182,7 @@ class RepoActivity : AppCompatActivity() {
             else {
                 viewModel.updateDrawer()
             }
-        })
+        }
 
         viewModel.drawerShowEvent.observe(this, EventObserver { open ->
             if (open) binding.drawerLayout.openDrawer(binding.navigationView)
@@ -201,16 +201,11 @@ class RepoActivity : AppCompatActivity() {
             }
 
             if (viewModel.currentTabPosition != -1) {
-                viewModel.showingPage?.let {
-                    if (viewModel.pages.remove(it)) {
+                viewModel.showingPage.let {
+                    if (viewModel.pages.remove(it.value)) {
                         return true
                     }
                 }
-            }
-
-            // Handle main text back stack
-            if (viewModel.restorePage()) {
-                return true
             }
         }
 

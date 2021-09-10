@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import sweet.wong.gmark.databinding.FragmentMarkdownBinding
 import sweet.wong.gmark.repo.viewmodel.RepoViewModel
-import sweet.wong.gmark.utils.EventObserver
 import sweet.wong.gmark.utils.SnappingLinearLayoutManager
 
 /**
@@ -44,7 +43,6 @@ class MarkdownFragment : Fragment() {
         initObserver()
     }
 
-    // TODO: 2021/9/10 把这个逻辑移到Fragment
     private fun initMarkList() {
         binding.markList.layoutManager = SnappingLinearLayoutManager(requireContext())
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -73,9 +71,11 @@ class MarkdownFragment : Fragment() {
             }
         }
 
-        viewModel.selectFileEvent.observe(viewLifecycleOwner, EventObserver {
-            scrollY(it.scrollY)
-        })
+        viewModel.showingPage.observe(viewLifecycleOwner) { page ->
+            val scrollY = page.scrollY
+            page.scrollY = 0
+            scrollY(scrollY)
+        }
 
     }
 
