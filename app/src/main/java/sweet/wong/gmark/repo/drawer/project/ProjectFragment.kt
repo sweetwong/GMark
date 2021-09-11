@@ -53,6 +53,7 @@ class ProjectFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.fileBrowser.adapter = browserAdapter
+        binding.fileBrowser.itemAnimator = null
         binding.navigationBar.adapter = barAdapter
 
         viewModel.drawerFolder.observe(viewLifecycleOwner) {

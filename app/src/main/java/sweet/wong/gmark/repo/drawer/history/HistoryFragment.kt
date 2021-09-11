@@ -30,6 +30,7 @@ class HistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         adapter = HistoryAdapter(viewModel)
         binding.historyList.adapter = adapter
+        binding.historyList.itemAnimator = null
 
         viewModel.histories.observe(viewLifecycleOwner) {
             adapter.submitList(it.toMutableList())
