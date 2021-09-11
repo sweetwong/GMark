@@ -2,6 +2,7 @@ package sweet.wong.gmark.sp
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.preference.PreferenceManager
 import sweet.wong.gmark.core.App
 
 /**
@@ -15,6 +16,8 @@ object SPUtils {
 
     private val sp: SharedPreferences
         get() = App.app.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
+
+    val settings = PreferenceManager.getDefaultSharedPreferences(App.app)
 
     private val editor: SharedPreferences.Editor
         get() = sp.edit()

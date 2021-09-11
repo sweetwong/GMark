@@ -19,7 +19,7 @@
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="Repository" />
+        app:title="View" />
 
     <EditTextPreference
         app:iconSpaceReserved="false"
@@ -29,15 +29,16 @@
 
     <SwitchPreference
         app:iconSpaceReserved="false"
-        app:key="hide_toolbar"
+        app:key="@string/pref_hide_toolbar"
+        app:persistent="true"
         app:summary="You can open settings by drawer layout again"
         app:title="Hide toolbar" />
 
     <SwitchPreference
         app:iconSpaceReserved="false"
-        app:key="hide_breadcrumbs"
-        app:summary="For example: GMark > app > src > main"
-        app:title="Hide breadcrumbs" />
+        app:key="@string/pref_hide_tab_layout"
+        app:persistent="true"
+        app:title="Hide tab layout" />
 
     <PreferenceCategory
         app:iconSpaceReserved="false"

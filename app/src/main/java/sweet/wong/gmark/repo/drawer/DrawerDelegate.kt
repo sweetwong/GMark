@@ -6,11 +6,13 @@ import android.widget.ImageButton
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import sweet.wong.gmark.R
+import sweet.wong.gmark.core.delay
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.databinding.LayoutDrawerBinding
 import sweet.wong.gmark.repo.RepoActivity
 import sweet.wong.gmark.repo.drawer.project.ProjectFragment
 import sweet.wong.gmark.repo.viewmodel.RepoViewModel
+import sweet.wong.gmark.settings.SettingsActivity
 import sweet.wong.gmark.utils.Event
 
 class DrawerDelegate(
@@ -27,9 +29,10 @@ class DrawerDelegate(
         }
 
         binding.btnProject.setOnClickListener(::onClickDrawerButton)
+        binding.btnOutline.setOnClickListener(::onClickDrawerButton)
+        binding.btnHistory.setOnClickListener(::onClickDrawerButton)
         binding.btnGit.setOnClickListener(::onClickDrawerButton)
-        binding.btnHistory.setOnClickListener(::onClickDrawerButton)
-        binding.btnHistory.setOnClickListener(::onClickDrawerButton)
+        binding.btnSettings.setOnClickListener(::onClickDrawerButton)
 
         binding.drawerToolbar.setNavigationOnClickListener {
             viewModel.drawerShowEvent.value = Event(false)
@@ -54,6 +57,13 @@ class DrawerDelegate(
             binding.btnOutline -> {
                 toast("Click outline")
             }
+            binding.btnSettings -> {
+                SettingsActivity.start(activity)
+            }
+        }
+
+        delay(200) {
+            viewModel.drawerShowEvent.value = Event(false)
         }
     }
 

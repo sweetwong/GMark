@@ -9,6 +9,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.databinding.ObservableList
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.fragment.app.add
@@ -28,6 +29,7 @@ import sweet.wong.gmark.repo.viewmodel.FileRaw
 import sweet.wong.gmark.repo.viewmodel.RepoViewModel
 import sweet.wong.gmark.repolist.RepoListActivity
 import sweet.wong.gmark.settings.SettingsActivity
+import sweet.wong.gmark.sp.SPUtils.settings
 import sweet.wong.gmark.utils.EventObserver
 import sweet.wong.gmark.utils.OnListChangedCallback
 import kotlin.math.min
@@ -66,6 +68,15 @@ class RepoActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             viewModel.loadREADME()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val hideToolbar = settings.getBoolean(getString(R.string.pref_hide_toolbar), false)
+        binding.toolbar.isVisible = !hideToolbar
+
+        val hideTabLayout = settings.getBoolean(getString(R.string.pref_hide_tab_layout), false)
+        binding.tabLayout.isVisible = !hideTabLayout
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -165,6 +176,7 @@ class RepoActivity : AppCompatActivity() {
                 binding.tabLayout.removeTabAt(positionStart)
                 if (sender.isEmpty()) {
                     viewModel.fileRaw.value = FileRaw(viewModel.rootFile, "", true)
+                    finish()
                 }
             }
         })
