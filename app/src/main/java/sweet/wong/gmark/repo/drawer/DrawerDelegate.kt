@@ -7,6 +7,7 @@ import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import sweet.wong.gmark.R
+import sweet.wong.gmark.core.delay
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.databinding.LayoutDrawerBinding
 import sweet.wong.gmark.repo.RepoActivity
@@ -35,10 +36,6 @@ class DrawerDelegate(
         binding.btnHistory.setOnClickListener(::onClickDrawerButton)
         binding.btnGit.setOnClickListener(::onClickDrawerButton)
         binding.btnSettings.setOnClickListener(::onClickDrawerButton)
-
-        binding.drawerToolbar.setNavigationOnClickListener {
-            viewModel.showDrawer.value = Event(false)
-        }
     }
 
     private fun onClickDrawerButton(button: View) {
@@ -51,23 +48,30 @@ class DrawerDelegate(
 
         when (button) {
             binding.btnProject -> {
+                binding.drawerToolbar.title = activity.getString(R.string.project)
                 activity.supportFragmentManager.commit {
                     replace<ProjectFragment>(R.id.fragment_container_view)
                 }
             }
             binding.btnGit -> {
+                binding.drawerToolbar.title = activity.getString(R.string.git)
                 toast("Click git")
             }
             binding.btnHistory -> {
+                binding.drawerToolbar.title = activity.getString(R.string.history)
                 activity.supportFragmentManager.commit {
                     replace<HistoryFragment>(R.id.fragment_container_view)
                 }
             }
             binding.btnOutline -> {
+                binding.drawerToolbar.title = activity.getString(R.string.outline)
                 toast("Click outline")
             }
             binding.btnSettings -> {
                 SettingsActivity.start(activity)
+                delay(200) {
+                    viewModel.showDrawer.value = Event(false)
+                }
             }
         }
     }
