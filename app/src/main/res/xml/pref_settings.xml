@@ -44,16 +44,18 @@
         app:iconSpaceReserved="false"
         app:title="Git Profile" />
 
-    <Preference
+    <EditTextPreference
         app:iconSpaceReserved="false"
         app:key="user_name"
-        app:summary="null"
-        app:title="User name" />
+        app:persistent="true"
+        app:title="User name"
+        app:useSimpleSummaryProvider="true" />
 
-    <Preference
+    <EditTextPreference
         app:iconSpaceReserved="false"
-        app:key="user_email\"
-        app:summary="null"
-        app:title="User Email" />
+        app:key="user_email"
+        app:persistent="true"
+        app:title="User Email"
+        app:useSimpleSummaryProvider="true" />
 
 </PreferenceScreen>

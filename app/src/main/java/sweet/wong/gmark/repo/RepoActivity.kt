@@ -25,7 +25,6 @@ import sweet.wong.gmark.ext.start
 import sweet.wong.gmark.repo.drawer.DrawerDelegate
 import sweet.wong.gmark.repo.drawer.history.Page
 import sweet.wong.gmark.repo.markdown.MarkdownFragment
-import sweet.wong.gmark.repo.viewmodel.FileRaw
 import sweet.wong.gmark.repo.viewmodel.RepoViewModel
 import sweet.wong.gmark.repolist.RepoListActivity
 import sweet.wong.gmark.settings.SettingsActivity
@@ -172,12 +171,13 @@ class RepoActivity : AppCompatActivity() {
                 positionStart: Int,
                 itemCount: Int
             ) {
+                if (sender.isEmpty()) {
+                    finish()
+                    return
+                }
+
                 // This will trigger onTabSelected
                 binding.tabLayout.removeTabAt(positionStart)
-                if (sender.isEmpty()) {
-                    viewModel.fileRaw.value = FileRaw(viewModel.rootFile, "", true)
-                    finish()
-                }
             }
         })
     }
