@@ -82,7 +82,7 @@ class RepoViewModel : ViewModel() {
 
     fun selectFile(position: Int) {
         if (position !in 0 until pages.size) {
-            toast("Select file failed cause position is error")
+            toast("Select file failed cause position is invalid")
             return
         }
         selectFile(pages[position])
@@ -111,7 +111,9 @@ class RepoViewModel : ViewModel() {
 
         // Check Same file
         if (file == showingFile) {
+            // Close and refresh drawer
             showDrawer.value = Event(false)
+            updateDrawer()
             return log("Repeat selection")
         }
 
@@ -150,6 +152,10 @@ class RepoViewModel : ViewModel() {
                                 }
                             }
                         }
+
+                    // Close and refresh drawer
+                    showDrawer.value = Event(false)
+                    updateDrawer()
                 }
             } catch (e: Exception) {
                 toast("Read file failed", e)

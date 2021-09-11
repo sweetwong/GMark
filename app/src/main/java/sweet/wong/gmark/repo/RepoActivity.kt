@@ -194,18 +194,6 @@ class RepoActivity : AppCompatActivity() {
      * View model observers
      */
     private fun initObservers() {
-        viewModel.showingPage.observe(this) {
-            // If drawer is visible, we close drawer
-            // Note that close drawer will trigger update drawer
-            if (binding.drawerLayout.isDrawerVisible(binding.navigationView)) {
-                binding.drawerLayout.closeDrawer(binding.navigationView)
-            }
-            // If drawer is not visible, we just need update drawer
-            else {
-                viewModel.updateDrawer()
-            }
-        }
-
         viewModel.showDrawer.observe(this, EventObserver { open ->
             if (open) binding.drawerLayout.openDrawer(binding.navigationView)
             else binding.drawerLayout.closeDrawer(binding.navigationView)
