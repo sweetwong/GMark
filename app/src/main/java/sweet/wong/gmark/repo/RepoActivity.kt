@@ -141,19 +141,21 @@ class RepoActivity : AppCompatActivity() {
         addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener by noOpDelegate() {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 viewModel.currentTabPosition = tab.position
-                if (tab.position < viewModel.pages.size) {
-                    val page = viewModel.pages[tab.position]
-                    if (page.firstSelect) {
-                        page.firstSelect = false
-                        return
-                    }
-                    viewModel.selectPage(viewModel.pages[tab.position], false)
-                }
+                viewModel.selectFile(tab.position)
             }
         })
 
         viewModel.pages.addOnListChangedCallback(object :
             OnListChangedCallback<ObservableList<Page>>() {
+
+            override fun onItemRangeChanged(
+                sender: ObservableList<Page>,
+                positionStart: Int,
+                itemCount: Int
+            ) {
+                selectTab(getTabAt(positionStart))
+            }
+
             override fun onItemRangeInserted(
                 sender: ObservableList<Page>,
                 positionStart: Int,

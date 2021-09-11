@@ -3,10 +3,12 @@ package sweet.wong.gmark.repo.drawer.history
 import java.io.File
 
 data class Page(
-    val file: File,
+    val path: String,
     var scrollY: Int = 0,
     var firstSelect: Boolean = true
 ) {
+
+    val file = File(path)
 
     override fun equals(other: Any?) = (other as? Page)?.file == file
 

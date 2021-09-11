@@ -74,36 +74,76 @@ class RepoViewModel : ViewModel() {
         updateDrawerEvent.value = Event(uiState)
     }
 
-    fun selectFile(file: File) {
-        selectPage(Page(file, 0))
+    fun selectFile(position: Int) {
+        if (position !in 0 until pages.size) {
+            toast("Select file failed cause position is error")
+            return
+        }
+        selectFile(pages[position])
     }
 
-    fun selectPage(page: Page, newFile: Boolean = true) {
-        val file = page.file
+    fun selectFile(page: Page) {
+        selectFile(page.file)
+    }
 
+    fun selectFile(path: String) {
+        selectFile(File(path))
+    }
+
+    /**
+     * There are three cases:
+     *
+     * 1. Choose same file
+     * 2. Choose existing file
+     * 3. Choose new file
+     */
+    fun selectFile(file: File) {
+        // Check file valid
         if (!file.exists() || !file.isFile) {
             return toast("File $file is not exist")
         }
 
+        // Check Same file
         if (file == showingFile) {
             drawerShowEvent.value = Event(false)
             return log("Repeat selection")
+        }
+
+        // Check existing file
+        var existingPage: Page? = null
+        pages.forEach {
+            if (it.file == file) {
+                existingPage = it
+            }
         }
 
         io {
             try {
                 val raw = file.readText()
                 ui {
-                    if (newFile) {
-                        pages.add(page)
-                    }
+                    // Update markdown text
                     fileRaw.value = FileRaw(file, raw)
-                    showingPage.value = page
+
+                    existingPage
+                        // Use existing file
+                        ?.let { page ->
+                            showingPage.value = page
+
+                            val index = pages.indexOf(page)
+                            pages[index] = pages[index]
+                        }
+                    // Add new file
+                        ?: apply {
+                            val newPage = Page(file.absolutePath)
+                            pages.add(newPage)
+                            showingPage.value = newPage
+                        }
                 }
             } catch (e: Exception) {
                 toast("Read file failed", e)
             }
         }
+
     }
 
     fun removeShowingPage(): Boolean = isPositionValid() && pages.remove(showingPage.value)
