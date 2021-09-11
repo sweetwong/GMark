@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -44,6 +43,7 @@ class MarkdownFragment : Fragment() {
     }
 
     private fun initMarkList() {
+        binding.markList.itemAnimator = null
         binding.markList.layoutManager = SnappingLinearLayoutManager(requireContext())
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             binding.markList.isForceDarkAllowed = false
@@ -85,12 +85,6 @@ class MarkdownFragment : Fragment() {
     private fun scrollY(scrollY: Int) {
         // Scroll
         binding.markList.scrollBy(0, scrollY)
-
-        // If it's new page, run animation
-        if (scrollY == 0) {
-            val animation = AnimationUtils.loadAnimation(requireContext(), android.R.anim.fade_in)
-            binding.markList.startAnimation(animation)
-        }
     }
 
 }
