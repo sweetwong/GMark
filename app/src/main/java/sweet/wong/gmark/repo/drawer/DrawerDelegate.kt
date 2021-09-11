@@ -5,11 +5,12 @@ import android.view.View
 import android.widget.ImageButton
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import sweet.wong.gmark.R
-import sweet.wong.gmark.core.delay
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.databinding.LayoutDrawerBinding
 import sweet.wong.gmark.repo.RepoActivity
+import sweet.wong.gmark.repo.drawer.history.HistoryFragment
 import sweet.wong.gmark.repo.drawer.project.ProjectFragment
 import sweet.wong.gmark.repo.viewmodel.RepoViewModel
 import sweet.wong.gmark.settings.SettingsActivity
@@ -27,6 +28,7 @@ class DrawerDelegate(
                 add<ProjectFragment>(R.id.fragment_container_view)
             }
         }
+        binding.btnProject.isSelected = true
 
         binding.btnProject.setOnClickListener(::onClickDrawerButton)
         binding.btnOutline.setOnClickListener(::onClickDrawerButton)
@@ -44,15 +46,22 @@ class DrawerDelegate(
             return
         }
 
+        unSelectAll()
+        button.isSelected = true
+
         when (button) {
             binding.btnProject -> {
-                toast("Click project")
+                activity.supportFragmentManager.commit {
+                    replace<ProjectFragment>(R.id.fragment_container_view)
+                }
             }
             binding.btnGit -> {
                 toast("Click git")
             }
             binding.btnHistory -> {
-                toast("Click history")
+                activity.supportFragmentManager.commit {
+                    replace<HistoryFragment>(R.id.fragment_container_view)
+                }
             }
             binding.btnOutline -> {
                 toast("Click outline")
@@ -61,11 +70,13 @@ class DrawerDelegate(
                 SettingsActivity.start(activity)
             }
         }
-
-        delay(200) {
-            viewModel.drawerShowEvent.value = Event(false)
-        }
     }
 
+    private fun unSelectAll() {
+        binding.btnProject.isSelected = false
+        binding.btnOutline.isSelected = false
+        binding.btnHistory.isSelected = false
+        binding.btnGit.isSelected = false
+    }
 
 }

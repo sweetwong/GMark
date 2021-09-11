@@ -1,6 +1,5 @@
 package sweet.wong.gmark.repo.drawer.project
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import sweet.wong.gmark.databinding.FragmentProjectBinding
 import sweet.wong.gmark.repo.viewmodel.RepoViewModel
-import sweet.wong.gmark.utils.EventObserver
 import java.io.File
 
 class ProjectFragment : Fragment() {
@@ -42,17 +40,13 @@ class ProjectFragment : Fragment() {
         updateNavigationBar(it)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        viewModel = ViewModelProvider(requireActivity())[RepoViewModel::class.java]
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentProjectBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(requireActivity())[RepoViewModel::class.java]
         return binding.root
     }
 
@@ -61,11 +55,11 @@ class ProjectFragment : Fragment() {
         binding.fileBrowser.adapter = browserAdapter
         binding.navigationBar.adapter = barAdapter
 
-        viewModel.updateDrawerEvent.observe(viewLifecycleOwner, EventObserver {
+        viewModel.drawerFolder.observe(viewLifecycleOwner) {
             uiState = it
             updateNavigationBar(it)
             updateFileBrowser(it)
-        })
+        }
     }
 
     private fun updateNavigationBar(uiState: ProjectUIState) {

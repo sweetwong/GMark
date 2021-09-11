@@ -43,7 +43,7 @@
                 android:padding="6dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/file"
-                app:tint="@color/blue_main"
+                app:tint="@color/selector_button_tint"
                 tools:ignore="ContentDescription" />
 
             <ImageButton
@@ -56,6 +56,7 @@
                 android:padding="6dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/outline"
+                app:tint="@color/selector_button_tint"
                 tools:ignore="ContentDescription" />
 
             <ImageButton
@@ -68,6 +69,7 @@
                 android:padding="6dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/history"
+                app:tint="@color/selector_button_tint"
                 tools:ignore="ContentDescription" />
 
             <ImageButton
@@ -80,6 +82,7 @@
                 android:padding="6dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/git"
+                app:tint="@color/selector_button_tint"
                 tools:ignore="ContentDescription" />
 
             <ImageButton

@@ -20,10 +20,10 @@ import sweet.wong.gmark.R
 import sweet.wong.gmark.core.delay
 import sweet.wong.gmark.core.noOpDelegate
 import sweet.wong.gmark.core.toast
+import sweet.wong.gmark.data.Page
 import sweet.wong.gmark.databinding.ActivityRepoBinding
 import sweet.wong.gmark.ext.start
 import sweet.wong.gmark.repo.drawer.DrawerDelegate
-import sweet.wong.gmark.repo.drawer.history.Page
 import sweet.wong.gmark.repo.markdown.MarkdownFragment
 import sweet.wong.gmark.repo.viewmodel.RepoViewModel
 import sweet.wong.gmark.repolist.RepoListActivity

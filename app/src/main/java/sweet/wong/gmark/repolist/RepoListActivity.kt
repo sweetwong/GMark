@@ -58,7 +58,7 @@ class RepoListActivity : AppCompatActivity() {
         viewModel.refreshRepoList()
 
         viewModel.repoSelectEvent.observe(this, EventObserver { repo ->
-            SPUtils.putInt(SPConstant.LAST_REPO_UID, repo.uid)
+            SPUtils.putInt(SPConstant.LAST_REPO_UID, repo.uid, true)
             RepoActivity.start(this)
             finish()
         })

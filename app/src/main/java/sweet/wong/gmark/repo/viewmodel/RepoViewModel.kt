@@ -8,8 +8,8 @@ import sweet.wong.gmark.core.log
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.core.ui
 import sweet.wong.gmark.data.DaoManager
+import sweet.wong.gmark.data.Page
 import sweet.wong.gmark.data.Repo
-import sweet.wong.gmark.repo.drawer.history.Page
 import sweet.wong.gmark.repo.drawer.project.ProjectUIState
 import sweet.wong.gmark.sp.SPConstant
 import sweet.wong.gmark.sp.SPUtils
@@ -27,7 +27,7 @@ class RepoViewModel : ViewModel() {
 
     val showingPage = MutableLiveData<Page>()
 
-    val updateDrawerEvent = MutableLiveData<Event<ProjectUIState>>()
+    val drawerFolder = MutableLiveData<ProjectUIState>()
 
     val pages = ObservableArrayList<Page>()
 
@@ -71,7 +71,7 @@ class RepoViewModel : ViewModel() {
         val drawerFile = showingFile.parentFile ?: return
 
         val uiState = ProjectUIState(drawerFile, showingFile, rootFile)
-        updateDrawerEvent.value = Event(uiState)
+        drawerFolder.value = uiState
     }
 
     fun selectFile(position: Int) {
@@ -109,14 +109,6 @@ class RepoViewModel : ViewModel() {
             return log("Repeat selection")
         }
 
-        // Check existing file
-        var existingPage: Page? = null
-        pages.forEach {
-            if (it.file == file) {
-                existingPage = it
-            }
-        }
-
         io {
             try {
                 val raw = file.readText()
@@ -124,19 +116,30 @@ class RepoViewModel : ViewModel() {
                     // Update markdown text
                     fileRaw.value = FileRaw(file, raw)
 
-                    existingPage
-                        // Use existing file
-                        ?.let { page ->
-                            showingPage.value = page
+                    getPage(file)
+                        ?.let { existingPage ->
+                            // Use existing file
+                            showingPage.value = existingPage
 
-                            val index = pages.indexOf(page)
+                            val index = pages.indexOf(existingPage)
                             pages[index] = pages[index]
+
+                            io {
+                                DaoManager.pageDao.apply {
+                                    deleteByPath(existingPage.path)
+                                    insertAll(existingPage)
+                                }
+                            }
                         }
-                    // Add new file
                         ?: apply {
+                            // Add new file
                             val newPage = Page(file.absolutePath)
                             pages.add(newPage)
                             showingPage.value = newPage
+
+                            io {
+                                DaoManager.pageDao.insertAll(newPage)
+                            }
                         }
                 }
             } catch (e: Exception) {
@@ -144,6 +147,16 @@ class RepoViewModel : ViewModel() {
             }
         }
 
+    }
+
+    private fun getPage(file: File): Page? {
+        var page: Page? = null
+        pages.forEach {
+            if (it.file == file) {
+                page = it
+            }
+        }
+        return page
     }
 
     fun removeShowingPage(): Boolean = isPositionValid() && pages.remove(showingPage.value)
