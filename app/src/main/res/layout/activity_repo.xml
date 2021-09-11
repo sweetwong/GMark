@@ -31,7 +31,7 @@
                 android:layout_height="38dp"
                 android:layout_below="@id/toolbar"
                 app:tabIndicatorColor="@color/blue_main"
-                app:tabMaxWidth="180dp"
+                app:tabMaxWidth="200dp"
                 app:tabMode="scrollable"
                 app:tabSelectedTextColor="@color/blue_main"
                 app:tabTextAppearance="@style/TabTextAppearance"

@@ -10,8 +10,9 @@ object DaoManager {
             .allowMainThreadQueries()
             .build().repoDao()
 
-    val pageDao: PageDao
-        get() = Room.databaseBuilder(App.app, PageDatabase::class.java, "page")
-            .build().pageDao()
+    fun getPageDao(repo: Repo) =
+        Room.databaseBuilder(App.app, PageDatabase::class.java, "page_" + repo.uid)
+            .build()
+            .pageDao()
 
 }

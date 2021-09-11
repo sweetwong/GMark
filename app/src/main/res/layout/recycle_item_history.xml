@@ -5,10 +5,6 @@
     <data>
 
         <variable
-            name="viewModel"
-            type="sweet.wong.gmark.repo.drawer.history.HistoryViewModel" />
-
-        <variable
             name="page"
             type="sweet.wong.gmark.data.Page" />
     </data>
@@ -17,9 +13,11 @@
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
         android:gravity="start"
         android:padding="16dp"
         android:text="@{page.file.name}"
+        android:textColor="@color/text_main"
         android:textSize="18sp"
         tools:text="目录" />
 

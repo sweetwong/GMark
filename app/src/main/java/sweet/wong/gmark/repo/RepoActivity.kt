@@ -110,7 +110,13 @@ class RepoActivity : AppCompatActivity() {
     private fun initDrawer(savedInstanceState: Bundle?) {
         binding.drawerLayout.addDrawerListener(object : DrawerListener by noOpDelegate() {
 
+            override fun onDrawerOpened(drawerView: View) {
+                viewModel.onDrawerShow.value = true
+
+            }
+
             override fun onDrawerClosed(drawerView: View) {
+                viewModel.onDrawerShow.value = false
                 viewModel.updateDrawer()
             }
         })
@@ -200,7 +206,7 @@ class RepoActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.drawerShowEvent.observe(this, EventObserver { open ->
+        viewModel.showDrawer.observe(this, EventObserver { open ->
             if (open) binding.drawerLayout.openDrawer(binding.navigationView)
             else binding.drawerLayout.closeDrawer(binding.navigationView)
         })

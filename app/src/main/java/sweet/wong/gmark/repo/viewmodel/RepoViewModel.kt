@@ -23,7 +23,15 @@ class RepoViewModel : ViewModel() {
      */
     val fileRaw = MutableLiveData<FileRaw>()
 
-    val drawerShowEvent = MutableLiveData<Event<Boolean>>()
+    /**
+     * This is used to control drawer
+     */
+    val showDrawer = MutableLiveData<Event<Boolean>>()
+
+    /**
+     * This is drawer callback
+     */
+    val onDrawerShow = MutableLiveData<Boolean>()
 
     val showingPage = MutableLiveData<Page>()
 
@@ -47,7 +55,7 @@ class RepoViewModel : ViewModel() {
         get() = showingPage.value?.file
 
     fun init(): Boolean {
-        val uid = getRepoUid()
+        val uid = SPUtils.getInt(SPConstant.LAST_REPO_UID)
         if (uid == 0) {
             return false
         }
@@ -55,8 +63,6 @@ class RepoViewModel : ViewModel() {
         rootFile = File(repo.localPath)
         return true
     }
-
-    fun getRepoUid() = SPUtils.getInt(SPConstant.LAST_REPO_UID)
 
     fun loadREADME() {
         rootFile.listFiles()?.forEach {
@@ -105,7 +111,7 @@ class RepoViewModel : ViewModel() {
 
         // Check Same file
         if (file == showingFile) {
-            drawerShowEvent.value = Event(false)
+            showDrawer.value = Event(false)
             return log("Repeat selection")
         }
 
@@ -125,7 +131,7 @@ class RepoViewModel : ViewModel() {
                             pages[index] = pages[index]
 
                             io {
-                                DaoManager.pageDao.apply {
+                                DaoManager.getPageDao(repo).apply {
                                     deleteByPath(existingPage.path)
                                     insertAll(existingPage)
                                 }
@@ -138,7 +144,10 @@ class RepoViewModel : ViewModel() {
                             showingPage.value = newPage
 
                             io {
-                                DaoManager.pageDao.insertAll(newPage)
+                                DaoManager.getPageDao(repo).apply {
+                                    deleteByPath(newPage.path)
+                                    insertAll(newPage)
+                                }
                             }
                         }
                 }

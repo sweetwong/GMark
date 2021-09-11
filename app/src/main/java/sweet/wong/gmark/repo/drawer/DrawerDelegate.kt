@@ -37,7 +37,7 @@ class DrawerDelegate(
         binding.btnSettings.setOnClickListener(::onClickDrawerButton)
 
         binding.drawerToolbar.setNavigationOnClickListener {
-            viewModel.drawerShowEvent.value = Event(false)
+            viewModel.showDrawer.value = Event(false)
         }
     }
 

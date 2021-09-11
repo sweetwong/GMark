@@ -20,9 +20,12 @@ class HistoryAdapter(private val viewModel: HistoryViewModel) :
     inner class VH(private val binding: RecycleItemHistoryBinding) : ViewHolder(binding.root) {
 
         fun bind(page: Page) {
-            binding.viewModel = viewModel
             binding.page = page
             binding.executePendingBindings()
+
+            itemView.setOnClickListener {
+                viewModel.repoViewModel.selectFile(page)
+            }
         }
 
     }

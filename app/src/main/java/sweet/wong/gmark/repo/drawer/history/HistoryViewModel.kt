@@ -15,7 +15,8 @@ class HistoryViewModel : ViewModel() {
 
     fun refresh() {
         io {
-            histories.postValue(DaoManager.pageDao.getAll())
+            val data = DaoManager.getPageDao(repoViewModel.repo).getAll()
+            histories.postValue(data.reversed())
         }
     }
 
