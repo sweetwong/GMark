@@ -1,4 +1,4 @@
-package sweet.wong.gmark.utils
+package sweet.wong.gmark.sp
 
 import android.content.Context
 import android.content.SharedPreferences

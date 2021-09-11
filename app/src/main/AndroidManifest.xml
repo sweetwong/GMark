@@ -17,6 +17,11 @@
         android:theme="@style/Theme.SweetNote">
 
         <activity android:name=".repolist.RepoListActivity">
+
+        </activity>
+
+        <activity android:name=".repo.RepoActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,8 +29,6 @@
             </intent-filter>
 
         </activity>
-
-        <activity android:name=".repo.RepoActivity" />
 
         <activity android:name=".photoview.PhotoViewActivity" />
 

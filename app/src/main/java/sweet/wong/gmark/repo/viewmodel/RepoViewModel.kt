@@ -7,9 +7,12 @@ import sweet.wong.gmark.core.io
 import sweet.wong.gmark.core.log
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.core.ui
+import sweet.wong.gmark.data.DaoManager
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.repo.drawer.history.Page
 import sweet.wong.gmark.repo.drawer.project.ProjectUIState
+import sweet.wong.gmark.sp.SPConstant
+import sweet.wong.gmark.sp.SPUtils
 import sweet.wong.gmark.utils.Event
 import java.io.File
 
@@ -43,10 +46,17 @@ class RepoViewModel : ViewModel() {
     val showingFile: File?
         get() = showingPage.value?.file
 
-    fun init(repo: Repo) {
-        this.repo = repo
+    fun init(): Boolean {
+        val uid = getRepoUid()
+        if (uid == 0) {
+            return false
+        }
+        repo = DaoManager.repoDao.get(uid)
         rootFile = File(repo.localPath)
+        return true
     }
+
+    fun getRepoUid() = SPUtils.getInt(SPConstant.LAST_REPO_UID)
 
     fun loadREADME() {
         rootFile.listFiles()?.forEach {

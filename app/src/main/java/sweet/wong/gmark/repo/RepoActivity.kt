@@ -1,7 +1,6 @@
 package sweet.wong.gmark.repo
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.Menu
@@ -20,13 +19,14 @@ import sweet.wong.gmark.R
 import sweet.wong.gmark.core.delay
 import sweet.wong.gmark.core.noOpDelegate
 import sweet.wong.gmark.core.toast
-import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.databinding.ActivityRepoBinding
+import sweet.wong.gmark.ext.start
 import sweet.wong.gmark.repo.drawer.DrawerDelegate
 import sweet.wong.gmark.repo.drawer.history.Page
 import sweet.wong.gmark.repo.markdown.MarkdownFragment
 import sweet.wong.gmark.repo.viewmodel.FileRaw
 import sweet.wong.gmark.repo.viewmodel.RepoViewModel
+import sweet.wong.gmark.repolist.RepoListActivity
 import sweet.wong.gmark.settings.SettingsActivity
 import sweet.wong.gmark.utils.EventObserver
 import sweet.wong.gmark.utils.OnListChangedCallback
@@ -43,9 +43,8 @@ class RepoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Parse argument
-        val repo = intent.getParcelableExtra<Repo>(EXTRA_REPO)
-        if (repo == null) {
+        if (!viewModel.init()) {
+            RepoListActivity.start(this)
             finish()
             return
         }
@@ -57,13 +56,11 @@ class RepoActivity : AppCompatActivity() {
             lifecycleOwner = this@RepoActivity
         }
 
-        initToolbar(repo.name)
+        initToolbar(viewModel.repo.name)
         initFragment(savedInstanceState)
         initDrawer(savedInstanceState)
         initTabLayout()
         initObservers()
-
-        viewModel.init(repo)
 
         // load README.md
         if (savedInstanceState == null) {
@@ -228,19 +225,18 @@ class RepoActivity : AppCompatActivity() {
                 SettingsActivity.start(this)
                 return true
             }
+            R.id.menu_change_repository -> {
+                RepoListActivity.start(this)
+                finish()
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }
 
     companion object {
 
-        private const val EXTRA_REPO = "extra_repo"
-
-        fun start(context: Context, repo: Repo) {
-            context.startActivity(
-                Intent(context, RepoActivity::class.java).putExtra(EXTRA_REPO, repo)
-            )
-        }
+        fun start(context: Context) = context.start<RepoActivity>()
 
     }
 

@@ -18,6 +18,10 @@ data class Repo(
 
 @Dao
 interface RepoDao {
+
+    @Query("SELECT * FROM repo WHERE uid = :uid")
+    fun get(uid: Int): Repo
+
     @Query("SELECT * FROM repo")
     fun getAll(): List<Repo>
 

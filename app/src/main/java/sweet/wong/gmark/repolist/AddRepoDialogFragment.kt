@@ -89,7 +89,7 @@ class RepoAuthDialogFragment(private val viewModel: RepoListViewModel) :
         // Radio group to switch git http clone or git ssh clone
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                R.id.radio_http -> {
+                R.id.radio_https -> {
                     inputUsername.isVisible = true
                     inputPassword.isVisible = true
                     inputSsh.isVisible = false
@@ -104,8 +104,8 @@ class RepoAuthDialogFragment(private val viewModel: RepoListViewModel) :
             }
         }
 
-        // Default is hhtp
-        radioGroup.check(R.id.radio_http)
+        // Default is https
+        radioGroup.check(R.id.radio_https)
 
         // Choose ssh private key
         inputSsh.setEndIconOnClickListener {
@@ -140,7 +140,7 @@ class RepoAuthDialogFragment(private val viewModel: RepoListViewModel) :
             return toast("Url should not be empty")
         }
 
-        if (binding.radioHttp.isChecked) {
+        if (binding.radioHttps.isChecked) {
             createHttpRepo(url)
         } else {
             createSshRepo(url)

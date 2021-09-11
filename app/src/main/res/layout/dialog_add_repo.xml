@@ -20,10 +20,10 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/radio_http"
+                android:id="@+id/radio_https"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="HTTP" />
+                android:text="HTTPS" />
 
             <RadioButton
                 android:id="@+id/radio_ssh"
@@ -43,7 +43,8 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="https://github.com/sweetwong/GMark.git" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

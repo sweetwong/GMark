@@ -1,5 +1,6 @@
 package sweet.wong.gmark.repolist
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -9,8 +10,11 @@ import androidx.core.content.res.ResourcesCompat
 import sweet.wong.gmark.R
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.databinding.ActivityRepoListBinding
+import sweet.wong.gmark.ext.start
 import sweet.wong.gmark.repo.RepoActivity
 import sweet.wong.gmark.settings.SettingsActivity
+import sweet.wong.gmark.sp.SPConstant
+import sweet.wong.gmark.sp.SPUtils
 import sweet.wong.gmark.utils.EventObserver
 import java.util.*
 
@@ -53,8 +57,10 @@ class RepoListActivity : AppCompatActivity() {
         // Refresh repo list
         viewModel.refreshRepoList()
 
-        viewModel.repoSelectEvent.observe(this, EventObserver {
-            RepoActivity.start(this, it)
+        viewModel.repoSelectEvent.observe(this, EventObserver { repo ->
+            SPUtils.putInt(SPConstant.LAST_REPO_UID, repo.uid)
+            RepoActivity.start(this)
+            finish()
         })
 
         viewModel.repoUpdateEvent.observe(this, EventObserver {
@@ -70,7 +76,7 @@ class RepoListActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.menu_sync -> {
                 toast("Sync")
                 return true
@@ -81,6 +87,11 @@ class RepoListActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    companion object {
+
+        fun start(context: Context) = context.start<RepoListActivity>()
     }
 
 }
