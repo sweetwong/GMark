@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Used for SP -->
+    <string-array name="language_values">
+        <item>english</item>
+        <item>chinese</item>
+    </string-array>
+
+    <!-- Used for showing -->
+    <string-array name="language_texts">
+        <item>English</item>
+        <item>Chinese</item>
+    </string-array>
+
+    <!-- Used for SP -->
+    <string-array name="theme_color_values">
+        <item>blue</item>
+        <item>red</item>
+        <item>yellow</item>
+    </string-array>
+
+    <!-- Used for showing -->
+    <string-array name="theme_color_texts">
+        <item>Blue</item>
+        <item>Red</item>
+        <item>Yellow</item>
+    </string-array>
+
+</resources>

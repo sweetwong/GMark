@@ -4,8 +4,12 @@
     <string name="outline">Outline</string>
     <string name="repository_list">Repository List</string>
     <string name="back_folder">..</string>
-    <string name="pref_hide_toolbar">hide_toolbar</string>
-    <string name="pref_hide_tab_layout">hide_tab_layout</string>
+
+    <string name="pref_hide_toolbar">pref_hide_toolbar</string>
+    <string name="pref_hide_tab_layout">pref_hide_tab_layout</string>
+    <string name="pref_theme_color">pref_theme_color</string>
+
     <string name="history">History</string>
     <string name="git">Git</string>
+    <string name="pref_text_size">pref_text_size</string>
 </resources>

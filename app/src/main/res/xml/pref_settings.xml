@@ -1,41 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
         app:title="General" />
 
-    <Preference
-        app:iconSpaceReserved="false"
+    <ListPreference
+        android:icon="@drawable/language"
+        app:defaultValue="english"
+        app:entries="@array/language_texts"
+        app:entryValues="@array/language_values"
         app:key="language"
-        app:summary="English"
-        app:title="Language" />
+        app:persistent="true"
+        app:title="Language"
+        app:useSimpleSummaryProvider="true" />
 
-    <Preference
-        app:iconSpaceReserved="false"
-        app:key="theme_color"
-        app:summary="Blue"
-        app:title="Theme color" />
+    <ListPreference
+        app:defaultValue="blue"
+        app:entries="@array/theme_color_texts"
+        app:entryValues="@array/theme_color_values"
+        app:icon="@drawable/theme"
+        app:key="@string/pref_theme_color"
+        app:persistent="true"
+        app:title="Theme color"
+        app:useSimpleSummaryProvider="true" />
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
         app:title="View" />
 
     <EditTextPreference
-        app:iconSpaceReserved="false"
-        app:key="text_size"
+        app:icon="@drawable/text_size"
+        app:key="@string/pref_text_size"
         app:summary="16sp"
         app:title="Text size" />
 
     <SwitchPreference
-        app:iconSpaceReserved="false"
+        app:icon="@drawable/tool"
         app:key="@string/pref_hide_toolbar"
         app:persistent="true"
         app:summary="You can open settings by drawer layout again"
         app:title="Hide toolbar" />
 
     <SwitchPreference
-        app:iconSpaceReserved="false"
+        app:icon="@drawable/tabs"
         app:key="@string/pref_hide_tab_layout"
         app:persistent="true"
         app:title="Hide tab layout" />
@@ -45,14 +54,14 @@
         app:title="Git Profile" />
 
     <EditTextPreference
-        app:iconSpaceReserved="false"
+        app:icon="@drawable/username"
         app:key="user_name"
         app:persistent="true"
         app:title="User name"
         app:useSimpleSummaryProvider="true" />
 
     <EditTextPreference
-        app:iconSpaceReserved="false"
+        app:icon="@drawable/password"
         app:key="user_email"
         app:persistent="true"
         app:title="User Email"

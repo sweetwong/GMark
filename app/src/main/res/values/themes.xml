@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.SweetNote" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.GMark" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/blue_main</item>
         <item name="colorPrimaryVariant">@color/blue_accent</item>
@@ -13,7 +13,30 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
+        <item name="android:overScrollMode">never</item>
     </style>
+
+    <style name="Theme.GMark.BLUE">
+        <item name="colorPrimary">@color/blue_main</item>
+        <item name="colorPrimaryVariant">@color/blue_accent</item>
+        <item name="colorSecondary">@color/blue_main</item>
+        <item name="colorSecondaryVariant">@color/blue_accent</item>
+    </style>
+
+    <style name="Theme.GMark.RED">
+        <item name="colorPrimary">@color/red_main</item>
+        <item name="colorPrimaryVariant">@color/red_accent</item>
+        <item name="colorSecondary">@color/red_main</item>
+        <item name="colorSecondaryVariant">@color/red_accent</item>
+    </style>
+
+    <style name="Theme.GMark.YELLOW">
+        <item name="colorPrimary">@color/yellow_main</item>
+        <item name="colorPrimaryVariant">@color/yellow_accent</item>
+        <item name="colorSecondary">@color/yellow_main</item>
+        <item name="colorSecondaryVariant">@color/yellow_accent</item>
+    </style>
+
 
     <style name="Divider">
         <item name="android:layout_width">match_parent</item>

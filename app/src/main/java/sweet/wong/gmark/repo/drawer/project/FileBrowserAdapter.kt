@@ -6,11 +6,12 @@ import android.widget.PopupMenu
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import sweet.wong.gmark.R
+import sweet.wong.gmark.core.App
 import sweet.wong.gmark.core.resources
 import sweet.wong.gmark.databinding.RecycleItemProjectBinding
+import sweet.wong.gmark.ext.getColorFromAttr
 import sweet.wong.gmark.ext.inflater
 import sweet.wong.gmark.utils.DefaultDiffUtilCallback
-import sweet.wong.gmark.utils.Resources
 import java.io.File
 
 /**
@@ -20,6 +21,9 @@ import java.io.File
  */
 class FileBrowserAdapter(private val onItemClick: (ProjectUIState) -> Unit) :
     ListAdapter<ProjectUIState, FileBrowserAdapter.VH>(DefaultDiffUtilCallback()) {
+
+    private val textMainColor = App.activity.getColor(R.color.text_main)
+    private val textHighlightColor = App.activity.getColorFromAttr(R.attr.colorPrimary)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = VH(
         RecycleItemProjectBinding.inflate(parent.inflater, parent, false)
@@ -37,7 +41,7 @@ class FileBrowserAdapter(private val onItemClick: (ProjectUIState) -> Unit) :
             when {
                 uiState.navigateBack -> {
                     binding.icon.setImageResource(R.drawable.folder)
-                    binding.text.setTextColor(Resources.COLOR_TEXT_MAIN)
+                    binding.text.setTextColor(textMainColor)
                 }
                 uiState.drawerFile.isDirectory -> {
                     binding.icon.setImageResource(R.drawable.folder)
@@ -63,12 +67,12 @@ class FileBrowserAdapter(private val onItemClick: (ProjectUIState) -> Unit) :
 
         private fun setFolderHighlight(file: File?, targetFile: File, rootFile: File?) {
             if (file == null || !file.exists() || file == rootFile) {
-                binding.text.setTextColor(Resources.COLOR_TEXT_MAIN)
+                binding.text.setTextColor(textMainColor)
                 return
             }
 
             if (file == targetFile) {
-                binding.text.setTextColor(Resources.COLOR_TEXT_HIGHLIGHT)
+                binding.text.setTextColor(textHighlightColor)
                 return
             }
 
@@ -77,9 +81,9 @@ class FileBrowserAdapter(private val onItemClick: (ProjectUIState) -> Unit) :
 
         private fun setFileHighlight(file: File?, targetFile: File) {
             if (file == targetFile) {
-                binding.text.setTextColor(Resources.COLOR_TEXT_HIGHLIGHT)
+                binding.text.setTextColor(textHighlightColor)
             } else {
-                binding.text.setTextColor(Resources.COLOR_TEXT_MAIN)
+                binding.text.setTextColor(textMainColor)
             }
         }
 

@@ -30,10 +30,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
                 android:layout_below="@id/toolbar"
-                app:tabIndicatorColor="@color/blue_main"
+                app:tabIndicatorColor="?colorPrimary"
                 app:tabMaxWidth="200dp"
                 app:tabMode="scrollable"
-                app:tabSelectedTextColor="@color/blue_main"
+                app:tabSelectedTextColor="?colorPrimary"
                 app:tabTextAppearance="@style/TabTextAppearance"
                 app:tabTextColor="@color/text_main"
                 app:tabUnboundedRipple="false" />
