@@ -1,4 +1,4 @@
-package sweet.wong.gmark.repo.drawer.history
+package sweet.wong.gmark.repo.history
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter

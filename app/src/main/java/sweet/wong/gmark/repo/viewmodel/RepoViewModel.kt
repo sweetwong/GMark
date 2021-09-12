@@ -11,7 +11,7 @@ import sweet.wong.gmark.data.DaoManager
 import sweet.wong.gmark.data.Page
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.repo.data.FileRaw
-import sweet.wong.gmark.repo.drawer.project.ProjectUIState
+import sweet.wong.gmark.repo.project.ProjectUIState
 import sweet.wong.gmark.sp.SPConstant
 import sweet.wong.gmark.sp.SPUtils
 import sweet.wong.gmark.utils.Event

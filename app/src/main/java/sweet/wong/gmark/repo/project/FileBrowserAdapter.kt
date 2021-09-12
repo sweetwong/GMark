@@ -1,4 +1,4 @@
-package sweet.wong.gmark.repo.drawer.project
+package sweet.wong.gmark.repo.project
 
 import android.view.Gravity
 import android.view.ViewGroup

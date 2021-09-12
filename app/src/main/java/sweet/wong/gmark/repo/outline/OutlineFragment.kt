@@ -1,4 +1,4 @@
-package sweet.wong.gmark.repo.drawer.outline
+package sweet.wong.gmark.repo.outline
 
 import android.os.Bundle
 import android.view.LayoutInflater
