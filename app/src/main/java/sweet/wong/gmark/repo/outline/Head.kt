@@ -5,7 +5,7 @@ data class Head(
     val level: Int,
     val markdownPosition: Int,
     var visible: Boolean = true,
-    var spinOpened: Boolean = false
+    var spinOpened: Boolean? = null
 ) {
 
     val titleWithBlank = calculateBlank()
@@ -13,10 +13,9 @@ data class Head(
     private fun calculateBlank(): String {
         val blank = StringBuilder()
         repeat(level - 1) {
-            blank.append("    ")
+            blank.append("  ")
         }
         return "$blank${title}"
     }
-
 
 }

@@ -4,20 +4,45 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="head"
             type="sweet.wong.gmark.repo.outline.Head" />
     </data>
 
-    <TextView
-        android:id="@+id/heading_text"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?selectableItemBackground"
-        android:padding="12dp"
-        android:text="@{head.titleWithBlank}"
-        android:textColor="@color/text_main"
-        android:textSize="18sp"
-        tools:text="Heading" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp">
+
+        <ImageView
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?controlBackground"
+            android:padding="12dp"
+            android:src="@drawable/spinner"
+            android:visibility="@{head.spinOpened != null ? View.VISIBLE : View.INVISIBLE}"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/heading_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            android:text="@{head.titleWithBlank}"
+            android:textColor="@color/text_main"
+            android:textSize="18sp"
+            tools:text="Heading" />
+
+    </LinearLayout>
 
 </layout>

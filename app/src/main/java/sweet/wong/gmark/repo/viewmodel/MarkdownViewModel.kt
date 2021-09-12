@@ -21,6 +21,7 @@ class MarkdownViewModel : ViewModel() {
                     newHeads.add(Head(title, node.level, i))
                 }
             }
+            initSpin(newHeads)
             this@MarkdownViewModel.allHeads.value = newHeads
         }
     }
@@ -39,7 +40,18 @@ class MarkdownViewModel : ViewModel() {
 
     val showingHeads = MutableLiveData<MutableList<Head>>()
 
+    private fun initSpin(allHeads: MutableList<Head>) {
+        for (i in 0 until allHeads.size - 1) {
+            val head = allHeads[i]
+            if (head.level < allHeads[i + 1].level) {
+                allHeads[i].spinOpened = true
+            }
+        }
+    }
+
     fun selectSpinner(head: Head) {
+        if (head.spinOpened == null) return
+
         val allHeads = this.allHeads.value ?: return toast("Select spinner heads is empty")
 
         // Find position
@@ -51,8 +63,6 @@ class MarkdownViewModel : ViewModel() {
         }
 
         if (position == -1) return toast("Select spinner invalid position")
-
-        head.spinOpened = !head.spinOpened
 
         var i = position + 1
         while (i < allHeads.size) {
