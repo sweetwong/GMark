@@ -66,7 +66,7 @@ class MarkdownDelegate(
         adapter.setParsedMarkdown(markwon, nodes)
         adapter.notifyDataSetChanged()
 
-        markdownViewModel.nodes.value = nodes
+        markdownViewModel.nodesToAllHeads.value = nodes
     }
 
     private fun getFileType(fileName: String): String {

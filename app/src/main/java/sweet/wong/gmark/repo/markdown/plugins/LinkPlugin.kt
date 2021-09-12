@@ -37,7 +37,7 @@ class LinkPlugin(
 
                 if (link.startsWith("#")) {
                     val head = link.replace("#", "")
-                    val nodes = markdownViewModel.nodes.value ?: return
+                    val nodes = markdownViewModel.nodesToAllHeads.value ?: return
                     val recyclerView = delegate.markList
                     repeat(nodes.size) { i ->
                         val node = nodes[i]
