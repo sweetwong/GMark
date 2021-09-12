@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import sweet.wong.gmark.core.delay
 import sweet.wong.gmark.databinding.FragmentProjectBinding
 import sweet.wong.gmark.repo.viewmodel.RepoViewModel
 import java.io.File
@@ -85,6 +86,10 @@ class ProjectFragment : Fragment() {
             file = file.parentFile
         }
         barAdapter.submitList(list.reversed())
+
+        delay(60) {
+            binding.navigationBar.smoothScrollToPosition(list.lastIndex)
+        }
     }
 
 
