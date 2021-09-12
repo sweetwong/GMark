@@ -25,17 +25,11 @@
                 android:layout_height="42dp"
                 android:background="@color/white" />
 
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_below="@id/toolbar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
-                android:layout_below="@id/spinner"
+                android:layout_below="@id/toolbar"
                 app:tabIndicatorColor="?colorPrimary"
                 app:tabMaxWidth="200dp"
                 app:tabMode="scrollable"
