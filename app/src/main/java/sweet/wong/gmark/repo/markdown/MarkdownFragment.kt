@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -85,6 +86,9 @@ class MarkdownFragment : Fragment() {
     private fun scrollY(scrollY: Int) {
         // Scroll
         binding.markList.scrollBy(0, scrollY)
+
+        val animation = AnimationUtils.loadAnimation(requireContext(), android.R.anim.fade_in)
+        binding.markList.startAnimation(animation)
     }
 
 }

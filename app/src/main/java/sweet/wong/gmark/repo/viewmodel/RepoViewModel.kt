@@ -57,10 +57,16 @@ class RepoViewModel : ViewModel() {
     fun init(): Boolean {
         val uid = SPUtils.getInt(SPConstant.LAST_REPO_UID)
         if (uid == 0) {
+            toast("Can not read repository uid", uid)
             return false
         }
         repo = DaoManager.repoDao.get(uid)
+
         rootFile = File(repo.localPath)
+        if (!rootFile.exists() || !rootFile.isDirectory) {
+            toast("Repository root path is invalid")
+            return false
+        }
         return true
     }
 
