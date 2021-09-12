@@ -12,7 +12,7 @@ import coil.load
 import sweet.wong.gmark.databinding.ActivityPhotoViewBinding
 
 /**
- * @author sweetwang 2021/9/7
+ * Activity used to show photo, support zoom in/out
  */
 class PhotoViewActivity : AppCompatActivity() {
 
