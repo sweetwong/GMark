@@ -9,12 +9,14 @@ import org.commonmark.node.Text
 import sweet.wong.gmark.core.log
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.repo.markdown.MarkdownDelegate
+import sweet.wong.gmark.repo.viewmodel.MarkdownViewModel
 import sweet.wong.gmark.repo.viewmodel.RepoViewModel
 import java.io.File
 
 class LinkPlugin(
+    private val repoViewModel: RepoViewModel,
+    private val markdownViewModel: MarkdownViewModel,
     private val delegate: MarkdownDelegate,
-    private val viewModel: RepoViewModel
 ) : AbstractMarkwonPlugin() {
 
     override fun configureConfiguration(builder: MarkwonConfiguration.Builder) {
@@ -26,7 +28,7 @@ class LinkPlugin(
                     return
                 }
 
-                val showingFile = viewModel.showingFile ?: return toast("Current file is null")
+                val showingFile = repoViewModel.showingFile ?: return toast("Current file is null")
 
                 log("link is $link", "showingFile is $showingFile")
 
@@ -35,9 +37,9 @@ class LinkPlugin(
 
                 if (link.startsWith("#")) {
                     val head = link.replace("#", "")
-                    val nodes = delegate.nodes
+                    val nodes = markdownViewModel.nodes.value ?: return
                     val recyclerView = delegate.markList
-                    repeat(delegate.nodes.size) { i ->
+                    repeat(nodes.size) { i ->
                         val node = nodes[i]
                         val firstChild = node.firstChild
                         if (node is Heading && firstChild is Text && firstChild.literal == head) {
@@ -62,7 +64,7 @@ class LinkPlugin(
                     }
                 }
 
-                viewModel.selectFile(File(resolved))
+                repoViewModel.selectFile(File(resolved))
 
             }
         })

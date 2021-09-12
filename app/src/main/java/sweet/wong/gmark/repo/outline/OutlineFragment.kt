@@ -30,6 +30,10 @@ class OutlineFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         adapter = OutlineAdapter(markdownViewModel)
         binding.outlineList.adapter = adapter
+
+        markdownViewModel.showingHeads.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
     }
 
 }

@@ -15,22 +15,24 @@ import io.noties.markwon.syntax.SyntaxHighlightPlugin
 import io.noties.prism4j.Prism4j
 import io.noties.prism4j.annotations.PrismBundle
 import org.commonmark.node.FencedCodeBlock
-import org.commonmark.node.Node
 import sweet.wong.gmark.R
 import sweet.wong.gmark.core.App
 import sweet.wong.gmark.repo.markdown.plugins.GmarkImagePlugin
 import sweet.wong.gmark.repo.markdown.plugins.LinkPlugin
+import sweet.wong.gmark.repo.viewmodel.MarkdownViewModel
 import sweet.wong.gmark.repo.viewmodel.RepoViewModel
 
 
 @PrismBundle(include = ["java", "kotlin"], grammarLocatorClassName = ".GrammarLocatorSourceCode")
-class MarkdownDelegate(viewModel: RepoViewModel) {
+class MarkdownDelegate(
+    repoViewModel: RepoViewModel,
+    private val markdownViewModel: MarkdownViewModel
+) {
 
     private val prism4j = Prism4j(GrammarLocatorSourceCode())
     private val prism4jTheme = Prism4jThemeDefault.create(getCodeBlockColor())
     private val reducer = MarkwonReducer.directChildren()
 
-    internal lateinit var nodes: List<Node>
     internal lateinit var markList: RecyclerView
 
     private val markwon: Markwon = Markwon.builder(App.app)
@@ -41,7 +43,7 @@ class MarkdownDelegate(viewModel: RepoViewModel) {
                 TablePlugin.create(App.app),
                 SyntaxHighlightPlugin.create(prism4j, prism4jTheme),
                 GmarkImagePlugin(),
-                LinkPlugin(this, viewModel)
+                LinkPlugin(repoViewModel, markdownViewModel, this)
             )
         )
         .build()
@@ -60,9 +62,11 @@ class MarkdownDelegate(viewModel: RepoViewModel) {
         val template = if (fileName.endsWith(".md")) markdown
         else "```${getFileType(fileName)}\n$markdown\n```"
         markList.adapter = adapter
-        nodes = reducer.reduce(markwon.parse(template))
+        val nodes = reducer.reduce(markwon.parse(template))
         adapter.setParsedMarkdown(markwon, nodes)
         adapter.notifyDataSetChanged()
+
+        markdownViewModel.nodes.value = nodes
     }
 
     private fun getFileType(fileName: String): String {

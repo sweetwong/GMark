@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import sweet.wong.gmark.databinding.FragmentMarkdownBinding
+import sweet.wong.gmark.repo.viewmodel.MarkdownViewModel
 import sweet.wong.gmark.repo.viewmodel.RepoViewModel
 import sweet.wong.gmark.utils.SnappingLinearLayoutManager
 
@@ -19,8 +20,9 @@ import sweet.wong.gmark.utils.SnappingLinearLayoutManager
 class MarkdownFragment : Fragment() {
 
     private lateinit var binding: FragmentMarkdownBinding
-    private lateinit var viewModel: RepoViewModel
+    private lateinit var repoViewModel: RepoViewModel
     private lateinit var markdownDelegate: MarkdownDelegate
+    private lateinit var markdownViewModel: MarkdownViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,8 +30,9 @@ class MarkdownFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMarkdownBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(requireActivity())[RepoViewModel::class.java]
-        binding.viewModel = viewModel
+        repoViewModel = ViewModelProvider(requireActivity())[RepoViewModel::class.java]
+        markdownViewModel = ViewModelProvider(requireActivity())[MarkdownViewModel::class.java]
+        binding.viewModel = repoViewModel
         binding.lifecycleOwner = this
         return binding.root
     }
@@ -37,7 +40,7 @@ class MarkdownFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Init markdown
-        markdownDelegate = MarkdownDelegate(viewModel)
+        markdownDelegate = MarkdownDelegate(repoViewModel, markdownViewModel)
 
         initMarkList()
         initObserver()
@@ -54,17 +57,17 @@ class MarkdownFragment : Fragment() {
         binding.markList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                val position = viewModel.currentTabPosition
-                val tabs = viewModel.pages
+                val position = repoViewModel.currentTabPosition
+                val tabs = repoViewModel.pages
                 if (position != -1 && position < tabs.size) {
-                    tabs[viewModel.currentTabPosition].scrollY += dy
+                    tabs[repoViewModel.currentTabPosition].scrollY += dy
                 }
             }
         })
     }
 
     private fun initObserver() {
-        viewModel.fileRaw.observe(viewLifecycleOwner) {
+        repoViewModel.fileRaw.observe(viewLifecycleOwner) {
             if (it.empty) {
                 markdownDelegate.setMarkdown("README.md", binding.markList, "")
             } else {
@@ -72,7 +75,7 @@ class MarkdownFragment : Fragment() {
             }
         }
 
-        viewModel.showingPage.observe(viewLifecycleOwner) { page ->
+        repoViewModel.showingPage.observe(viewLifecycleOwner) { page ->
             val scrollY = page.scrollY
             page.scrollY = 0
             scrollY(scrollY)

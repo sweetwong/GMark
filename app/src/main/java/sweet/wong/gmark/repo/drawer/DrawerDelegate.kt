@@ -12,6 +12,7 @@ import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.databinding.LayoutDrawerBinding
 import sweet.wong.gmark.repo.RepoActivity
 import sweet.wong.gmark.repo.history.HistoryFragment
+import sweet.wong.gmark.repo.outline.OutlineFragment
 import sweet.wong.gmark.repo.project.ProjectFragment
 import sweet.wong.gmark.repo.viewmodel.RepoViewModel
 import sweet.wong.gmark.settings.SettingsActivity
@@ -53,6 +54,12 @@ class DrawerDelegate(
                     replace<ProjectFragment>(R.id.fragment_container_view)
                 }
             }
+            binding.btnOutline -> {
+                binding.drawerToolbar.title = activity.getString(R.string.outline)
+                activity.supportFragmentManager.commit {
+                    replace<OutlineFragment>(R.id.fragment_container_view)
+                }
+            }
             binding.btnGit -> {
                 binding.drawerToolbar.title = activity.getString(R.string.git)
                 toast("Click git")
@@ -62,10 +69,6 @@ class DrawerDelegate(
                 activity.supportFragmentManager.commit {
                     replace<HistoryFragment>(R.id.fragment_container_view)
                 }
-            }
-            binding.btnOutline -> {
-                binding.drawerToolbar.title = activity.getString(R.string.outline)
-                toast("Click outline")
             }
             binding.btnSettings -> {
                 SettingsActivity.start(activity)
