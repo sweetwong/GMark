@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import sweet.wong.gmark.data.Page
 import sweet.wong.gmark.databinding.RecycleItemHistoryBinding
 import sweet.wong.gmark.ext.inflater
+import sweet.wong.gmark.repo.viewmodel.HistoryViewModel
 import sweet.wong.gmark.utils.DefaultDiffUtilCallback
 
 class HistoryAdapter(private val viewModel: HistoryViewModel) :
