@@ -21,6 +21,24 @@ class RepoListViewModel : ViewModel() {
     val repoUpdateEvent = MutableLiveData<Event<Int>>()
     val repoSelectEvent = MutableLiveData<Event<Repo>>()
 
+    fun pull(uiState: RepoUIState) {
+
+    }
+
+    private fun clone(repoUIState: RepoUIState) {
+        val repo = repoUIState.repo
+
+        // TODO: 2021/9/3 添加进度条
+        Clone.clone(
+            repo.url,
+            repo.localPath,
+            repo.username,
+            repo.password,
+            repo.ssh,
+            RepoCloneMonitor(this, repoUIState)
+        )
+    }
+
     fun refreshRepoList() {
         // FIXME: 2021/9/2 这里刷新可能会导致丢失UI状态
         io {
@@ -46,7 +64,7 @@ class RepoListViewModel : ViewModel() {
                 ui {
                     val repoUIState = RepoUIState(repo)
                     repoUIStates.value = repoUIStates.value.apply { add(repoUIState) }
-                    startClone(repoUIState)
+                    clone(repoUIState)
                 }
             } catch (e: Exception) {
                 toast("Add new repo failed", e)
@@ -54,10 +72,10 @@ class RepoListViewModel : ViewModel() {
         }
     }
 
-    fun deleteRepo(repo: Repo) {
+    fun deleteRepo(uiState: RepoUIState) {
         io {
             try {
-                DaoManager.repoDao.delete(repo)
+                DaoManager.repoDao.delete(uiState.repo)
                 ui {
                     refreshRepoList()
                 }
@@ -67,18 +85,17 @@ class RepoListViewModel : ViewModel() {
         }
     }
 
-    private fun startClone(repoUIState: RepoUIState) {
-        val repo = repoUIState.repo
+}
 
-        // TODO: 2021/9/3 添加进度条
-        Clone.clone(
-            repo.url,
-            repo.localPath,
-            repo.username,
-            repo.password,
-            repo.ssh,
-            RepoCloneMonitor(this, repoUIState)
-        )
-    }
+/**
+ * Represent repository list item view model
+ */
+class RepoUIState(val repo: Repo) {
+
+    var position = -1
+
+    var progress = ""
+
+    var statusText = ""
 
 }

@@ -20,4 +20,5 @@
     <string name="copy">Copy</string>
     <string name="paste">Paste</string>
     <string name="delete">Delete</string>
+    <string name="pull">Pull</string>
 </resources>

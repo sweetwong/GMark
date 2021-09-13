@@ -1,10 +1,13 @@
 package sweet.wong.gmark.repolist
 
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import sweet.wong.gmark.R
 import sweet.wong.gmark.databinding.RecycleItemRepoBinding
 import sweet.wong.gmark.utils.Event
 
@@ -26,8 +29,17 @@ class RepoListAdapter(private val viewModel: RepoListViewModel) :
             binding.executePendingBindings()
             uiState.position = position
 
-            itemView.setOnLongClickListener {
-                viewModel.deleteRepo(uiState.repo)
+            itemView.setOnLongClickListener { v ->
+                val popupMenu = PopupMenu(v.context, v, Gravity.END)
+                popupMenu.inflate(R.menu.popup_menu_repo_list)
+                popupMenu.setOnMenuItemClickListener { menuItem ->
+                    when (menuItem.itemId) {
+                        R.id.menu_pull -> viewModel.pull(uiState)
+                        R.id.menu_delete -> viewModel.deleteRepo(uiState)
+                    }
+                    true
+                }
+                popupMenu.show()
                 true
             }
 
