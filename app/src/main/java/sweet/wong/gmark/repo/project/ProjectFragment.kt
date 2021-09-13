@@ -1,20 +1,17 @@
 package sweet.wong.gmark.repo.project
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import sweet.wong.gmark.base.BaseFragment
 import sweet.wong.gmark.core.delay
 import sweet.wong.gmark.databinding.FragmentProjectBinding
 import sweet.wong.gmark.repo.viewmodel.RepoViewModel
 import java.io.File
 
-class ProjectFragment : Fragment() {
+class ProjectFragment : BaseFragment<FragmentProjectBinding>() {
 
     private lateinit var viewModel: RepoViewModel
-    private lateinit var binding: FragmentProjectBinding
 
     private lateinit var uiState: ProjectUIState
 
@@ -41,18 +38,10 @@ class ProjectFragment : Fragment() {
         updateNavigationBar(it)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentProjectBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(requireActivity())[RepoViewModel::class.java]
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(requireActivity())[RepoViewModel::class.java]
+
         binding.fileBrowser.adapter = browserAdapter
         binding.fileBrowser.itemAnimator = null
         binding.navigationBar.adapter = barAdapter

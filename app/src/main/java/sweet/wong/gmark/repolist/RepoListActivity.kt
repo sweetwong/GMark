@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import sweet.wong.gmark.R
+import sweet.wong.gmark.base.BaseActivity
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.databinding.ActivityRepoListBinding
 import sweet.wong.gmark.ext.start
@@ -21,18 +21,13 @@ import java.util.*
 /**
  * Repository list page
  */
-class RepoListActivity : AppCompatActivity() {
+class RepoListActivity : BaseActivity<ActivityRepoListBinding>() {
 
-    private lateinit var binding: ActivityRepoListBinding
     private lateinit var repoListAdapter: RepoListAdapter
     private val viewModel: RepoListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Bind view
-        binding = ActivityRepoListBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         // Init ActionBar
         setSupportActionBar(binding.toolbar)

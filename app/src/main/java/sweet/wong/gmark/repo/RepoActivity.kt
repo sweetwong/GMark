@@ -2,10 +2,12 @@ package sweet.wong.gmark.repo
 
 import android.content.Context
 import android.os.Bundle
-import android.view.*
+import android.view.KeyEvent
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.databinding.ObservableList
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
@@ -14,6 +16,7 @@ import androidx.fragment.app.commit
 import com.blankj.utilcode.util.ScreenUtils
 import com.google.android.material.tabs.TabLayout
 import sweet.wong.gmark.R
+import sweet.wong.gmark.base.BaseActivity
 import sweet.wong.gmark.core.delay
 import sweet.wong.gmark.core.noOpDelegate
 import sweet.wong.gmark.core.toast
@@ -31,29 +34,23 @@ import sweet.wong.gmark.utils.EventObserver
 import sweet.wong.gmark.utils.OnListChangedCallback
 import kotlin.math.min
 
-class RepoActivity : AppCompatActivity() {
+class RepoActivity : BaseActivity<ActivityRepoBinding>() {
 
     private val viewModel: RepoViewModel by viewModels()
-
-    private lateinit var binding: ActivityRepoBinding
 
     private lateinit var drawerDelegate: DrawerDelegate
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         if (!viewModel.init()) {
             RepoListActivity.start(this)
             finish()
             return
         }
+        super.onCreate(savedInstanceState)
 
         // Binding View
-        binding = ActivityRepoBinding.inflate(layoutInflater).apply {
-            setContentView(root)
-            viewModel = this@RepoActivity.viewModel
-            lifecycleOwner = this@RepoActivity
-        }
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
         initToolbar(viewModel.repo.name)
         initFragment(savedInstanceState)

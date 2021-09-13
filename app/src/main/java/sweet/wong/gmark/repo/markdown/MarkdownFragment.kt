@@ -2,13 +2,11 @@ package sweet.wong.gmark.repo.markdown
 
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import sweet.wong.gmark.base.BaseFragment
 import sweet.wong.gmark.databinding.FragmentMarkdownBinding
 import sweet.wong.gmark.repo.viewmodel.MarkdownViewModel
 import sweet.wong.gmark.repo.viewmodel.RepoViewModel
@@ -17,28 +15,19 @@ import sweet.wong.gmark.utils.SnappingLinearLayoutManager
 /**
  * Fragment for markdown text preview
  */
-class MarkdownFragment : Fragment() {
+class MarkdownFragment : BaseFragment<FragmentMarkdownBinding>() {
 
-    private lateinit var binding: FragmentMarkdownBinding
     private lateinit var repoViewModel: RepoViewModel
     private lateinit var markdownDelegate: MarkdownDelegate
     private lateinit var markdownViewModel: MarkdownViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentMarkdownBinding.inflate(inflater, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         repoViewModel = ViewModelProvider(requireActivity())[RepoViewModel::class.java]
         markdownViewModel = ViewModelProvider(requireActivity())[MarkdownViewModel::class.java]
         binding.viewModel = repoViewModel
         binding.lifecycleOwner = this
-        return binding.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         // Init markdown
         markdownDelegate = MarkdownDelegate(repoViewModel, markdownViewModel)
 
