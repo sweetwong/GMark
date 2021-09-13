@@ -17,7 +17,7 @@ class MarkdownViewModel : ViewModel() {
             repeat(nodes.size) { i ->
                 val node = nodes[i]
                 if (node is Heading) {
-                    val title = (node.firstChild as Text).literal
+                    val title = (node.firstChild as? Text)?.literal.orEmpty()
                     newHeads.add(Head(title, node.level, i))
                 }
             }
