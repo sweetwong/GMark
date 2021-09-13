@@ -1,7 +1,18 @@
 package sweet.wong.gmark.editor
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
+import sweet.wong.gmark.base.BaseActivity
+import sweet.wong.gmark.databinding.ActivityEditorBinding
+import sweet.wong.gmark.ext.start
 
-// TODO: 2021/9/7 Add a editor
-class EditorActivity : AppCompatActivity() {
+class EditorActivity : BaseActivity<ActivityEditorBinding>() {
+
+    companion object {
+
+        fun start(context: Context) {
+            context.start<EditorActivity>()
+        }
+
+    }
+
 }

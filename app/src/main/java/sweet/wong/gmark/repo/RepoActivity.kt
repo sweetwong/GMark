@@ -2,10 +2,7 @@ package sweet.wong.gmark.repo
 
 import android.content.Context
 import android.os.Bundle
-import android.view.KeyEvent
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +19,7 @@ import sweet.wong.gmark.core.noOpDelegate
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.Page
 import sweet.wong.gmark.databinding.ActivityRepoBinding
+import sweet.wong.gmark.editor.EditorActivity
 import sweet.wong.gmark.ext.start
 import sweet.wong.gmark.repo.drawer.DrawerDelegate
 import sweet.wong.gmark.repo.markdown.MarkdownFragment
@@ -219,12 +217,15 @@ class RepoActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_repo_list, menu)
+        menuInflater.inflate(R.menu.menu_repo, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.menu_edit -> {
+                EditorActivity.start(this)
+            }
             R.id.menu_sync -> {
                 toast("Sync")
                 return true

@@ -34,6 +34,8 @@
 
         <activity android:name=".settings.SettingsActivity" />
 
+        <activity android:name=".editor.EditorActivity" />
+
     </application>
 
 </manifest>
