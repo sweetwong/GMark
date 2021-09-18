@@ -10,13 +10,14 @@ import org.commonmark.node.Image
 import sweet.wong.gmark.photoview.PhotoViewActivity
 
 /**
- * TODO: Add Description
+ * Handle image click event and image align
  *
  * @author sweetwang 2021/9/7
  */
-class GmarkImagePlugin : AbstractMarkwonPlugin() {
+class ImagePlugin : AbstractMarkwonPlugin() {
 
     override fun configureSpansFactory(builder: MarkwonSpansFactory.Builder) {
+        // Handle Image Click
         builder.appendFactory(Image::class.java) { configuration, props ->
             val url = ImageProps.DESTINATION.require(props)
             LinkSpan(configuration.theme(), url) { view, link ->
@@ -25,6 +26,7 @@ class GmarkImagePlugin : AbstractMarkwonPlugin() {
             }
         }
 
+        // Handle Image Align
         builder.appendFactory(Image::class.java) { _, _ ->
             AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER)
         }

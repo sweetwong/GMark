@@ -17,7 +17,7 @@ import io.noties.prism4j.annotations.PrismBundle
 import org.commonmark.node.FencedCodeBlock
 import sweet.wong.gmark.R
 import sweet.wong.gmark.core.App
-import sweet.wong.gmark.repo.markdown.plugins.GmarkImagePlugin
+import sweet.wong.gmark.repo.markdown.plugins.ImagePlugin
 import sweet.wong.gmark.repo.markdown.plugins.LinkPlugin
 import sweet.wong.gmark.repo.viewmodel.MarkdownViewModel
 import sweet.wong.gmark.repo.viewmodel.RepoViewModel
@@ -42,7 +42,7 @@ class MarkdownDelegate(
                 HtmlPlugin.create(),
                 TablePlugin.create(App.app),
                 SyntaxHighlightPlugin.create(prism4j, prism4jTheme),
-                GmarkImagePlugin(),
+                ImagePlugin(),
                 LinkPlugin(repoViewModel, markdownViewModel, this)
             )
         )
