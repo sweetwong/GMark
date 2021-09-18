@@ -21,4 +21,7 @@
     <string name="paste">Paste</string>
     <string name="delete">Delete</string>
     <string name="pull">Pull</string>
+    <string name="confirm">Confirm</string>
+    <string name="undo">Undo</string>
+    <string name="redo">Redo</string>
 </resources>

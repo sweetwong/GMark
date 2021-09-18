@@ -221,7 +221,9 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_edit -> {
-                EditorActivity.start(this)
+                val file = viewModel.showingFile ?: return true
+                EditorActivity.start(this, file.absolutePath)
+                return true
             }
             R.id.menu_sync -> {
                 toast("Sync")
