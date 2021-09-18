@@ -110,14 +110,14 @@ class RepoViewModel : ViewModel() {
      * 2. Choose existing file
      * 3. Choose new file
      */
-    fun selectFile(file: File) {
+    fun selectFile(file: File?, forceUpdate: Boolean = false) {
         // Check file valid
-        if (!file.exists() || !file.isFile) {
+        if (file == null || !file.exists() || !file.isFile) {
             return toast("File $file is not exist")
         }
 
         // Check Same file
-        if (file == showingFile) {
+        if (file == showingFile && !forceUpdate) {
             // Close and refresh drawer
             showDrawer.value = Event(false)
             updateDrawer()

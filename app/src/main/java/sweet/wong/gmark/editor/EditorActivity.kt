@@ -1,21 +1,23 @@
 package sweet.wong.gmark.editor
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
 import sweet.wong.gmark.R
 import sweet.wong.gmark.base.BaseActivity
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.databinding.ActivityEditorBinding
-import sweet.wong.gmark.ext.start
+import sweet.wong.gmark.utils.EventObserver
 import java.io.File
 
 class EditorActivity : BaseActivity<ActivityEditorBinding>() {
 
     private val viewModel: EditorViewModel by viewModels()
-    private lateinit var undoRedo: TextViewUndoRedo
+    private var undoRedo: TextViewUndoRedo? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,15 +57,32 @@ class EditorActivity : BaseActivity<ActivityEditorBinding>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_confirm -> {
-                toast("不错")
+//                val alertDialog = AlertDialog.Builder(this)
+//                    .setCancelable(true)
+//                    .setTitle("Are you sure to save the modified content?")
+//                    .setPositiveButton(R.string.confirm) { dialog, _ ->
+//                        viewModel.save().observe(this, EventObserver {
+//                            setResult(RESULT_OK)
+//                            finish()
+//                        })
+//                        dialog.dismiss()
+//                    }
+//                    .setNegativeButton(R.string.cancel) { dialog, _ ->
+//                        dialog.dismiss()
+//                    }
+//                alertDialog.show()
+                viewModel.save().observe(this, EventObserver {
+                    setResult(RESULT_OK)
+                    finish()
+                })
                 return true
             }
             R.id.menu_undo -> {
-                undoRedo.undo()
+                undoRedo?.undo()
                 return true
             }
             R.id.menu_redo -> {
-                undoRedo.redo()
+                undoRedo?.redo()
                 return true
             }
         }
@@ -74,10 +93,10 @@ class EditorActivity : BaseActivity<ActivityEditorBinding>() {
 
         private const val EXTRA_PATH = "extra_path"
 
-        fun start(context: Context, path: String) {
-            context.start<EditorActivity> {
-                putExtra(EXTRA_PATH, path)
-            }
+        fun start(context: Context, launcher: ActivityResultLauncher<Intent>, path: String) {
+            launcher.launch(
+                Intent(context, EditorActivity::class.java).putExtra(EXTRA_PATH, path)
+            )
         }
 
     }

@@ -6,6 +6,7 @@ import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.isVisible
@@ -39,6 +40,13 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
     private val viewModel: RepoViewModel by viewModels()
 
     private lateinit var drawerDelegate: DrawerDelegate
+
+    private val editorLauncher = registerForActivityResult(StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            // File has changed, now we force update
+            viewModel.selectFile(viewModel.showingFile, true)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (!viewModel.init()) {
@@ -222,7 +230,7 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
         when (item.itemId) {
             R.id.menu_edit -> {
                 val file = viewModel.showingFile ?: return true
-                EditorActivity.start(this, file.absolutePath)
+                EditorActivity.start(this, editorLauncher, file.absolutePath)
                 return true
             }
             R.id.menu_sync -> {
