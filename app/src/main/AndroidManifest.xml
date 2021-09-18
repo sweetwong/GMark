@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GMark">
 
-        <activity android:name=".repolist.RepoListActivity">
+        <activity
+            android:name=".repolist.RepoListActivity"
+            android:exported="true">
 
         </activity>
 
