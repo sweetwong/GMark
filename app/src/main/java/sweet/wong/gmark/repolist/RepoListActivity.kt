@@ -11,6 +11,7 @@ import sweet.wong.gmark.base.BaseActivity
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.databinding.ActivityRepoListBinding
 import sweet.wong.gmark.ext.start
+import sweet.wong.gmark.newrepo.NewRepoActivity
 import sweet.wong.gmark.repo.RepoActivity
 import sweet.wong.gmark.settings.SettingsActivity
 import sweet.wong.gmark.sp.SPConstant
@@ -36,10 +37,7 @@ class RepoListActivity : BaseActivity<ActivityRepoListBinding>() {
         binding.fab.imageTintList =
             ResourcesCompat.getColorStateList(resources, R.color.ck_red, null)
         binding.fab.setOnClickListener {
-            binding.fab.isEnabled = false
-            val dialogFragment = RepoAuthDialogFragment(viewModel)
-            dialogFragment.onDismiss = { binding.fab.isEnabled = true }
-            dialogFragment.show(supportFragmentManager, RepoAuthDialogFragment::class.java.name)
+            NewRepoActivity.start(this)
         }
 
         // Init RecyclerView

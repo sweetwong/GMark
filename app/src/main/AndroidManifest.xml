@@ -38,6 +38,8 @@
 
         <activity android:name=".editor.EditorActivity" />
 
+        <activity android:name=".newrepo.NewRepoActivity" />
+
     </application>
 
 </manifest>
