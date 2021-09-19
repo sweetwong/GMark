@@ -20,14 +20,17 @@ class RepoListAdapter(private val viewModel: RepoListViewModel) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = VH.from(parent)
 
     override fun onBindViewHolder(holder: VH, position: Int) =
-        holder.bind(viewModel, getItem(position), position)
+        holder.bind(viewModel, getItem(position))
 
     class VH(private val binding: RecycleItemRepoBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: RepoListViewModel, uiState: RepoUIState, position: Int) {
-            binding.state = uiState
-            binding.executePendingBindings()
-            uiState.position = position
+        fun bind(viewModel: RepoListViewModel, uiState: RepoUIState) {
+            val refresh = {
+                binding.state = uiState
+                binding.executePendingBindings()
+            }
+            refresh()
+            uiState.refresh = refresh
 
             itemView.setOnLongClickListener { v ->
                 val popupMenu = PopupMenu(v.context, v, Gravity.END)

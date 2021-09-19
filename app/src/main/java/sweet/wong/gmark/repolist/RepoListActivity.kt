@@ -45,6 +45,7 @@ class RepoListActivity : BaseActivity<ActivityRepoListBinding>() {
         // Init RecyclerView
         repoListAdapter = RepoListAdapter(viewModel)
         binding.repoList.adapter = repoListAdapter
+        binding.repoList.itemAnimator = null
         viewModel.repoUIStates.observe(this@RepoListActivity) {
             repoListAdapter.submitList(it.toMutableList())
         }
@@ -57,12 +58,6 @@ class RepoListActivity : BaseActivity<ActivityRepoListBinding>() {
             SPUtils.putInt(SPConstant.LAST_REPO_UID, repo.uid, true)
             RepoActivity.start(this)
             finish()
-        })
-
-        viewModel.repoUpdateEvent.observe(this, EventObserver {
-            if (it != -1) {
-                repoListAdapter.notifyItemChanged(it)
-            }
         })
     }
 

@@ -13,8 +13,18 @@ data class Repo(
     @ColumnInfo(name = "username") var username: String?,
     @ColumnInfo(name = "password") var password: String?,
     @ColumnInfo(name = "ssh") var ssh: String?,
+    @ColumnInfo(name = "lastUpdateTime") var lastUpdateTime: Long = System.currentTimeMillis(),
+    @ColumnInfo(name = "state") var state: Int = STATE_INIT,
     @PrimaryKey(autoGenerate = true) var uid: Int = 0
-) : Parcelable
+) : Parcelable {
+
+    companion object {
+        const val STATE_INIT = 0
+        const val STATE_SYNCING = 1
+        const val STATE_FAILED = 2
+        const val STATE_SUCCESS = 3
+    }
+}
 
 @Dao
 interface RepoDao {

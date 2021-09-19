@@ -2,9 +2,8 @@ package sweet.wong.gmark.repolist
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import sweet.wong.gmark.core.io
-import sweet.wong.gmark.core.toast
-import sweet.wong.gmark.core.ui
+import com.blankj.utilcode.util.TimeUtils
+import sweet.wong.gmark.core.*
 import sweet.wong.gmark.data.DaoManager
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.git.Clone
@@ -18,25 +17,44 @@ class RepoListViewModel : ViewModel() {
 
     val repoUIStates = NonNullLiveData<MutableList<RepoUIState>>(mutableListOf())
 
-    val repoUpdateEvent = MutableLiveData<Event<Int>>()
     val repoSelectEvent = MutableLiveData<Event<Repo>>()
 
     fun pull(uiState: RepoUIState) {
 
     }
 
-    private fun clone(repoUIState: RepoUIState) {
-        val repo = repoUIState.repo
+    private fun clone(uiState: RepoUIState) {
+        val repo = uiState.repo
 
         // TODO: 2021/9/3 添加进度条
-        Clone.clone(
-            repo.url,
-            repo.localPath,
-            repo.username,
-            repo.password,
-            repo.ssh,
-            RepoCloneMonitor(this, repoUIState)
-        )
+        io {
+            Clone.clone(
+                repo.url,
+                repo.localPath,
+                repo.username,
+                repo.password,
+                repo.ssh,
+                object : Clone.CloneCallback by noOpDelegate() {
+
+                    override fun onProgress(title: String?, percent: Int) {
+                        ui {
+                            log("Git clone onProgress", "title", title, "percent", percent)
+                            uiState.statusText = "$title ... ($percent%)"
+                            uiState.progress = percent.toString()
+                            uiState.refresh?.invoke()
+                        }
+                    }
+
+                    override fun onSuccess() {
+                        ui {
+                            uiState.statusText = TimeUtils.date2String(TimeUtils.getNowDate())
+                            uiState.refresh?.invoke()
+                        }
+                    }
+
+                }
+            )
+        }
     }
 
     fun refreshRepoList() {
@@ -92,10 +110,10 @@ class RepoListViewModel : ViewModel() {
  */
 class RepoUIState(val repo: Repo) {
 
-    var position = -1
-
     var progress = ""
 
     var statusText = ""
+
+    var refresh: (() -> Unit)? = null
 
 }
