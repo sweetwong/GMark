@@ -1,27 +1,24 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.GMark" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/blue_main</item>
-        <item name="colorPrimaryVariant">@color/blue_accent</item>
-        <item name="colorOnPrimary">@color/black</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/blue_main</item>
-        <item name="colorSecondaryVariant">@color/blue_accent</item>
-        <item name="colorOnSecondary">@color/black</item>
+    <style name="Theme.GMark" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Primary colors. -->
+        <item name="colorPrimary">@color/ck_blue600</item>
+        <item name="colorPrimaryDark">@color/ck_white</item>
+        <item name="colorAccent">@color/ck_blue800</item>
+        <item name="colorRipple">@color/ck_blue600_10</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
+        <!-- Window color -->
+        <item name="android:windowBackground">@color/ck_white</item>
         <!-- Customize your theme here. -->
         <item name="android:overScrollMode">never</item>
         <item name="android:scrollbars">none</item>
     </style>
 
     <style name="Theme.GMark.BLUE">
-        <item name="colorPrimary">@color/blue_main</item>
-        <item name="colorPrimaryVariant">@color/blue_accent</item>
-        <item name="colorSecondary">@color/blue_main</item>
-        <item name="colorSecondaryVariant">@color/blue_accent</item>
+        <item name="colorPrimary">@color/ck_blue600</item>
+        <item name="colorAccent">@color/ck_blue800</item>
+        <item name="colorRipple">@color/ck_blue600_10</item>
     </style>
 
     <style name="Theme.GMark.RED">

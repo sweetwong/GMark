@@ -17,7 +17,8 @@ object ThemeUtils {
     )
 
     fun setTheme(context: Context) {
-        val color = SPUtils.settings.getString(context.getString(R.string.pref_theme_color), null)
+        val color =
+            SPUtils.settings.getString(context.getString(R.string.pref_theme_color), THEME_BLUE)
         THEMES[color]?.let { context.setTheme(it) }
     }
 

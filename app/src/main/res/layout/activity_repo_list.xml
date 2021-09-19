@@ -45,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="36dp"
                 android:src="@drawable/add"
+                android:tint="@color/red_main"
                 app:backgroundTint="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

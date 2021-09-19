@@ -13,6 +13,7 @@
 
     <color name="blue_main">@color/ck_blue600</color>
     <color name="blue_accent">@color/ck_blue800</color>
+    <color name="blue_ripple">@color/ck_blue600_10</color>
 
     <color name="red_main">@color/ck_red500</color>
     <color name="red_accent">@color/ck_red700</color>

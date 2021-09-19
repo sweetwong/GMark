@@ -25,4 +25,5 @@
     <string name="undo">Undo</string>
     <string name="redo">Redo</string>
     <string name="cancel">Cancel</string>
+    <string name="gmark_url">https://github.com/sweetwong/GMark.git</string>
 </resources>

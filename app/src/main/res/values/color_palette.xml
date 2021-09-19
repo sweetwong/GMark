@@ -140,6 +140,9 @@
     <!-- model 蓝600-->
     <color name="ck_blue600">#1B73FF</color>
 
+    <!-- model 蓝600 10%透明度-->
+    <color name="ck_blue600_10">#1A1B73FF</color>
+
     <!-- model 蓝600 40%透明度-->
     <color name="ck_blue600_40">#661B73FF</color>
 

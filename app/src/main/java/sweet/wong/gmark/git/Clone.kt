@@ -11,6 +11,7 @@ import org.eclipse.jgit.transport.SshTransport
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider
 import org.eclipse.jgit.util.FS
 import sweet.wong.gmark.core.noOpDelegate
+import sweet.wong.gmark.data.Repo
 import java.io.File
 
 object Clone {
@@ -22,38 +23,31 @@ object Clone {
     const val TITLE_RESOLVING_DELTAS = "Resolving deltas"
     const val TITLE_UPDATING_REFERENCES = "Updating references"
 
-    fun clone(
-        url: String,
-        localPath: String,
-        username: String? = null,
-        password: String? = null,
-        ssh: String? = null,
-        callback: CloneCallback
-    ) {
+    fun clone(repo: Repo, callback: CloneCallback) {
         try {
             // Delete local repository
-            File(localPath).deleteRecursively()
+            File(repo.localPath).deleteRecursively()
 
             val cloneCommand = Git.cloneRepository()
-                .setURI(url)
+                .setURI(repo.url)
                 .setProgressMonitor(RepoCloneMonitor(callback))
-                .setDirectory(File(localPath))
+                .setDirectory(File(repo.localPath))
                 .setCloneSubmodules(false)
                 // for SSH clone
                 .apply {
-                    if (ssh != null) {
+                    if (repo.ssh != null) {
                         setTransportConfigCallback {
-                            (it as? SshTransport)?.sshSessionFactory = SshSessionFactory(ssh)
+                            (it as? SshTransport)?.sshSessionFactory = SshSessionFactory(repo.ssh!!)
                         }
                     }
                 }
                 // for HTTP clone
                 .apply {
-                    if (username != null && password != null)
+                    if (repo.username != null && repo.password != null)
                         setCredentialsProvider(
                             UsernamePasswordCredentialsProvider(
-                                username,
-                                password
+                                repo.username,
+                                repo.password
                             )
                         )
                 }

@@ -4,8 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.activity.viewModels
-import androidx.core.content.res.ResourcesCompat
 import sweet.wong.gmark.R
 import sweet.wong.gmark.base.BaseActivity
 import sweet.wong.gmark.core.toast
@@ -27,6 +27,12 @@ class RepoListActivity : BaseActivity<ActivityRepoListBinding>() {
     private lateinit var repoListAdapter: RepoListAdapter
     private val viewModel: RepoListViewModel by viewModels()
 
+    private val addRepoLauncher = registerForActivityResult(StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            viewModel.refreshRepoList()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -34,10 +40,8 @@ class RepoListActivity : BaseActivity<ActivityRepoListBinding>() {
         setSupportActionBar(binding.toolbar)
 
         // When click fab
-        binding.fab.imageTintList =
-            ResourcesCompat.getColorStateList(resources, R.color.ck_red, null)
         binding.fab.setOnClickListener {
-            NewRepoActivity.start(this)
+            NewRepoActivity.start(this, addRepoLauncher)
         }
 
         // Init RecyclerView

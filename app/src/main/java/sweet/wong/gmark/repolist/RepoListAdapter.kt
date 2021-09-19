@@ -37,7 +37,9 @@ class RepoListAdapter(private val viewModel: RepoListViewModel) :
                 popupMenu.inflate(R.menu.popup_menu_repo_list)
                 popupMenu.setOnMenuItemClickListener { menuItem ->
                     when (menuItem.itemId) {
-                        R.id.menu_pull -> viewModel.pull(uiState)
+                        R.id.menu_pull -> {
+//                            viewModel.pull(uiState)
+                        }
                         R.id.menu_delete -> viewModel.deleteRepo(uiState)
                     }
                     true
