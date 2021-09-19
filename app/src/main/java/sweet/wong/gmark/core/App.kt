@@ -12,23 +12,17 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         app = this
+        ThemeUtils.setTheme(this)
 
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks by noOpDelegate() {
             override fun onActivityPreCreated(activity: Activity, savedInstanceState: Bundle?) {
-                App.activity = activity
                 ThemeUtils.setTheme(activity)
-            }
-
-            override fun onActivityResumed(activity: Activity) {
-                App.activity = activity
             }
         })
     }
 
     companion object {
-
         lateinit var app: App
-        lateinit var activity: Activity
     }
 
 }

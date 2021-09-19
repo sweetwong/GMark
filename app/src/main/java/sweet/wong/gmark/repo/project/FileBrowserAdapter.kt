@@ -22,8 +22,8 @@ import java.io.File
 class FileBrowserAdapter(private val onItemClick: (ProjectUIState) -> Unit) :
     ListAdapter<ProjectUIState, FileBrowserAdapter.VH>(DefaultDiffUtilCallback()) {
 
-    private val textMainColor = App.activity.getColor(R.color.text_main)
-    private val textHighlightColor = App.activity.getColorFromAttr(R.attr.colorPrimary)
+    private val textMainColor = App.app.getColor(R.color.text_main)
+    private val textHighlightColor = App.app.getColorFromAttr(R.attr.colorPrimary)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = VH(
         RecycleItemProjectBinding.inflate(parent.inflater, parent, false)
