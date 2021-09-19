@@ -20,7 +20,7 @@ import java.io.File
 
 object Clone {
 
-    fun clone(repo: Repo): Flow<Result> = callbackFlow {
+    fun start(repo: Repo): Flow<Result> = callbackFlow {
         try {
             // Delete old files
             val rootFile = File(repo.localPath)

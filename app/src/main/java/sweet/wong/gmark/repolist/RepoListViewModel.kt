@@ -27,7 +27,7 @@ class RepoListViewModel : ViewModel() {
     val repoSelectEvent = MutableLiveData<Event<Repo>>()
 
     private fun clone(uiState: RepoUIState) = viewModelScope.launch(Dispatchers.IO) {
-        Clone.clone(uiState.repo).collect { result ->
+        Clone.start(uiState.repo).collect { result ->
             when (result) {
                 is Clone.Result.Success -> {
                     uiState.repo.state = Repo.STATE_SUCCESS
