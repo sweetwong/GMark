@@ -67,7 +67,12 @@ class RepoListViewModel : ViewModel() {
                 val uiState = RepoUIState(repo)
                 repoUtiStatesValue.add(uiState)
                 if (uiState.repo.state == Repo.STATE_INIT) {
+                    uiState.statusText = "Preparing clone ..."
+                    uiState.refresh?.invoke()
                     clone(uiState)
+                } else if (uiState.repo.state == Repo.STATE_SUCCESS) {
+                    uiState.statusText = TimeUtils.date2String(TimeUtils.getNowDate())
+                    uiState.refresh?.invoke()
                 }
             }
             repoUIStates.value = repoUtiStatesValue

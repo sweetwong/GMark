@@ -55,7 +55,7 @@ class RepoListActivity : BaseActivity<ActivityRepoListBinding>() {
         viewModel.refreshRepoList()
 
         viewModel.repoSelectEvent.observe(this, EventObserver { repo ->
-            SPUtils.putString(SPConstant.LAST_REPO_URL, repo.url, true)
+            SPUtils.putString(SPConstant.RECENT_REPO_URL, repo.url, true)
             RepoActivity.start(this)
             finish()
         })

@@ -56,25 +56,17 @@ class RepoViewModel : ViewModel() {
         get() = showingPage.value?.file
 
     fun init(): Boolean {
-        val url = SPUtils.getString(SPConstant.LAST_REPO_URL)
-        if (url.isNullOrEmpty()) {
-            toast("Can not read repository uid", url)
-            return false
-        }
+        // 1: Get recent loaded url by shared preferences
+        val url = SPUtils.getString(SPConstant.RECENT_REPO_URL) ?: return false
+        // 2: Get repo model by room
+        val repo = DaoManager.repoDao.get(url) ?: return false
+        // 3: Ensure repo has downloaded successfully
+        if (repo.state != Repo.STATE_SUCCESS) return false
+        // 4: Ensure local directory exists
+        rootFile = File(repo.localPath).apply { if (!isDirectory) return false }
 
-        val repo = DaoManager.repoDao.get(url)
-        if (repo == null) {
-            toast("Repo is null")
-            return false
-        }
+        // Now we init success
         this.repo = repo
-
-        rootFile = File(repo.localPath)
-        if (!rootFile.exists() || !rootFile.isDirectory) {
-            toast("Repository root path is invalid")
-            return false
-        }
-
         return true
     }
 
