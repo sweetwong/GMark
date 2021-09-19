@@ -67,11 +67,11 @@ class RepoListAdapter(private val viewModel: RepoListViewModel) :
         private val diffCallback = object : DiffUtil.ItemCallback<RepoUIState>() {
 
             override fun areItemsTheSame(oldItem: RepoUIState, newItem: RepoUIState): Boolean {
-                return oldItem.repo.uid == newItem.repo.uid
+                return oldItem.repo == newItem.repo
             }
 
             override fun areContentsTheSame(oldItem: RepoUIState, newItem: RepoUIState): Boolean {
-                return oldItem.repo.uid == newItem.repo.uid
+                return oldItem.repo == newItem.repo
             }
 
         }

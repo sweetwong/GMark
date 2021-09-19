@@ -54,8 +54,7 @@ class RepoListActivity : BaseActivity<ActivityRepoListBinding>() {
         viewModel.refreshRepoList()
 
         viewModel.repoSelectEvent.observe(this, EventObserver { repo ->
-            // FIXME: 2021/9/19 Here bug is, first click is not available, why?
-            SPUtils.putInt(SPConstant.LAST_REPO_UID, repo.uid, true)
+            SPUtils.putString(SPConstant.LAST_REPO_URL, repo.url, true)
             RepoActivity.start(this)
             finish()
         })
