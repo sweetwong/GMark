@@ -49,12 +49,12 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         if (!viewModel.init()) {
             RepoListActivity.start(this)
             finish()
             return
         }
-        super.onCreate(savedInstanceState)
 
         // Binding View
         binding.viewModel = viewModel

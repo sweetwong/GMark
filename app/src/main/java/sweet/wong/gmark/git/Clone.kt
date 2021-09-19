@@ -3,6 +3,10 @@ package sweet.wong.gmark.git
 import com.jcraft.jsch.JSch
 import com.jcraft.jsch.Session
 import com.jcraft.jsch.UserInfo
+import kotlinx.coroutines.channels.ProducerScope
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.lib.ProgressMonitor
 import org.eclipse.jgit.transport.JschConfigSessionFactory
@@ -16,22 +20,18 @@ import java.io.File
 
 object Clone {
 
-    const val TITLE_REMOTE_ENUMERATING_OBJECTS = "remote: Enumerating objects"
-    const val TITLE_REMOTE_COUNTING_OBJECTS = "remote: Counting objects"
-    const val TITLE_REMOTE_COMPRESSING_OBJECTS = "remote: Compressing objects"
-    const val TITLE_RECEIVING_OBJECTS = "Receiving objects"
-    const val TITLE_RESOLVING_DELTAS = "Resolving deltas"
-    const val TITLE_UPDATING_REFERENCES = "Updating references"
-
-    fun clone(repo: Repo, callback: CloneCallback) {
+    fun clone(repo: Repo): Flow<Result> = callbackFlow {
         try {
-            // Delete local repository
-            File(repo.localPath).deleteRecursively()
+            // Delete old files
+            val rootFile = File(repo.localPath)
+            if (rootFile.isDirectory) {
+                rootFile.deleteRecursively()
+            }
 
             val cloneCommand = Git.cloneRepository()
                 .setURI(repo.url)
-                .setProgressMonitor(RepoCloneMonitor(callback))
-                .setDirectory(File(repo.localPath))
+                .setProgressMonitor(RepoCloneMonitor(this))
+                .setDirectory(rootFile)
                 .setCloneSubmodules(false)
                 // for SSH clone
                 .apply {
@@ -45,26 +45,24 @@ object Clone {
                 .apply {
                     if (repo.username != null && repo.password != null)
                         setCredentialsProvider(
-                            UsernamePasswordCredentialsProvider(
-                                repo.username,
-                                repo.password
-                            )
+                            UsernamePasswordCredentialsProvider(repo.username, repo.password)
                         )
                 }
 
             cloneCommand.call()
         } catch (e: Exception) {
-            callback.onFailed(e)
+            send(Result.Failure(e))
         }
+        awaitClose()
     }
 
-    interface CloneCallback {
+    sealed class Result {
 
-        fun onSuccess()
+        object Success : Result()
 
-        fun onProgress(title: String?, percent: Int)
+        class Progress(val title: String?, val percent: Int) : Result()
 
-        fun onFailed(e: Exception)
+        class Failure(val e: Exception) : Result()
 
     }
 
@@ -98,7 +96,7 @@ object Clone {
         }
     }
 
-    class RepoCloneMonitor(private val callback: CloneCallback) : ProgressMonitor {
+    class RepoCloneMonitor(private val scope: ProducerScope<Result>) : ProgressMonitor {
 
         private var mTotalWork = 0
         private var mWorkDone = 0
@@ -114,10 +112,9 @@ object Clone {
                 mLastProgress = p
             }
 
-            callback.onProgress(mTitle, mLastProgress)
-
+            scope.trySend(Result.Progress(mTitle, mLastProgress))
             if (mTitle == TITLE_UPDATING_REFERENCES && mLastProgress == 100) {
-                callback.onSuccess()
+                scope.trySend(Result.Success)
             }
         }
 
@@ -145,5 +142,11 @@ object Clone {
         }
     }
 
+    const val TITLE_REMOTE_ENUMERATING_OBJECTS = "remote: Enumerating objects"
+    const val TITLE_REMOTE_COUNTING_OBJECTS = "remote: Counting objects"
+    const val TITLE_REMOTE_COMPRESSING_OBJECTS = "remote: Compressing objects"
+    const val TITLE_RECEIVING_OBJECTS = "Receiving objects"
+    const val TITLE_RESOLVING_DELTAS = "Resolving deltas"
+    const val TITLE_UPDATING_REFERENCES = "Updating references"
 
 }
