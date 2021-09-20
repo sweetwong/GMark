@@ -16,23 +16,21 @@
     </style>
 
     <style name="Theme.GMark.BLUE">
-        <item name="colorPrimary">@color/ck_blue600</item>
-        <item name="colorAccent">@color/ck_blue800</item>
-        <item name="colorRipple">@color/ck_blue600_10</item>
+        <item name="colorPrimary">@color/blue_main</item>
+        <item name="colorAccent">@color/blue_main</item>
+        <item name="colorRipple">@color/blue_ripple</item>
     </style>
 
     <style name="Theme.GMark.RED">
         <item name="colorPrimary">@color/red_main</item>
-        <item name="colorPrimaryVariant">@color/red_accent</item>
-        <item name="colorSecondary">@color/red_main</item>
-        <item name="colorSecondaryVariant">@color/red_accent</item>
+        <item name="colorAccent">@color/red_main</item>
+        <item name="colorRipple">@color/red_ripple</item>
     </style>
 
     <style name="Theme.GMark.YELLOW">
         <item name="colorPrimary">@color/yellow_main</item>
-        <item name="colorPrimaryVariant">@color/yellow_accent</item>
-        <item name="colorSecondary">@color/yellow_main</item>
-        <item name="colorSecondaryVariant">@color/yellow_accent</item>
+        <item name="colorAccent">@color/yellow_main</item>
+        <item name="colorRipple">@color/yellow_ripple</item>
     </style>
 
     <style name="Divider">

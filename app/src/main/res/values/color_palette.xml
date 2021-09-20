@@ -676,6 +676,9 @@
     <!-- model 黄 450 60%透明度-->
     <color name="ck_yellow450_60">#99E3A200</color>
 
+    <!-- model 黄 500 10%透明度-->
+    <color name="ck_yellow500_10">#1AD49B15</color>
+
     <!-- model 黄 500-->
     <color name="ck_yellow500">#D49B15</color>
 
@@ -871,6 +874,9 @@
 
     <!-- model 红 400 40%透明度-->
     <color name="ck_red400_60">#99F13E3A</color>
+
+    <!-- model 红 500 10%透明度-->
+    <color name="ck_red500_10">#1AD82A26</color>
 
     <!-- model 红 500-->
     <color name="ck_red500">#D82A26</color>

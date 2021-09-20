@@ -17,9 +17,11 @@
 
     <color name="red_main">@color/ck_red500</color>
     <color name="red_accent">@color/ck_red700</color>
+    <color name="red_ripple">@color/ck_red500_10</color>
     <color name="red_sub">#FCE8E6</color>
 
     <color name="yellow_main">@color/ck_yellow500</color>
     <color name="yellow_accent">@color/ck_yellow700</color>
+    <color name="yellow_ripple">@color/ck_yellow500_10</color>
 
 </resources>

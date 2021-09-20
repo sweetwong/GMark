@@ -33,6 +33,7 @@
                 app:tabIndicatorColor="?colorPrimary"
                 app:tabMaxWidth="200dp"
                 app:tabMode="scrollable"
+                app:tabRippleColor="?colorRipple"
                 app:tabSelectedTextColor="?colorPrimary"
                 app:tabTextAppearance="@style/TabTextAppearance"
                 app:tabTextColor="@color/text_main"
