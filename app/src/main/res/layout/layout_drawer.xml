@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="sweet.wong.gmark.repo.viewmodel.RepoViewModel" />
+            type="sweet.wong.gmark.repo.RepoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

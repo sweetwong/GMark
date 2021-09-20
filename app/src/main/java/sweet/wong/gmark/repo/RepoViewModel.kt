@@ -1,4 +1,4 @@
-package sweet.wong.gmark.repo.viewmodel
+package sweet.wong.gmark.repo
 
 import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.MutableLiveData

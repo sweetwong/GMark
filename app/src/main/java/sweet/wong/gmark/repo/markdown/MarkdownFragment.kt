@@ -8,8 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import sweet.wong.gmark.base.BaseFragment
 import sweet.wong.gmark.databinding.FragmentMarkdownBinding
-import sweet.wong.gmark.repo.viewmodel.MarkdownViewModel
-import sweet.wong.gmark.repo.viewmodel.RepoViewModel
+import sweet.wong.gmark.repo.RepoViewModel
 import sweet.wong.gmark.utils.SnappingLinearLayoutManager
 
 /**

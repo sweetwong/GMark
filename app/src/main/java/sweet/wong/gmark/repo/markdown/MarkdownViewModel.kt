@@ -1,4 +1,4 @@
-package sweet.wong.gmark.repo.viewmodel
+package sweet.wong.gmark.repo.markdown
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

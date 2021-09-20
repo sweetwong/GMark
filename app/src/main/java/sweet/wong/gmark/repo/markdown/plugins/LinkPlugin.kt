@@ -8,9 +8,9 @@ import org.commonmark.node.Heading
 import org.commonmark.node.Text
 import sweet.wong.gmark.core.log
 import sweet.wong.gmark.core.toast
+import sweet.wong.gmark.repo.RepoViewModel
 import sweet.wong.gmark.repo.markdown.MarkdownDelegate
-import sweet.wong.gmark.repo.viewmodel.MarkdownViewModel
-import sweet.wong.gmark.repo.viewmodel.RepoViewModel
+import sweet.wong.gmark.repo.markdown.MarkdownViewModel
 import java.io.File
 
 class LinkPlugin(

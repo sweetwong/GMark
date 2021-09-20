@@ -5,7 +5,7 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import sweet.wong.gmark.base.BaseFragment
 import sweet.wong.gmark.databinding.FragmentOutlineBinding
-import sweet.wong.gmark.repo.viewmodel.MarkdownViewModel
+import sweet.wong.gmark.repo.markdown.MarkdownViewModel
 
 class OutlineFragment : BaseFragment<FragmentOutlineBinding>() {
 

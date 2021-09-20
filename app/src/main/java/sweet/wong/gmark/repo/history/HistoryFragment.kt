@@ -6,8 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import sweet.wong.gmark.base.BaseFragment
 import sweet.wong.gmark.databinding.FragmentHisotryBinding
-import sweet.wong.gmark.repo.viewmodel.HistoryViewModel
-import sweet.wong.gmark.repo.viewmodel.RepoViewModel
+import sweet.wong.gmark.repo.RepoViewModel
 
 class HistoryFragment : BaseFragment<FragmentHisotryBinding>() {
 

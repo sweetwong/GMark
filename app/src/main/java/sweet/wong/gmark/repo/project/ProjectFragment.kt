@@ -5,7 +5,7 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import sweet.wong.gmark.base.BaseFragment
 import sweet.wong.gmark.databinding.FragmentProjectBinding
-import sweet.wong.gmark.repo.viewmodel.RepoViewModel
+import sweet.wong.gmark.repo.RepoViewModel
 import java.io.File
 
 class ProjectFragment : BaseFragment<FragmentProjectBinding>() {

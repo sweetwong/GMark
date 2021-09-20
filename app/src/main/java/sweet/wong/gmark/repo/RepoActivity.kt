@@ -27,7 +27,6 @@ import sweet.wong.gmark.editor.EditorActivity
 import sweet.wong.gmark.ext.start
 import sweet.wong.gmark.repo.drawer.DrawerDelegate
 import sweet.wong.gmark.repo.markdown.MarkdownFragment
-import sweet.wong.gmark.repo.viewmodel.RepoViewModel
 import sweet.wong.gmark.repolist.RepoListActivity
 import sweet.wong.gmark.settings.SettingsActivity
 import sweet.wong.gmark.sp.SPUtils.settings

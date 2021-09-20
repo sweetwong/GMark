@@ -1,10 +1,11 @@
-package sweet.wong.gmark.repo.viewmodel
+package sweet.wong.gmark.repo.history
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import sweet.wong.gmark.core.io
 import sweet.wong.gmark.data.DaoManager
 import sweet.wong.gmark.data.Page
+import sweet.wong.gmark.repo.RepoViewModel
 
 class HistoryViewModel : ViewModel() {
 

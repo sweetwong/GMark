@@ -11,7 +11,7 @@ import sweet.wong.gmark.core.noOpDelegate
 import sweet.wong.gmark.databinding.RecycleItemOutlineBinding
 import sweet.wong.gmark.ext.dp
 import sweet.wong.gmark.ext.inflater
-import sweet.wong.gmark.repo.viewmodel.MarkdownViewModel
+import sweet.wong.gmark.repo.markdown.MarkdownViewModel
 import sweet.wong.gmark.utils.DefaultDiffUtilCallback
 
 class OutlineAdapter(private val markdownViewModel: MarkdownViewModel) :
