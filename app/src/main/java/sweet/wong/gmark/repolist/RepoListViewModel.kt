@@ -3,7 +3,6 @@ package sweet.wong.gmark.repolist
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.blankj.utilcode.util.TimeUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
@@ -17,6 +16,7 @@ import sweet.wong.gmark.git.GitResult
 import sweet.wong.gmark.git.Pull
 import sweet.wong.gmark.utils.Event
 import sweet.wong.gmark.utils.NonNullLiveData
+import sweet.wong.gmark.utils.TimeUtils
 import java.io.File
 
 /**
@@ -45,7 +45,7 @@ class RepoListViewModel : ViewModel() {
             is GitResult.Success -> {
                 withContext(Dispatchers.IO) {
                     uiState.repo.state = Repo.STATE_SUCCESS
-                    uiState.statusText = TimeUtils.date2String(TimeUtils.getNowDate())
+                    uiState.statusText = TimeUtils.getRelativeString()
                     DaoManager.repoDao.update(uiState.repo)
                 }
                 uiState.refresh?.invoke()
@@ -81,7 +81,7 @@ class RepoListViewModel : ViewModel() {
                     uiState.refresh?.invoke()
                     clone(uiState)
                 } else if (uiState.repo.state == Repo.STATE_SUCCESS) {
-                    uiState.statusText = TimeUtils.date2String(TimeUtils.getNowDate())
+                    uiState.statusText = TimeUtils.getRelativeString(uiState.repo.time)
                     uiState.refresh?.invoke()
                 }
             }
