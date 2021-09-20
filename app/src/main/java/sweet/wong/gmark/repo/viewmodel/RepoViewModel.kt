@@ -3,10 +3,12 @@ package sweet.wong.gmark.repo.viewmodel
 import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import sweet.wong.gmark.core.io
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import sweet.wong.gmark.core.log
 import sweet.wong.gmark.core.toast
-import sweet.wong.gmark.core.ui
 import sweet.wong.gmark.data.DaoManager
 import sweet.wong.gmark.data.Page
 import sweet.wong.gmark.data.Repo
@@ -109,10 +111,11 @@ class RepoViewModel : ViewModel() {
      * 2. Choose existing file
      * 3. Choose new file
      */
-    fun selectFile(file: File?, forceUpdate: Boolean = false) {
+    fun selectFile(file: File?, forceUpdate: Boolean = false) = viewModelScope.launch {
         // Check file valid
         if (file == null || !file.exists() || !file.isFile) {
-            return toast("File $file is not exist")
+            toast("File $file is not exist")
+            return@launch
         }
 
         // Check Same file
@@ -120,64 +123,53 @@ class RepoViewModel : ViewModel() {
             // Close and refresh drawer
             showDrawer.value = Event(false)
             updateDrawer()
-            return log("Repeat selection")
+            log("Repeat selection")
+            return@launch
         }
 
-        io {
-            try {
-                val raw = file.readText()
-                ui {
-                    // Update markdown text
-                    fileRaw.value = FileRaw(file, raw)
+        try {
+            // Read file in io thread
+            val raw = withContext(Dispatchers.IO) { file.readText() }
 
-                    getPage(file)
-                        ?.let { existingPage ->
-                            // Use existing file
-                            showingPage.value = existingPage
+            // Update markdown text
+            fileRaw.value = FileRaw(file, raw)
+            pages.find { it.file == file }
+                ?.let { existingPage ->
+                    // Use existing file
+                    showingPage.value = existingPage
 
-                            val index = pages.indexOf(existingPage)
-                            pages[index] = pages[index]
+                    val index = pages.indexOf(existingPage)
+                    pages[index] = pages[index]
 
-                            io {
-                                DaoManager.getPageDao(repo).apply {
-                                    deleteByPath(existingPage.path)
-                                    insertAll(existingPage)
-                                }
-                            }
+                    withContext(Dispatchers.IO) {
+                        DaoManager.getPageDao(repo).apply {
+                            deleteByPath(existingPage.path)
+                            insertAll(existingPage)
                         }
-                        ?: apply {
-                            // Add new file
-                            val newPage = Page(file.absolutePath)
-                            pages.add(newPage)
-                            showingPage.value = newPage
-
-                            io {
-                                DaoManager.getPageDao(repo).apply {
-                                    deleteByPath(newPage.path)
-                                    insertAll(newPage)
-                                }
-                            }
-                        }
-
-                    // Close and refresh drawer
-                    showDrawer.value = Event(false)
-                    updateDrawer()
+                    }
                 }
-            } catch (e: Exception) {
-                toast("Read file failed", e)
-            }
+                ?: apply {
+                    // Add new file
+                    val newPage = Page(file.absolutePath)
+                    pages.add(newPage)
+                    showingPage.value = newPage
+
+                    withContext(Dispatchers.IO) {
+                        DaoManager.getPageDao(repo).apply {
+                            deleteByPath(newPage.path)
+                            insertAll(newPage)
+                        }
+                    }
+                }
+
+            // Close and refresh drawer
+            showDrawer.value = Event(false)
+            updateDrawer()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            toast("Read file failed", e)
         }
 
-    }
-
-    private fun getPage(file: File): Page? {
-        var page: Page? = null
-        pages.forEach {
-            if (it.file == file) {
-                page = it
-            }
-        }
-        return page
     }
 
     fun removeShowingPage(): Boolean = isPositionValid() && pages.remove(showingPage.value)
