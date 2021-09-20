@@ -13,6 +13,7 @@ import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.DaoManager
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.git.Clone
+import sweet.wong.gmark.git.GitResult
 import sweet.wong.gmark.utils.Event
 import sweet.wong.gmark.utils.NonNullLiveData
 import java.io.File
@@ -29,7 +30,7 @@ class RepoListViewModel : ViewModel() {
     private fun clone(uiState: RepoUIState) = viewModelScope.launch(Dispatchers.IO) {
         Clone.start(uiState.repo).collect { result ->
             when (result) {
-                is Clone.Result.Success -> {
+                is GitResult.Success -> {
                     uiState.repo.state = Repo.STATE_SUCCESS
                     uiState.statusText = TimeUtils.date2String(TimeUtils.getNowDate())
                     DaoManager.repoDao.update(uiState.repo)
@@ -37,13 +38,13 @@ class RepoListViewModel : ViewModel() {
                         uiState.refresh?.invoke()
                     }
                 }
-                is Clone.Result.Failure -> {
+                is GitResult.Failure -> {
                     result.e.printStackTrace()
                     toast("Clone failed", result.e)
                     uiState.repo.state = Repo.STATE_FAILED
                     DaoManager.repoDao.update(uiState.repo)
                 }
-                is Clone.Result.Progress -> {
+                is GitResult.Progress -> {
                     log(
                         "Git clone onProgress", "title", result.title, "percent", result.percent
                     )
