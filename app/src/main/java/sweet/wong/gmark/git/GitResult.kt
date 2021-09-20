@@ -4,8 +4,8 @@ sealed class GitResult {
 
     object Success : GitResult()
 
-    class Progress(val title: String?, val percent: Int) : GitResult()
+    data class Progress(val title: String?, val percent: Int) : GitResult()
 
-    class Failure(val e: Exception) : GitResult()
+    data class Failure(val e: Exception) : GitResult()
 
 }
