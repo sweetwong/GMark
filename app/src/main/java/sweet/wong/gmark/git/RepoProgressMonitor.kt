@@ -2,6 +2,7 @@ package sweet.wong.gmark.git
 
 import kotlinx.coroutines.channels.ProducerScope
 import org.eclipse.jgit.lib.ProgressMonitor
+import sweet.wong.gmark.core.log
 import sweet.wong.gmark.git.Common.TITLE_UPDATING_REFERENCES
 
 class RepoProgressMonitor(private val scope: ProducerScope<GitResult>) : ProgressMonitor {
@@ -20,6 +21,7 @@ class RepoProgressMonitor(private val scope: ProducerScope<GitResult>) : Progres
             mLastProgress = p
         }
 
+        log("Git monitor onProgress", "title", mTitle, "percent", mLastProgress)
         scope.trySend(GitResult.Progress(mTitle, mLastProgress))
         if (mTitle == TITLE_UPDATING_REFERENCES && mLastProgress == 100) {
             scope.trySend(GitResult.Success)

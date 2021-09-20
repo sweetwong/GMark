@@ -51,6 +51,10 @@ class RepoListAdapter(private val viewModel: RepoListViewModel) :
             itemView.setOnClickListener {
                 viewModel.repoSelectEvent.value = Event(uiState.repo)
             }
+
+            binding.btnSync.setOnClickListener {
+                viewModel.pull(uiState)
+            }
         }
 
         companion object {

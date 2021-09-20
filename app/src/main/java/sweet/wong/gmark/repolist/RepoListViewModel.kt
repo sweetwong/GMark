@@ -6,14 +6,15 @@ import androidx.lifecycle.viewModelScope
 import com.blankj.utilcode.util.TimeUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import sweet.wong.gmark.core.log
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.DaoManager
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.git.Clone
 import sweet.wong.gmark.git.GitResult
+import sweet.wong.gmark.git.Pull
 import sweet.wong.gmark.utils.Event
 import sweet.wong.gmark.utils.NonNullLiveData
 import java.io.File
@@ -27,34 +28,42 @@ class RepoListViewModel : ViewModel() {
 
     val repoSelectEvent = MutableLiveData<Event<Repo>>()
 
-    private fun clone(uiState: RepoUIState) = viewModelScope.launch(Dispatchers.IO) {
-        Clone.start(uiState.repo).collect { result ->
-            when (result) {
-                is GitResult.Success -> {
+    private fun clone(uiState: RepoUIState) = viewModelScope.launch {
+        Clone.start(uiState.repo).flowOn(Dispatchers.IO).collect { result ->
+            updateUI(uiState, result)
+        }
+    }
+
+    fun pull(uiState: RepoUIState) = viewModelScope.launch {
+        Pull.start(uiState.repo).flowOn(Dispatchers.IO).collect { result ->
+            updateUI(uiState, result)
+        }
+    }
+
+    private suspend fun updateUI(uiState: RepoUIState, result: GitResult) {
+        when (result) {
+            is GitResult.Success -> {
+                withContext(Dispatchers.IO) {
                     uiState.repo.state = Repo.STATE_SUCCESS
                     uiState.statusText = TimeUtils.date2String(TimeUtils.getNowDate())
                     DaoManager.repoDao.update(uiState.repo)
-                    withContext(Dispatchers.Main) {
-                        uiState.refresh?.invoke()
-                    }
                 }
-                is GitResult.Failure -> {
-                    result.e.printStackTrace()
-                    toast("Clone failed", result.e)
+                uiState.refresh?.invoke()
+            }
+            is GitResult.Failure -> {
+                toast("Clone failed", result.e)
+                withContext(Dispatchers.IO) {
                     uiState.repo.state = Repo.STATE_FAILED
                     DaoManager.repoDao.update(uiState.repo)
                 }
-                is GitResult.Progress -> {
-                    log(
-                        "Git clone onProgress", "title", result.title, "percent", result.percent
-                    )
+            }
+            is GitResult.Progress -> {
+                withContext(Dispatchers.IO) {
                     uiState.repo.state = Repo.STATE_SYNCING
                     uiState.statusText = "${result.title} ... (${result.percent}%)"
                     uiState.progress = result.percent.toString()
-                    withContext(Dispatchers.Main) {
-                        uiState.refresh?.invoke()
-                    }
                 }
+                uiState.refresh?.invoke()
             }
         }
     }

@@ -4,12 +4,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import sweet.wong.gmark.data.Repo
 
-/**
- * TODO: Add Description
- *
- * @author sweetwang 2021/9/7
- */
-object Pull {
+object Fetch {
 
     fun start(repo: Repo) = callbackFlow {
         try {
@@ -17,7 +12,7 @@ object Pull {
             val config = git.repository.config
             val remotes: Set<String> = config.getSubsections("remote")
             val remote = remotes.first()
-            git.pull()
+            git.fetch()
                 .setProgressMonitor(RepoProgressMonitor(this@callbackFlow))
                 .setRemote(remote)
                 .call()
