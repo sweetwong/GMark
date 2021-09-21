@@ -1,6 +1,7 @@
 package sweet.wong.gmark.git
 
 import org.eclipse.jgit.lib.ProgressMonitor
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider
 import org.junit.Test
 
 class PushTest {
@@ -8,6 +9,13 @@ class PushTest {
     @Test
     fun push() {
         git.push()
+            .setRemote("https://github.com/sweetwong/GMark.git")
+            .setCredentialsProvider(
+                UsernamePasswordCredentialsProvider(
+                    "sweetwong",
+                    "123Woaini!!"
+                )
+            )
             .setProgressMonitor(object : ProgressMonitor {
                 override fun start(totalTasks: Int) {
                     println("start, totalTasks: $totalTasks")

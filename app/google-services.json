@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "783018109891",
+    "project_id": "gmark-b1d5b",
+    "storage_bucket": "gmark-b1d5b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783018109891:android:31f9342bde40dce3b42b76",
+        "android_client_info": {
+          "package_name": "sweet.wong.gmark"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "783018109891-sio7jm62in9blqlhe4t0pr9foca4istc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "sweet.wong.gmark",
+            "certificate_hash": "1ee990b057d8a6d2becdab98aed689a5cd395cac"
+          }
+        },
+        {
+          "client_id": "783018109891-ipngkdbldsto41h9pv0e0520agg6e7hv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLPvf2aZx4pAcz9wQfdYGGOx_nGNj1VzA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "783018109891-ipngkdbldsto41h9pv0e0520agg6e7hv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

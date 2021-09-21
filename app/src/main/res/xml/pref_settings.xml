@@ -67,4 +67,9 @@
         app:title="User Email"
         app:useSimpleSummaryProvider="true" />
 
+    <Preference
+        app:key="@string/pref_github_auth"
+        app:persistent="true"
+        app:title="Github" />
+
 </PreferenceScreen>
