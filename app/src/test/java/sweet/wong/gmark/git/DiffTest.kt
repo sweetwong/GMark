@@ -6,8 +6,11 @@ class DiffTest {
 
     @Test
     fun diff() {
-        val diffList = git.diff().call()
-        println(diffList)
+        val diffList = git.diff()
+            .call()
+        diffList.forEach {
+            println(it)
+        }
     }
 
 }

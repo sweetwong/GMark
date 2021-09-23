@@ -8,10 +8,10 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import sweet.wong.gmark.R
 import sweet.wong.gmark.core.delay
-import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.databinding.LayoutDrawerBinding
 import sweet.wong.gmark.repo.RepoActivity
 import sweet.wong.gmark.repo.RepoViewModel
+import sweet.wong.gmark.repo.git.GitFragment
 import sweet.wong.gmark.repo.history.HistoryFragment
 import sweet.wong.gmark.repo.outline.OutlineFragment
 import sweet.wong.gmark.repo.project.ProjectFragment
@@ -62,7 +62,9 @@ class DrawerDelegate(
             }
             binding.btnGit -> {
                 binding.drawerToolbar.title = activity.getString(R.string.git)
-                toast("Click git")
+                activity.supportFragmentManager.commit {
+                    replace<GitFragment>(R.id.fragment_container_view)
+                }
             }
             binding.btnHistory -> {
                 binding.drawerToolbar.title = activity.getString(R.string.history)
