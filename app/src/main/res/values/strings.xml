@@ -3,15 +3,15 @@
     <string name="project">Project</string>
     <string name="outline">Outline</string>
     <string name="repository_list">Repository List</string>
-    <string name="back_folder">..</string>
+    <string name="back_folder" translatable="false">..</string>
 
-    <string name="pref_hide_toolbar">pref_hide_toolbar</string>
-    <string name="pref_hide_tab_layout">pref_hide_tab_layout</string>
-    <string name="pref_theme_color">pref_theme_color</string>
+    <string name="pref_hide_toolbar" translatable="false">pref_hide_toolbar</string>
+    <string name="pref_hide_tab_layout" translatable="false">pref_hide_tab_layout</string>
+    <string name="pref_theme_color" translatable="false">pref_theme_color</string>
 
     <string name="history">History</string>
-    <string name="git">Git</string>
-    <string name="pref_text_size">pref_text_size</string>
+    <string name="git" translatable="false">Git</string>
+    <string name="pref_text_size" translatable="false">pref_text_size</string>
     <string name="edit">Edit</string>
     <string name="sync">Sync</string>
     <string name="settings">Settings</string>
@@ -25,7 +25,7 @@
     <string name="undo">Undo</string>
     <string name="redo">Redo</string>
     <string name="cancel">Cancel</string>
-    <string name="gmark_url">https://github.com/sweetwong/GMark.git</string>
-    <string name="pref_github_auth">pref_github_auth</string>
+    <string name="gmark_url" translatable="false">https://github.com/sweetwong/GMark.git</string>
+    <string name="pref_github_auth" translatable="false">pref_github_auth</string>
     <string name="commit_message">Commit Message</string>
 </resources>
