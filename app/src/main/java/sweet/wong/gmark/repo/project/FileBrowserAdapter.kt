@@ -79,34 +79,49 @@ class FileBrowserAdapter(
 
                     }
                     R.id.menu_rename -> {
-                        tvName.isVisible = false
-                        etRename.isVisible = true
-                        etRename.setText(tvName.text)
-                        etRename.requestFocus()
-
-                        etRename.setOnEditorActionListener { v, actionId, event ->
-                            if (actionId == EditorInfo.IME_ACTION_DONE
-                                || actionId == EditorInfo.IME_ACTION_UNSPECIFIED
-                            ) {
-                                tvName.isVisible = true
-                                etRename.isVisible = false
-                                val newName = etRename.text.toString()
-                                viewModel.renameFile(uiState.drawerFile, newName)
-                                    .observe(viewLifecycleOwner, EventObserver { success ->
-                                        if (success) {
-                                            tvName.text = newName
-                                            viewModel.refreshDrawer()
-                                        }
-                                    })
-                                return@setOnEditorActionListener true
-                            }
-                            false
-                        }
+                        clickRename(uiState)
                     }
                 }
                 true
             }
             popupMenu.show()
+        }
+
+        private fun clickRename(uiState: ProjectUIState) = with(binding) {
+            fun rename() {
+                tvName.isVisible = true
+                etRename.isVisible = false
+                val newName = etRename.text.toString()
+                viewModel.renameFile(uiState.drawerFile, newName)
+                    .observe(viewLifecycleOwner, EventObserver { success ->
+                        if (success) {
+                            tvName.text = newName
+                            viewModel.refreshDrawer()
+                        }
+                    })
+            }
+
+            tvName.isVisible = false
+            etRename.isVisible = true
+            etRename.setText(tvName.text)
+            etRename.requestFocus()
+
+            etRename.setOnEditorActionListener { v, actionId, event ->
+                if (actionId == EditorInfo.IME_ACTION_DONE
+                    || actionId == EditorInfo.IME_ACTION_UNSPECIFIED
+                ) {
+                    rename()
+                    return@setOnEditorActionListener true
+                }
+                false
+            }
+
+            etRename.setOnFocusChangeListener { v, hasFocus ->
+                if (!hasFocus) {
+                    rename()
+                }
+            }
+
         }
 
         private fun setFolderHighlight(file: File?, targetFile: File, rootFile: File?) {
