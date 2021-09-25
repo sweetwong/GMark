@@ -14,7 +14,6 @@ import sweet.wong.gmark.databinding.RecycleItemProjectBinding
 import sweet.wong.gmark.ext.getColorFromAttr
 import sweet.wong.gmark.ext.inflater
 import sweet.wong.gmark.utils.DefaultDiffUtilCallback
-import sweet.wong.gmark.utils.EventObserver
 import java.io.File
 
 /**
@@ -87,11 +86,7 @@ class FileBrowserAdapter(
         }
 
         private fun clickDelete(uiState: ProjectUIState) {
-            viewModel.delete(uiState).observe(viewLifecycleOwner, EventObserver { success ->
-                if (success) {
-                    viewModel.refreshDrawer()
-                }
-            })
+            viewModel.delete(uiState)
         }
 
         private fun clickRename(uiState: ProjectUIState) = with(binding) {
@@ -99,13 +94,10 @@ class FileBrowserAdapter(
                 tvName.isVisible = true
                 etRename.isVisible = false
                 val newName = etRename.text.toString()
-                viewModel.renameFile(uiState.drawerFile, newName)
-                    .observe(viewLifecycleOwner, EventObserver { success ->
-                        if (success) {
-                            tvName.text = newName
-                            viewModel.refreshDrawer()
-                        }
-                    })
+                viewModel.renameFile(uiState.drawerFile, newName).observe(viewLifecycleOwner) {
+                    tvName.text = newName
+                    viewModel.refreshDrawer()
+                }
             }
 
             tvName.isVisible = false
@@ -122,13 +114,6 @@ class FileBrowserAdapter(
                 }
                 false
             }
-
-            etRename.setOnFocusChangeListener { v, hasFocus ->
-                if (!hasFocus) {
-                    rename()
-                }
-            }
-
         }
 
         private fun setFolderHighlight(file: File?, targetFile: File, rootFile: File?) {

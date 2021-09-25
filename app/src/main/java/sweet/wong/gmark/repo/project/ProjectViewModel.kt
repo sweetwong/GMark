@@ -2,11 +2,12 @@ package sweet.wong.gmark.repo.project
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import sweet.wong.gmark.core.toast
-import sweet.wong.gmark.utils.Event
 import java.io.File
 
 class ProjectViewModel : ViewModel() {
@@ -28,7 +29,7 @@ class ProjectViewModel : ViewModel() {
         }
     }
 
-    fun updateNavigationBar(uiState: ProjectUIState) {
+    private fun updateNavigationBar(uiState: ProjectUIState) {
         val list = mutableListOf<ProjectUIState>()
         var file: File? = uiState.drawerFile
         // If has showing file, add to navigation bar end
@@ -53,7 +54,7 @@ class ProjectViewModel : ViewModel() {
         navBarList.value = list.reversed()
     }
 
-    fun updateFileBrowser(uiState: ProjectUIState) {
+    private fun updateFileBrowser(uiState: ProjectUIState) {
         val folderFile = uiState.drawerFile
 
         if (!folderFile.exists() || !folderFile.isDirectory) return
@@ -92,61 +93,50 @@ class ProjectViewModel : ViewModel() {
         return false
     }
 
-    fun renameFile(file: File, newName: String) = MutableLiveData<Event<Boolean>>().apply {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                // Same name, do nothing, and callback success
-                if (file.name == newName) {
-                    postValue(Event(true))
-                    return@launch
-                }
-                // Check blank
-                if (newName.isBlank()) {
-                    toast("File name should not be blank")
-                    postValue(Event(false))
-                    return@launch
-                }
-                // Parent doesn't exist, callback fail
-                val parentFile = file.parentFile
-                if (parentFile?.exists() != true) {
-                    postValue(Event(false))
-                    return@launch
-                }
-                // New name exists, callback fail
-                val newFile = File(parentFile, newName)
-                if (newFile.exists()) {
-                    postValue(Event(false))
-                    toast("File exists, please delete old file first")
-                    return@launch
-                }
-                // Rename
-                if (file.renameTo(newFile)) {
-                    toast("Rename success")
-                    postValue(Event(true))
-                } else {
-                    toast("Rename file failed")
-                    postValue(Event(false))
-                }
-            } catch (e: Exception) {
-                postValue(Event(false))
-                toast("Rename file failed", e)
-                e.printStackTrace()
+    fun renameFile(file: File, newName: String) = liveData(Dispatchers.IO) {
+        try {
+            // Same name, do nothing, and callback success
+            if (file.name == newName) {
+                return@liveData
             }
+            // Check blank
+            if (newName.isBlank()) {
+                toast("File name should not be blank")
+                return@liveData
+            }
+            // Parent doesn't exist, callback fail
+            val parentFile = file.parentFile
+            if (parentFile?.exists() != true) {
+                return@liveData
+            }
+            // New name exists, callback fail
+            val newFile = File(parentFile, newName)
+            if (newFile.exists()) {
+                toast("File exists, please delete old file first")
+                return@liveData
+            }
+            // Rename
+            if (file.renameTo(newFile)) {
+                emit(Unit)
+            } else {
+                toast("Rename file failed")
+            }
+        } catch (e: Exception) {
+            toast("Rename file failed", e)
+            e.printStackTrace()
         }
     }
 
-    fun delete(uiState: ProjectUIState) = MutableLiveData<Event<Boolean>>().apply {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                toast("Delete success")
-                postValue(Event(uiState.drawerFile.deleteRecursively()))
-            } catch (e: Exception) {
-                e.printStackTrace()
-                toast("Delete failed", e)
-                postValue(Event(false))
+    fun delete(uiState: ProjectUIState) = viewModelScope.launch(Dispatchers.IO) {
+        try {
+            if (uiState.drawerFile.deleteRecursively()) {
+                withContext(Dispatchers.Main) { refreshDrawer() }
             }
-
+        } catch (e: Exception) {
+            e.printStackTrace()
+            toast("Delete failed", e)
         }
+
     }
 
 }
