@@ -92,49 +92,61 @@ class ProjectViewModel : ViewModel() {
         return false
     }
 
-    fun renameFile(file: File, newName: String): MutableLiveData<Event<Boolean>> {
-        val result = MutableLiveData<Event<Boolean>>()
+    fun renameFile(file: File, newName: String) = MutableLiveData<Event<Boolean>>().apply {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 // Same name, do nothing, and callback success
                 if (file.name == newName) {
-                    result.postValue(Event(true))
+                    postValue(Event(true))
                     return@launch
                 }
                 // Check blank
                 if (newName.isBlank()) {
                     toast("File name should not be blank")
-                    result.postValue(Event(false))
+                    postValue(Event(false))
                     return@launch
                 }
                 // Parent doesn't exist, callback fail
                 val parentFile = file.parentFile
                 if (parentFile?.exists() != true) {
-                    result.postValue(Event(false))
+                    postValue(Event(false))
                     return@launch
                 }
                 // New name exists, callback fail
                 val newFile = File(parentFile, newName)
                 if (newFile.exists()) {
-                    result.postValue(Event(false))
+                    postValue(Event(false))
                     toast("File exists, please delete old file first")
                     return@launch
                 }
                 // Rename
                 if (file.renameTo(newFile)) {
                     toast("Rename success")
-                    result.postValue(Event(true))
+                    postValue(Event(true))
                 } else {
                     toast("Rename file failed")
-                    result.postValue(Event(false))
+                    postValue(Event(false))
                 }
             } catch (e: Exception) {
-                result.postValue(Event(false))
+                postValue(Event(false))
                 toast("Rename file failed", e)
                 e.printStackTrace()
             }
         }
-        return result
+    }
+
+    fun delete(uiState: ProjectUIState) = MutableLiveData<Event<Boolean>>().apply {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                toast("Delete success")
+                postValue(Event(uiState.drawerFile.deleteRecursively()))
+            } catch (e: Exception) {
+                e.printStackTrace()
+                toast("Delete failed", e)
+                postValue(Event(false))
+            }
+
+        }
     }
 
 }

@@ -49,8 +49,7 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding>() {
 
         repoViewModel.drawerFolder.observe(viewLifecycleOwner) {
             uiState = it
-            viewModel.updateNavigationBar(it)
-            viewModel.updateFileBrowser(it)
+            viewModel.selectDrawerFile(uiState)
         }
 
         viewModel.fileBrowserList.observe(viewLifecycleOwner) {

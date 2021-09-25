@@ -78,13 +78,20 @@ class FileBrowserAdapter(
                     R.id.menu_new -> {
 
                     }
-                    R.id.menu_rename -> {
-                        clickRename(uiState)
-                    }
+                    R.id.menu_rename -> clickRename(uiState)
+                    R.id.menu_delete -> clickDelete(uiState)
                 }
                 true
             }
             popupMenu.show()
+        }
+
+        private fun clickDelete(uiState: ProjectUIState) {
+            viewModel.delete(uiState).observe(viewLifecycleOwner, EventObserver { success ->
+                if (success) {
+                    viewModel.refreshDrawer()
+                }
+            })
         }
 
         private fun clickRename(uiState: ProjectUIState) = with(binding) {
