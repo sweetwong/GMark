@@ -130,42 +130,49 @@ class ProjectViewModel : ViewModel() {
 
     fun rename(uiState: ProjectUIState) = viewModelScope.launch {
         try {
-            val newName = uiState.editingText
             val file = uiState.drawerFile
-            // Same name, do nothing
-            if (file.name == newName) {
-                return@launch
+            val newName = uiState.editingText
+            val success = renameInner(file, newName)
+            if (success) {
+                uiState.name = newName
+                refreshDrawer()
             }
-            // Check blank
-            if (newName.isBlank()) {
-                toast("File name should not be blank")
-                return@launch
-            }
-            // Parent doesn't exist
-            val parentFile = file.parentFile
-            if (parentFile?.exists() != true) {
-                return@launch
-            }
-            // New name exists
-            val newFile = File(parentFile, newName)
-            if (newFile.exists()) {
-                toast("File exists, please delete old file first")
-                return@launch
-            }
-            // Rename failed
-            if (!file.renameTo(newFile)) {
-                toast("Rename file failed")
-                return@launch
-            }
-
-            // Success, now update ui
-            uiState.name = newName
+            uiState.isEditing = false
             uiState.updateUI()
-            refreshDrawer()
         } catch (e: Exception) {
             e.printStackTrace()
             toast("Rename file failed", e)
         }
+    }
+
+    private fun renameInner(file: File, newName: String): Boolean {
+        // Same name, do nothing
+        if (file.name == newName) {
+            return true
+        }
+        // Check blank
+        if (newName.isBlank()) {
+            toast("File name should not be blank")
+            return false
+        }
+        // Parent doesn't exist
+        val parentFile = file.parentFile
+        if (parentFile?.exists() != true) {
+            return false
+        }
+        // New name exists
+        val newFile = File(parentFile, newName)
+        if (newFile.exists()) {
+            toast("File exists, please delete old file first")
+            return false
+        }
+        // Rename failed
+        if (!file.renameTo(newFile)) {
+            toast("Rename file failed")
+            return false
+        }
+
+        return true
     }
 
     fun delete(uiState: ProjectUIState) = viewModelScope.launch(Dispatchers.IO) {

@@ -7,6 +7,7 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.blankj.utilcode.util.KeyboardUtils
 import sweet.wong.gmark.R
 import sweet.wong.gmark.core.App
 import sweet.wong.gmark.databinding.RecycleItemProjectBinding
@@ -47,8 +48,8 @@ class FileBrowserAdapter(
                 tvName.setTextColor(if (uiState.isHighlight) textHighlightColor else textMainColor)
 
                 if (uiState.isEditing) {
-                    etRename.requestFocus()
                     etRename.setSelection(etRename.length())
+                    KeyboardUtils.showSoftInput(etRename)
                 }
             }
 
@@ -96,6 +97,7 @@ class FileBrowserAdapter(
             etRename.setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == IME_ACTION_DONE || actionId == IME_ACTION_UNSPECIFIED) {
                     viewModel.rename(uiState)
+                    KeyboardUtils.hideSoftInput(etRename)
                     return@setOnEditorActionListener true
                 }
                 false
