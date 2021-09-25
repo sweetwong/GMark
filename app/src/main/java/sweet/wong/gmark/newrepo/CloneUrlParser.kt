@@ -11,7 +11,7 @@ object CloneUrlParser {
             return CloneUrlType.SSH
         }
 
-        if (url.contains("https://github.com/")) {
+        if (url.contains("https://github.com")) {
             return CloneUrlType.GITHUB
         }
 

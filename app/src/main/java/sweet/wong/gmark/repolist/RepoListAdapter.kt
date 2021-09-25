@@ -1,50 +1,43 @@
 package sweet.wong.gmark.repolist
 
 import android.view.Gravity
-import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.recyclerview.widget.DiffUtil
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import sweet.wong.gmark.R
 import sweet.wong.gmark.databinding.RecycleItemRepoBinding
+import sweet.wong.gmark.ext.inflater
+import sweet.wong.gmark.utils.DefaultDiffUtilCallback
 import sweet.wong.gmark.utils.Event
 
 /**
- * TODO: Add Description
+ * Repository item adapter
  */
-class RepoListAdapter(private val viewModel: RepoListViewModel) :
-    ListAdapter<RepoUIState, RepoListAdapter.VH>(diffCallback) {
+class RepoListAdapter(
+    private val viewModel: RepoListViewModel,
+    private val lifecycleOwner: LifecycleOwner
+) : ListAdapter<RepoUIState, RepoListAdapter.VH>(DefaultDiffUtilCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = VH.from(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = VH(
+        RecycleItemRepoBinding.inflate(parent.inflater, parent, false)
+    )
 
     override fun onBindViewHolder(holder: VH, position: Int) =
         holder.bind(viewModel, getItem(position))
 
-    class VH(private val binding: RecycleItemRepoBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class VH(private val binding: RecycleItemRepoBinding) : ViewHolder(binding.root) {
 
         fun bind(viewModel: RepoListViewModel, uiState: RepoUIState) {
-            val refresh = {
+            uiState.bind(lifecycleOwner) {
                 binding.state = uiState
                 binding.executePendingBindings()
             }
-            refresh()
-            uiState.refresh = refresh
 
             itemView.setOnLongClickListener { v ->
-                val popupMenu = PopupMenu(v.context, v, Gravity.END)
-                popupMenu.inflate(R.menu.popup_menu_repo_list)
-                popupMenu.setOnMenuItemClickListener { menuItem ->
-                    when (menuItem.itemId) {
-                        R.id.menu_pull -> {
-//                            viewModel.pull(uiState)
-                        }
-                        R.id.menu_delete -> viewModel.deleteRepo(uiState)
-                    }
-                    true
-                }
-                popupMenu.show()
+                showPopMenu(v, uiState)
                 true
             }
 
@@ -57,29 +50,18 @@ class RepoListAdapter(private val viewModel: RepoListViewModel) :
             }
         }
 
-        companion object {
-
-            fun from(parent: ViewGroup) = VH(
-                RecycleItemRepoBinding.inflate(
-                    LayoutInflater.from(parent.context), parent, false
-                )
-            )
-
-        }
-    }
-
-    companion object {
-
-        private val diffCallback = object : DiffUtil.ItemCallback<RepoUIState>() {
-
-            override fun areItemsTheSame(oldItem: RepoUIState, newItem: RepoUIState): Boolean {
-                return oldItem.repo == newItem.repo
+        private fun showPopMenu(v: View, uiState: RepoUIState) {
+            val popupMenu = PopupMenu(v.context, v, Gravity.END)
+            popupMenu.inflate(R.menu.popup_menu_repo_list)
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.menu_pull -> {
+                    }
+                    R.id.menu_delete -> viewModel.deleteRepo(uiState)
+                }
+                true
             }
-
-            override fun areContentsTheSame(oldItem: RepoUIState, newItem: RepoUIState): Boolean {
-                return oldItem.repo == newItem.repo
-            }
-
+            popupMenu.show()
         }
 
     }

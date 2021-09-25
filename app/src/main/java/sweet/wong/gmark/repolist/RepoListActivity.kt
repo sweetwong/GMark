@@ -45,7 +45,7 @@ class RepoListActivity : BaseActivity<ActivityRepoListBinding>() {
         }
 
         // Init RecyclerView
-        repoListAdapter = RepoListAdapter(viewModel)
+        repoListAdapter = RepoListAdapter(viewModel, this)
         binding.repoList.adapter = repoListAdapter
         viewModel.repoUIStates.observe(this@RepoListActivity) {
             repoListAdapter.submitList(it.toMutableList())

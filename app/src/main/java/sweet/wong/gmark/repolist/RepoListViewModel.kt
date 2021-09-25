@@ -48,7 +48,7 @@ class RepoListViewModel : ViewModel() {
                     uiState.statusText = TimeUtils.getRelativeString()
                     DaoManager.repoDao.update(uiState.repo)
                 }
-                uiState.refresh?.invoke()
+                uiState.updateUI()
             }
             is GitResult.Failure -> {
                 toast("Clone failed", result.e)
@@ -63,7 +63,7 @@ class RepoListViewModel : ViewModel() {
                     uiState.statusText = "${result.title} ... (${result.percent}%)"
                     uiState.progress = result.percent.toString()
                 }
-                uiState.refresh?.invoke()
+                uiState.updateUI()
             }
         }
     }
@@ -78,11 +78,11 @@ class RepoListViewModel : ViewModel() {
                 repoUtiStatesValue.add(uiState)
                 if (uiState.repo.state == Repo.STATE_INIT) {
                     uiState.statusText = "Preparing clone ..."
-                    uiState.refresh?.invoke()
+                    uiState.updateUI()
                     clone(uiState)
                 } else if (uiState.repo.state == Repo.STATE_SUCCESS) {
                     uiState.statusText = TimeUtils.getRelativeString(uiState.repo.time)
-                    uiState.refresh?.invoke()
+                    uiState.updateUI()
                 }
             }
             repoUIStates.value = repoUtiStatesValue
@@ -108,18 +108,5 @@ class RepoListViewModel : ViewModel() {
             toast("Delete repo failed", e)
         }
     }
-
-}
-
-/**
- * Represent repository list item view model
- */
-class RepoUIState(val repo: Repo) {
-
-    var progress = ""
-
-    var statusText = ""
-
-    var refresh: (() -> Unit)? = null
 
 }
