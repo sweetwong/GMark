@@ -9,28 +9,27 @@
             type="sweet.wong.gmark.repo.project.ProjectUIState" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:selectableItemBackground"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
         android:padding="8dp">
 
         <ImageView
-            android:id="@+id/icon"
+            android:id="@+id/iv_icon"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:layout_centerVertical="true"
             tools:ignore="ContentDescription"
             tools:src="@drawable/folder" />
 
         <TextView
-            android:id="@+id/text"
-            android:layout_width="0dp"
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_centerVertical="true"
             android:layout_marginStart="12dp"
-            android:layout_weight="1"
+            android:layout_toEndOf="@+id/iv_icon"
             android:gravity="start"
             android:padding="3dp"
             android:text="@{uiState.navigateBack ? @string/back_folder : uiState.drawerFile.name}"
@@ -38,5 +37,23 @@
             android:textSize="18sp"
             tools:text="目录" />
 
-    </LinearLayout>
+        <EditText
+            android:id="@+id/et_rename"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@+id/iv_icon"
+            android:background="@color/ck_transparent"
+            android:gravity="start"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:padding="3dp"
+            android:textColor="@color/text_main"
+            android:textSize="18sp"
+            android:visibility="gone"
+            tools:ignore="Autofill,LabelFor"
+            tools:text="目录" />
+
+    </RelativeLayout>
 </layout>

@@ -8,7 +8,7 @@ import sweet.wong.gmark.databinding.RecycleItemGitDiffBinding
 import sweet.wong.gmark.ext.inflater
 import sweet.wong.gmark.utils.DefaultDiffUtilCallback
 
-class GitDiffAdapter : ListAdapter<DiffEntry, GitDiffAdapter.VH>(DefaultDiffUtilCallback()) {
+class DiffAdapter : ListAdapter<DiffEntry, DiffAdapter.VH>(DefaultDiffUtilCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = VH(
         RecycleItemGitDiffBinding.inflate(parent.inflater, parent, false)

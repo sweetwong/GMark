@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/menu_new"
-        android:title="New" />
+        android:title="@string/new_file" />
 
     <item
         android:id="@+id/menu_rename"

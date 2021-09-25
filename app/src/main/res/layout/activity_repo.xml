@@ -23,7 +23,8 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/toolbar_height"
-                android:background="@color/white" />
+                android:background="@color/white"
+                app:title="@{viewModel.repo.name}" />
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout"

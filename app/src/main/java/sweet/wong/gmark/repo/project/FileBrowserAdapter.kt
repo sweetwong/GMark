@@ -2,7 +2,10 @@ package sweet.wong.gmark.repo.project
 
 import android.view.Gravity
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.PopupMenu
+import androidx.core.view.isVisible
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import sweet.wong.gmark.R
@@ -12,6 +15,7 @@ import sweet.wong.gmark.databinding.RecycleItemProjectBinding
 import sweet.wong.gmark.ext.getColorFromAttr
 import sweet.wong.gmark.ext.inflater
 import sweet.wong.gmark.utils.DefaultDiffUtilCallback
+import sweet.wong.gmark.utils.EventObserver
 import java.io.File
 
 /**
@@ -19,7 +23,11 @@ import java.io.File
  *
  * @author sweetwang 2021/9/1
  */
-class FileBrowserAdapter(private val onItemClick: (ProjectUIState) -> Unit) :
+class FileBrowserAdapter(
+    private val viewModel: ProjectViewModel,
+    private val viewLifecycleOwner: LifecycleOwner,
+    private val onItemClick: (ProjectUIState) -> Unit
+) :
     ListAdapter<ProjectUIState, FileBrowserAdapter.VH>(DefaultDiffUtilCallback()) {
 
     private val textMainColor = App.app.getColor(R.color.text_main)
@@ -33,22 +41,22 @@ class FileBrowserAdapter(private val onItemClick: (ProjectUIState) -> Unit) :
 
     inner class VH(private val binding: RecycleItemProjectBinding) : ViewHolder(binding.root) {
 
-        fun bind(uiState: ProjectUIState) {
-            binding.uiState = uiState
-            binding.executePendingBindings()
-            binding.text.setTextColor(resources.getColor(R.color.text_main, null))
+        fun bind(uiState: ProjectUIState) = with(binding) {
+            this.uiState = uiState
+            executePendingBindings()
+            tvName.setTextColor(resources.getColor(R.color.text_main, null))
 
             when {
                 uiState.navigateBack -> {
-                    binding.icon.setImageResource(R.drawable.folder)
-                    binding.text.setTextColor(textMainColor)
+                    ivIcon.setImageResource(R.drawable.folder)
+                    tvName.setTextColor(textMainColor)
                 }
                 uiState.drawerFile.isDirectory -> {
-                    binding.icon.setImageResource(R.drawable.folder)
+                    ivIcon.setImageResource(R.drawable.folder)
                     setFolderHighlight(uiState.showingFile, uiState.drawerFile, uiState.rootFile)
                 }
                 uiState.drawerFile.isFile -> {
-                    binding.icon.setImageResource(R.drawable.text)
+                    ivIcon.setImageResource(R.drawable.text)
                     setFileHighlight(uiState.showingFile, uiState.drawerFile)
                 }
             }
@@ -57,9 +65,39 @@ class FileBrowserAdapter(private val onItemClick: (ProjectUIState) -> Unit) :
                 onItemClick(uiState)
             }
 
-            itemView.setOnLongClickListener {
-                val popupMenu = PopupMenu(it.context, it, Gravity.END)
+            itemView.setOnLongClickListener { v ->
+                val popupMenu = PopupMenu(v.context, v, Gravity.END)
                 popupMenu.inflate(R.menu.menu_project_browser)
+                popupMenu.setOnMenuItemClickListener { menuItem ->
+                    when (menuItem.itemId) {
+                        R.id.menu_rename -> {
+                            tvName.isVisible = false
+                            etRename.isVisible = true
+                            etRename.setText(tvName.text)
+                            etRename.requestFocus()
+
+                            etRename.setOnEditorActionListener { v, actionId, event ->
+                                if (actionId == EditorInfo.IME_ACTION_DONE
+                                    || actionId == EditorInfo.IME_ACTION_UNSPECIFIED
+                                ) {
+                                    tvName.isVisible = true
+                                    etRename.isVisible = false
+                                    val newName = etRename.text.toString()
+                                    viewModel.renameFile(uiState.drawerFile, newName)
+                                        .observe(viewLifecycleOwner, EventObserver { success ->
+                                            if (success) {
+                                                tvName.text = newName
+                                                viewModel.refreshDrawer()
+                                            }
+                                        })
+                                    return@setOnEditorActionListener true
+                                }
+                                false
+                            }
+                        }
+                    }
+                    true
+                }
                 popupMenu.show()
                 true
             }
@@ -67,12 +105,12 @@ class FileBrowserAdapter(private val onItemClick: (ProjectUIState) -> Unit) :
 
         private fun setFolderHighlight(file: File?, targetFile: File, rootFile: File?) {
             if (file == null || !file.exists() || file == rootFile) {
-                binding.text.setTextColor(textMainColor)
+                binding.tvName.setTextColor(textMainColor)
                 return
             }
 
             if (file == targetFile) {
-                binding.text.setTextColor(textHighlightColor)
+                binding.tvName.setTextColor(textHighlightColor)
                 return
             }
 
@@ -81,9 +119,9 @@ class FileBrowserAdapter(private val onItemClick: (ProjectUIState) -> Unit) :
 
         private fun setFileHighlight(file: File?, targetFile: File) {
             if (file == targetFile) {
-                binding.text.setTextColor(textHighlightColor)
+                binding.tvName.setTextColor(textHighlightColor)
             } else {
-                binding.text.setTextColor(textMainColor)
+                binding.tvName.setTextColor(textMainColor)
             }
         }
 
