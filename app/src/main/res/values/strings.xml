@@ -28,5 +28,6 @@
     <string name="gmark_url" translatable="false">https://github.com/sweetwong/GMark.git</string>
     <string name="pref_github_auth" translatable="false">pref_github_auth</string>
     <string name="commit_message">Commit Message</string>
-    <string name="new_file">New</string>
+    <string name="new_file">New File</string>
+    <string name="new_folder">New Folder</string>
 </resources>

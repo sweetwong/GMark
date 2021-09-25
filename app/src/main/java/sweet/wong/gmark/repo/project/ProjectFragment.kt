@@ -24,7 +24,7 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding>() {
         repoViewModel = ViewModelProvider(requireActivity())[RepoViewModel::class.java]
 
         browserAdapter = FileBrowserAdapter(viewModel, viewLifecycleOwner) { selected ->
-            if (selected.navigateBack) {
+            if (selected.isNavigateBack) {
                 val parent = ProjectUIState(
                     selected, selected.drawerFile.parentFile ?: return@FileBrowserAdapter
                 )
@@ -33,6 +33,7 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding>() {
             }
             if (selected.drawerFile.isDirectory) {
                 viewModel.selectDrawerFile(selected)
+                return@FileBrowserAdapter
             }
             if (selected.drawerFile.isFile) {
                 repoViewModel.selectFile(selected.drawerFile)

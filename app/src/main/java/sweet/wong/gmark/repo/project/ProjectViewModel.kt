@@ -93,7 +93,15 @@ class ProjectViewModel : ViewModel() {
         return false
     }
 
-    fun renameFile(file: File, newName: String) = liveData(Dispatchers.IO) {
+    fun addNew() {
+
+    }
+
+    fun new() {
+
+    }
+
+    fun rename(file: File, newName: String) = liveData(Dispatchers.IO) {
         try {
             // Same name, do nothing, and callback success
             if (file.name == newName) {
@@ -122,8 +130,8 @@ class ProjectViewModel : ViewModel() {
                 toast("Rename file failed")
             }
         } catch (e: Exception) {
-            toast("Rename file failed", e)
             e.printStackTrace()
+            toast("Rename file failed", e)
         }
     }
 
@@ -136,7 +144,6 @@ class ProjectViewModel : ViewModel() {
             e.printStackTrace()
             toast("Delete failed", e)
         }
-
     }
 
 }

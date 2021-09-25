@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="uiState"
             type="sweet.wong.gmark.repo.project.ProjectUIState" />
@@ -32,9 +34,10 @@
             android:layout_toEndOf="@+id/iv_icon"
             android:gravity="start"
             android:padding="3dp"
-            android:text="@{uiState.navigateBack ? @string/back_folder : uiState.drawerFile.name}"
+            android:text="@{uiState.name}"
             android:textColor="@color/text_main"
             android:textSize="18sp"
+            android:visibility="@{uiState.editing ? View.GONE : View.VISIBLE}"
             tools:text="目录" />
 
         <EditText
@@ -51,7 +54,7 @@
             android:padding="3dp"
             android:textColor="@color/text_main"
             android:textSize="18sp"
-            android:visibility="gone"
+            android:visibility="@{uiState.editing ? View.VISIBLE : View.GONE}"
             tools:ignore="Autofill,LabelFor"
             tools:text="目录" />
 

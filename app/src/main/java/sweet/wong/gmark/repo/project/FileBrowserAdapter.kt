@@ -14,6 +14,7 @@ import sweet.wong.gmark.databinding.RecycleItemProjectBinding
 import sweet.wong.gmark.ext.getColorFromAttr
 import sweet.wong.gmark.ext.inflater
 import sweet.wong.gmark.utils.DefaultDiffUtilCallback
+import sweet.wong.gmark.utils.EventObserver
 import java.io.File
 
 /**
@@ -42,10 +43,15 @@ class FileBrowserAdapter(
         fun bind(uiState: ProjectUIState) = with(binding) {
             this.uiState = uiState
             executePendingBindings()
-            tvName.setTextColor(resources.getColor(R.color.text_main, null))
 
+            uiState.refreshEvent.observe(viewLifecycleOwner, EventObserver {
+                this.uiState = uiState
+                executePendingBindings()
+            })
+
+            tvName.setTextColor(resources.getColor(R.color.text_main, null))
             when {
-                uiState.navigateBack -> {
+                uiState.isNavigateBack -> {
                     ivIcon.setImageResource(R.drawable.folder)
                     tvName.setTextColor(textMainColor)
                 }
@@ -74,9 +80,8 @@ class FileBrowserAdapter(
             popupMenu.inflate(R.menu.menu_project_browser)
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
-                    R.id.menu_new -> {
-
-                    }
+                    R.id.menu_new_file -> clickNewFile(uiState)
+                    R.id.menu_new_folder -> clickNewFolder(uiState)
                     R.id.menu_rename -> clickRename(uiState)
                     R.id.menu_delete -> clickDelete(uiState)
                 }
@@ -85,16 +90,22 @@ class FileBrowserAdapter(
             popupMenu.show()
         }
 
+        private fun clickNewFile(uiState: ProjectUIState) {
+
+        }
+
+        private fun clickNewFolder(uiState: ProjectUIState) {
+
+        }
+
         private fun clickDelete(uiState: ProjectUIState) {
             viewModel.delete(uiState)
         }
 
         private fun clickRename(uiState: ProjectUIState) = with(binding) {
             fun rename() {
-                tvName.isVisible = true
-                etRename.isVisible = false
                 val newName = etRename.text.toString()
-                viewModel.renameFile(uiState.drawerFile, newName).observe(viewLifecycleOwner) {
+                viewModel.rename(uiState.drawerFile, newName).observe(viewLifecycleOwner) {
                     tvName.text = newName
                     viewModel.refreshDrawer()
                 }

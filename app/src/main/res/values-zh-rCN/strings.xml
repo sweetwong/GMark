@@ -19,5 +19,6 @@
     <string name="repository_list">仓库列表</string>
     <string name="outline">大纲</string>
     <string name="project">项目</string>
-    <string name="new_file">新建</string>
+    <string name="new_file">新建文件</string>
+    <string name="new_folder">新建文件夹</string>
 </resources>
