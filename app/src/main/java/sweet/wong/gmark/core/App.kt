@@ -12,10 +12,10 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         app = this
-        ThemeUtils.setTheme(this)
 
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks by noOpDelegate() {
             override fun onActivityPreCreated(activity: Activity, savedInstanceState: Bundle?) {
+                ThemeUtils.setTheme(this@App)
                 ThemeUtils.setTheme(activity)
             }
         })

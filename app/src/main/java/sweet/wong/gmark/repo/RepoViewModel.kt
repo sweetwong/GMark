@@ -73,10 +73,12 @@ class RepoViewModel : ViewModel() {
     }
 
     fun loadREADME() {
-        rootFile.listFiles()?.forEach {
-            if (it.name == "README.md") {
-                selectFile(it)
-            }
+        val readMeFile = rootFile.listFiles()?.find { it.name == "README.md" }
+        if (readMeFile != null) {
+            selectFile(readMeFile)
+        } else {
+            drawerFolder.value = ProjectUIState(rootFile, rootFile, rootFile)
+            showDrawer.value = Event(true)
         }
     }
 
@@ -84,8 +86,7 @@ class RepoViewModel : ViewModel() {
         val showingFile = this.showingFile ?: return
         val drawerFile = showingFile.parentFile ?: return
 
-        val uiState = ProjectUIState(drawerFile, showingFile, rootFile)
-        drawerFolder.value = uiState
+        drawerFolder.value = ProjectUIState(drawerFile, showingFile, rootFile)
     }
 
     fun selectFile(position: Int) {

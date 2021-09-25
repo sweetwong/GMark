@@ -13,8 +13,6 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding>() {
     private val viewModel: ProjectViewModel by viewModels()
     private lateinit var repoViewModel: RepoViewModel
 
-    private lateinit var uiState: ProjectUIState
-
     private lateinit var browserAdapter: FileBrowserAdapter
 
     private lateinit var navBarAdapter: NavigationBarAdapter
@@ -49,8 +47,7 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding>() {
         binding.navigationBar.adapter = navBarAdapter
 
         repoViewModel.drawerFolder.observe(viewLifecycleOwner) {
-            uiState = it
-            viewModel.selectDrawerFile(uiState)
+            viewModel.selectDrawerFile(it)
         }
 
         viewModel.fileBrowserList.observe(viewLifecycleOwner) {
