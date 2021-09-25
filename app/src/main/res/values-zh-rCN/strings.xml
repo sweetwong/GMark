@@ -29,4 +29,7 @@
     <string name="user_name">用户</string>
     <string name="user_email">邮箱</string>
     <string name="hide_toolbar_summary">你可以通过侧边导航栏打开设置，然后重新显示工具栏</string>
+    <string name="clone">克隆</string>
+    <string name="username">用户名</string>
+    <string name="password">密码</string>
 </resources>

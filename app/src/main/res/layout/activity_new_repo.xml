@@ -30,39 +30,16 @@
             android:paddingStart="12dp"
             android:paddingEnd="12dp">
 
-            <RadioGroup
-                android:id="@+id/radio_group"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radio_https"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="HTTPS" />
-
-                <RadioButton
-                    android:id="@+id/radio_ssh"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:text="SSH" />
-
-            </RadioGroup>
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_url"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="24dp"
                 android:hint="URL">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/gmark_url" />
+                    android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -71,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:hint="Username">
+                android:hint="@string/username">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -84,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:hint="Passowrd">
+                android:hint="@string/password">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -122,15 +99,19 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
-                android:id="@+id/btn_clone"
-                android:layout_width="200dp"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_github"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="36dp"
-                android:layout_marginBottom="6dp"
-                android:background="@drawable/ripple_round_button"
-                android:text="clone"
-                android:textColor="?colorPrimary" />
+                android:layout_marginTop="12dp"
+                android:hint="@string/github">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
         </LinearLayout>
 

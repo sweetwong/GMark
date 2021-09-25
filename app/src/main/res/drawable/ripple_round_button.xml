@@ -3,6 +3,7 @@
     android:color="?colorRipple">
     <item>
         <shape android:shape="rectangle">
+            <stroke android:color="?colorRipple" />
             <solid android:color="@color/ck_white" />
             <corners android:radius="200dp" />
         </shape>

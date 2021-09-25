@@ -39,4 +39,7 @@
     <string name="user_email">User Email</string>
     <string name="github" translatable="false">Github</string>
     <string name="hide_toolbar_summary">You can open settings by drawer layout again</string>
+    <string name="clone">Clone</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
 </resources>

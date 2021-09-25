@@ -38,7 +38,9 @@
 
         <activity android:name=".editor.EditorActivity" />
 
-        <activity android:name=".newrepo.NewRepoActivity" />
+        <activity
+            android:name=".newrepo.NewRepoActivity"
+            android:exported="true" />
 
     </application>
 
