@@ -101,6 +101,12 @@ class ProjectViewModel : ViewModel() {
                     result.postValue(Event(true))
                     return@launch
                 }
+                // Check blank
+                if (newName.isBlank()) {
+                    toast("File name should not be blank")
+                    result.postValue(Event(false))
+                    return@launch
+                }
                 // Parent doesn't exist, callback fail
                 val parentFile = file.parentFile
                 if (parentFile?.exists() != true) {
@@ -115,8 +121,13 @@ class ProjectViewModel : ViewModel() {
                     return@launch
                 }
                 // Rename
-                file.renameTo(newFile)
-                result.postValue(Event(true))
+                if (file.renameTo(newFile)) {
+                    toast("Rename success")
+                    result.postValue(Event(true))
+                } else {
+                    toast("Rename file failed")
+                    result.postValue(Event(false))
+                }
             } catch (e: Exception) {
                 result.postValue(Event(false))
                 toast("Rename file failed", e)

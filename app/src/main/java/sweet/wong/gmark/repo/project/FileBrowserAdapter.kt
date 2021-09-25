@@ -1,9 +1,8 @@
 package sweet.wong.gmark.repo.project
 
-import android.view.Gravity
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.EditorInfo
-import android.widget.PopupMenu
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.isVisible
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.ListAdapter
@@ -65,42 +64,49 @@ class FileBrowserAdapter(
                 onItemClick(uiState)
             }
 
-            itemView.setOnLongClickListener { v ->
-                val popupMenu = PopupMenu(v.context, v, Gravity.END)
-                popupMenu.inflate(R.menu.menu_project_browser)
-                popupMenu.setOnMenuItemClickListener { menuItem ->
-                    when (menuItem.itemId) {
-                        R.id.menu_rename -> {
-                            tvName.isVisible = false
-                            etRename.isVisible = true
-                            etRename.setText(tvName.text)
-                            etRename.requestFocus()
-
-                            etRename.setOnEditorActionListener { v, actionId, event ->
-                                if (actionId == EditorInfo.IME_ACTION_DONE
-                                    || actionId == EditorInfo.IME_ACTION_UNSPECIFIED
-                                ) {
-                                    tvName.isVisible = true
-                                    etRename.isVisible = false
-                                    val newName = etRename.text.toString()
-                                    viewModel.renameFile(uiState.drawerFile, newName)
-                                        .observe(viewLifecycleOwner, EventObserver { success ->
-                                            if (success) {
-                                                tvName.text = newName
-                                                viewModel.refreshDrawer()
-                                            }
-                                        })
-                                    return@setOnEditorActionListener true
-                                }
-                                false
-                            }
-                        }
-                    }
-                    true
-                }
-                popupMenu.show()
+            itemView.setOnLongClickListener {
+                showPopupMenu(it, uiState)
                 true
             }
+        }
+
+        private fun showPopupMenu(v: View, uiState: ProjectUIState) = with(binding) {
+            val popupMenu = PopupMenu(v.context, v, Gravity.END)
+            popupMenu.inflate(R.menu.menu_project_browser)
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.menu_new -> {
+
+                    }
+                    R.id.menu_rename -> {
+                        tvName.isVisible = false
+                        etRename.isVisible = true
+                        etRename.setText(tvName.text)
+                        etRename.requestFocus()
+
+                        etRename.setOnEditorActionListener { v, actionId, event ->
+                            if (actionId == EditorInfo.IME_ACTION_DONE
+                                || actionId == EditorInfo.IME_ACTION_UNSPECIFIED
+                            ) {
+                                tvName.isVisible = true
+                                etRename.isVisible = false
+                                val newName = etRename.text.toString()
+                                viewModel.renameFile(uiState.drawerFile, newName)
+                                    .observe(viewLifecycleOwner, EventObserver { success ->
+                                        if (success) {
+                                            tvName.text = newName
+                                            viewModel.refreshDrawer()
+                                        }
+                                    })
+                                return@setOnEditorActionListener true
+                            }
+                            false
+                        }
+                    }
+                }
+                true
+            }
+            popupMenu.show()
         }
 
         private fun setFolderHighlight(file: File?, targetFile: File, rootFile: File?) {
