@@ -2,7 +2,6 @@ package sweet.wong.gmark.repo.project
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -83,7 +82,35 @@ class ProjectViewModel : ViewModel() {
             }
         }
 
+        sorted.forEach {
+            setHighlight(it, it.showingFile, it.drawerFile, it.rootFile)
+        }
+
         fileBrowserList.value = sorted
+    }
+
+    private fun setHighlight(
+        uiState: ProjectUIState,
+        currentFile: File?,
+        targetFile: File,
+        rootFile: File?
+    ) {
+        if (uiState.isNavigateBack) {
+            uiState.isHighlight = false
+            return
+        }
+
+        if (currentFile == null || !currentFile.exists() || currentFile == rootFile) {
+            uiState.isHighlight = false
+            return
+        }
+
+        if (currentFile == targetFile) {
+            uiState.isHighlight = true
+            return
+        }
+
+        setHighlight(uiState, currentFile.parentFile, targetFile, rootFile)
     }
 
     private fun filterFolder(file: File): Boolean {
@@ -101,34 +128,40 @@ class ProjectViewModel : ViewModel() {
 
     }
 
-    fun rename(file: File, newName: String) = liveData(Dispatchers.IO) {
+    fun rename(uiState: ProjectUIState) = viewModelScope.launch {
         try {
-            // Same name, do nothing, and callback success
+            val newName = uiState.editingText
+            val file = uiState.drawerFile
+            // Same name, do nothing
             if (file.name == newName) {
-                return@liveData
+                return@launch
             }
             // Check blank
             if (newName.isBlank()) {
                 toast("File name should not be blank")
-                return@liveData
+                return@launch
             }
-            // Parent doesn't exist, callback fail
+            // Parent doesn't exist
             val parentFile = file.parentFile
             if (parentFile?.exists() != true) {
-                return@liveData
+                return@launch
             }
-            // New name exists, callback fail
+            // New name exists
             val newFile = File(parentFile, newName)
             if (newFile.exists()) {
                 toast("File exists, please delete old file first")
-                return@liveData
+                return@launch
             }
-            // Rename
-            if (file.renameTo(newFile)) {
-                emit(Unit)
-            } else {
+            // Rename failed
+            if (!file.renameTo(newFile)) {
                 toast("Rename file failed")
+                return@launch
             }
+
+            // Success, now update ui
+            uiState.name = newName
+            uiState.updateUI()
+            refreshDrawer()
         } catch (e: Exception) {
             e.printStackTrace()
             toast("Rename file failed", e)

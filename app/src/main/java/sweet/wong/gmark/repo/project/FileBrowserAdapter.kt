@@ -1,21 +1,18 @@
 package sweet.wong.gmark.repo.project
 
 import android.view.*
-import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.EditorInfo.IME_ACTION_DONE
+import android.view.inputmethod.EditorInfo.IME_ACTION_UNSPECIFIED
 import androidx.appcompat.widget.PopupMenu
-import androidx.core.view.isVisible
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import sweet.wong.gmark.R
 import sweet.wong.gmark.core.App
-import sweet.wong.gmark.core.resources
 import sweet.wong.gmark.databinding.RecycleItemProjectBinding
 import sweet.wong.gmark.ext.getColorFromAttr
 import sweet.wong.gmark.ext.inflater
 import sweet.wong.gmark.utils.DefaultDiffUtilCallback
-import sweet.wong.gmark.utils.EventObserver
-import java.io.File
 
 /**
  * TODO: Add Description
@@ -41,27 +38,17 @@ class FileBrowserAdapter(
     inner class VH(private val binding: RecycleItemProjectBinding) : ViewHolder(binding.root) {
 
         fun bind(uiState: ProjectUIState) = with(binding) {
-            this.uiState = uiState
-            executePendingBindings()
-
-            uiState.refreshEvent.observe(viewLifecycleOwner, EventObserver {
+            // Observer refresh event
+            uiState.bind(viewLifecycleOwner) {
                 this.uiState = uiState
                 executePendingBindings()
-            })
 
-            tvName.setTextColor(resources.getColor(R.color.text_main, null))
-            when {
-                uiState.isNavigateBack -> {
-                    ivIcon.setImageResource(R.drawable.folder)
-                    tvName.setTextColor(textMainColor)
-                }
-                uiState.drawerFile.isDirectory -> {
-                    ivIcon.setImageResource(R.drawable.folder)
-                    setFolderHighlight(uiState.showingFile, uiState.drawerFile, uiState.rootFile)
-                }
-                uiState.drawerFile.isFile -> {
-                    ivIcon.setImageResource(R.drawable.text)
-                    setFileHighlight(uiState.showingFile, uiState.drawerFile)
+                // Binding text color
+                tvName.setTextColor(if (uiState.isHighlight) textHighlightColor else textMainColor)
+
+                if (uiState.isEditing) {
+                    etRename.requestFocus()
+                    etRename.setSelection(etRename.length())
                 }
             }
 
@@ -103,49 +90,15 @@ class FileBrowserAdapter(
         }
 
         private fun clickRename(uiState: ProjectUIState) = with(binding) {
-            fun rename() {
-                val newName = etRename.text.toString()
-                viewModel.rename(uiState.drawerFile, newName).observe(viewLifecycleOwner) {
-                    tvName.text = newName
-                    viewModel.refreshDrawer()
-                }
-            }
+            uiState.isEditing = true
+            uiState.updateUI()
 
-            tvName.isVisible = false
-            etRename.isVisible = true
-            etRename.setText(tvName.text)
-            etRename.requestFocus()
-
-            etRename.setOnEditorActionListener { v, actionId, event ->
-                if (actionId == EditorInfo.IME_ACTION_DONE
-                    || actionId == EditorInfo.IME_ACTION_UNSPECIFIED
-                ) {
-                    rename()
+            etRename.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == IME_ACTION_DONE || actionId == IME_ACTION_UNSPECIFIED) {
+                    viewModel.rename(uiState)
                     return@setOnEditorActionListener true
                 }
                 false
-            }
-        }
-
-        private fun setFolderHighlight(file: File?, targetFile: File, rootFile: File?) {
-            if (file == null || !file.exists() || file == rootFile) {
-                binding.tvName.setTextColor(textMainColor)
-                return
-            }
-
-            if (file == targetFile) {
-                binding.tvName.setTextColor(textHighlightColor)
-                return
-            }
-
-            setFolderHighlight(file.parentFile, targetFile, rootFile)
-        }
-
-        private fun setFileHighlight(file: File?, targetFile: File) {
-            if (file == targetFile) {
-                binding.tvName.setTextColor(textHighlightColor)
-            } else {
-                binding.tvName.setTextColor(textMainColor)
             }
         }
 

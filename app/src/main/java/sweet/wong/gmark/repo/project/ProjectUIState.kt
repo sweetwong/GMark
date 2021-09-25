@@ -12,17 +12,21 @@ data class ProjectUIState(
     val showingFile: File,
     val rootFile: File,
     val isNavigateBack: Boolean = false,
-    var editing: Boolean = false
+    var isEditing: Boolean = false
 ) : UIState() {
 
     var name: String = if (isNavigateBack) ".." else drawerFile.name
+
+    var editingText: String = name
+
+    var isHighlight: Boolean = false
 
     constructor(uiState: ProjectUIState, file: File) : this(
         file,
         uiState.showingFile,
         uiState.rootFile,
         uiState.isNavigateBack,
-        uiState.editing
+        uiState.isEditing
     )
 
 }

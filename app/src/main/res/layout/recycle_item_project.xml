@@ -22,6 +22,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_centerVertical="true"
+            android:src="@{uiState.drawerFile.file ? @drawable/text : @drawable/folder}"
             tools:ignore="ContentDescription"
             tools:src="@drawable/folder" />
 
@@ -52,6 +53,7 @@
             android:imeOptions="actionDone"
             android:inputType="text"
             android:padding="3dp"
+            android:text="@={uiState.editingText}"
             android:textColor="@color/text_main"
             android:textSize="18sp"
             android:visibility="@{uiState.editing ? View.VISIBLE : View.GONE}"
