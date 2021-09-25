@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
         app:title="General" />
-
-    <ListPreference
-        android:icon="@drawable/language"
-        app:defaultValue="english"
-        app:entries="@array/language_texts"
-        app:entryValues="@array/language_values"
-        app:key="language"
-        app:persistent="true"
-        app:title="Language"
-        app:useSimpleSummaryProvider="true" />
 
     <ListPreference
         app:defaultValue="blue"
@@ -23,7 +12,7 @@
         app:icon="@drawable/theme"
         app:key="@string/pref_theme_color"
         app:persistent="true"
-        app:title="Theme color"
+        app:title="@string/theme_color"
         app:useSimpleSummaryProvider="true" />
 
     <PreferenceCategory
@@ -34,20 +23,20 @@
         app:icon="@drawable/text_size"
         app:key="@string/pref_text_size"
         app:summary="16sp"
-        app:title="Text size" />
+        app:title="@string/text_size" />
 
     <SwitchPreference
         app:icon="@drawable/tool"
         app:key="@string/pref_hide_toolbar"
         app:persistent="true"
-        app:summary="You can open settings by drawer layout again"
-        app:title="Hide toolbar" />
+        app:summary="@string/hide_toolbar_summary"
+        app:title="@string/hide_toolbar" />
 
     <SwitchPreference
         app:icon="@drawable/tabs"
         app:key="@string/pref_hide_tab_layout"
         app:persistent="true"
-        app:title="Hide tab layout" />
+        app:title="@string/hide_tab_layout" />
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
@@ -57,19 +46,19 @@
         app:icon="@drawable/username"
         app:key="user_name"
         app:persistent="true"
-        app:title="User name"
+        app:title="@string/user_name"
         app:useSimpleSummaryProvider="true" />
 
     <EditTextPreference
         app:icon="@drawable/password"
         app:key="user_email"
         app:persistent="true"
-        app:title="User Email"
+        app:title="@string/user_email"
         app:useSimpleSummaryProvider="true" />
 
     <Preference
         app:key="@string/pref_github_auth"
         app:persistent="true"
-        app:title="Github" />
+        app:title="@string/github" />
 
 </PreferenceScreen>

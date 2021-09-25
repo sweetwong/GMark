@@ -30,4 +30,13 @@
     <string name="commit_message">Commit Message</string>
     <string name="new_file">New File</string>
     <string name="new_folder">New Folder</string>
+    <string name="language">Language</string>
+    <string name="theme_color">Theme color</string>
+    <string name="text_size">Text size</string>
+    <string name="hide_toolbar">Hide toolbar</string>
+    <string name="hide_tab_layout">Hide tab layout</string>
+    <string name="user_name">User name</string>
+    <string name="user_email">User Email</string>
+    <string name="github" translatable="false">Github</string>
+    <string name="hide_toolbar_summary">You can open settings by drawer layout again</string>
 </resources>
