@@ -7,6 +7,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import sweet.wong.gmark.core.toast
+import sweet.wong.gmark.ext.MAIN_CATCH
+import sweet.wong.gmark.repo.RepoViewModel
 import java.io.File
 
 class ProjectViewModel : ViewModel() {
@@ -14,16 +16,18 @@ class ProjectViewModel : ViewModel() {
     val navBarList = MutableLiveData<List<ProjectUIState>>()
     val fileBrowserList = MutableLiveData<List<ProjectUIState>>()
 
-    private var currentUIState: ProjectUIState? = null
+    lateinit var repoViewModel: RepoViewModel
+
+    private var currentFolder: ProjectUIState? = null
 
     fun selectDrawerFile(uiState: ProjectUIState) {
-        currentUIState = uiState
+        currentFolder = uiState
         updateFileBrowser(uiState)
         updateNavigationBar(uiState)
     }
 
     fun refreshDrawer() {
-        currentUIState?.let {
+        currentFolder?.let {
             selectDrawerFile(it)
         }
     }
@@ -120,12 +124,22 @@ class ProjectViewModel : ViewModel() {
         return false
     }
 
-    fun addNew() {
+    fun newFile(fileName: String) = viewModelScope.launch(Dispatchers.MAIN_CATCH) {
+        if (fileName.isBlank()) {
+            toast("File name is blank")
+            return@launch
+        }
 
-    }
+        val currentFolder = currentFolder ?: return@launch
+        val folderFile = currentFolder.drawerFile
 
-    fun new() {
+        val newFile = File(folderFile, fileName)
+        if (!newFile.createNewFile()) {
+            toast("Create failed")
+            return@launch
+        }
 
+        repoViewModel.selectFile(newFile)
     }
 
     fun rename(uiState: ProjectUIState) = viewModelScope.launch {
