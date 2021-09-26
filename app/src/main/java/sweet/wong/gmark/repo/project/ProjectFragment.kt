@@ -4,17 +4,14 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import sweet.wong.gmark.R
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.databinding.FragmentProjectBinding
-import sweet.wong.gmark.repo.RepoViewModel
 import sweet.wong.gmark.repo.drawer.DrawerFragment
 
 class ProjectFragment : DrawerFragment<FragmentProjectBinding>() {
 
     private val viewModel: ProjectViewModel by viewModels()
-    private lateinit var repoViewModel: RepoViewModel
 
     private lateinit var browserAdapter: FileBrowserAdapter
 
@@ -25,8 +22,6 @@ class ProjectFragment : DrawerFragment<FragmentProjectBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        repoViewModel = ViewModelProvider(requireActivity())[RepoViewModel::class.java]
-
         browserAdapter = FileBrowserAdapter(viewModel, viewLifecycleOwner) { selected ->
             if (selected.isNavigateBack) {
                 val parent = ProjectUIState(
