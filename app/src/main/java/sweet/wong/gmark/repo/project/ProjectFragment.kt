@@ -1,14 +1,17 @@
 package sweet.wong.gmark.repo.project
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import sweet.wong.gmark.base.BaseFragment
+import sweet.wong.gmark.R
+import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.databinding.FragmentProjectBinding
 import sweet.wong.gmark.repo.RepoViewModel
+import sweet.wong.gmark.repo.drawer.DrawerFragment
 
-class ProjectFragment : BaseFragment<FragmentProjectBinding>() {
+class ProjectFragment : DrawerFragment<FragmentProjectBinding>() {
 
     private val viewModel: ProjectViewModel by viewModels()
     private lateinit var repoViewModel: RepoViewModel
@@ -16,6 +19,9 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding>() {
     private lateinit var browserAdapter: FileBrowserAdapter
 
     private lateinit var navBarAdapter: NavigationBarAdapter
+
+    override val menuRes: Int
+        get() = R.menu.menu_project
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -57,6 +63,14 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding>() {
         viewModel.navBarList.observe(viewLifecycleOwner) {
             navBarAdapter.submitList(it) {
                 binding.navigationBar.scrollToPosition(it.lastIndex)
+            }
+        }
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem) {
+        when (menuItem.itemId) {
+            R.id.menu_add -> {
+                toast("Add")
             }
         }
     }

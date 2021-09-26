@@ -65,7 +65,7 @@ class FileBrowserAdapter(
 
         private fun showPopupMenu(v: View, uiState: ProjectUIState) = with(binding) {
             val popupMenu = PopupMenu(v.context, v, Gravity.END)
-            popupMenu.inflate(R.menu.menu_project_browser)
+            popupMenu.inflate(R.menu.popup_menu_project_browser)
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
                     R.id.menu_new_file -> clickNewFile(uiState)
