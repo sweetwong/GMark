@@ -3,28 +3,30 @@ package sweet.wong.gmark.repo.git
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import sweet.wong.gmark.base.BaseFragment
 import sweet.wong.gmark.databinding.FragmentGitBinding
-import sweet.wong.gmark.repo.RepoViewModel
+import sweet.wong.gmark.repo.drawer.DrawerFragment
 
-class GitFragment : BaseFragment<FragmentGitBinding>() {
+class GitFragment : DrawerFragment<FragmentGitBinding>() {
 
     private val viewModel: GitViewModel by viewModels()
-    private lateinit var repoViewModel: RepoViewModel
-    private val adapter = DiffAdapter()
+    private lateinit var adapter: DiffAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        repoViewModel = ViewModelProvider(requireActivity())[RepoViewModel::class.java]
 
+        adapter = DiffAdapter(viewModel, viewLifecycleOwner)
         binding.rvGitDiff.adapter = adapter
-//
-//        viewModel.diffEntries.observe(viewLifecycleOwner) {
-//            adapter.submitList(it.toMutableList())
-//        }
-//
-//        viewModel.refresh(repoViewModel.rootFile)
+        binding.rvGitDiff.itemAnimator = null
+
+        viewModel.uiStates.observe(viewLifecycleOwner) {
+            adapter.submitList(it.toMutableList())
+        }
+
+        repoViewModel.onDrawerShow.observe(viewLifecycleOwner) { show ->
+            if (show) {
+                viewModel.refresh(repoViewModel.rootFile)
+            }
+        }
     }
 
 }

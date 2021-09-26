@@ -1,14 +1,7 @@
 package sweet.wong.gmark.repo.git
 
 import org.eclipse.jgit.diff.DiffEntry
+import sweet.wong.gmark.utils.UIState
 
-sealed class DiffUIState {
-
-    data class Success(val diffEntries: List<DiffEntry>) : DiffUIState()
-
-    object Empty : DiffUIState()
-
-    class Failed() : DiffUIState()
-
-}
+data class DiffUIState(val entry: DiffEntry) : UIState()
 

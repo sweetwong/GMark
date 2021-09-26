@@ -6,24 +6,27 @@
 
     </data>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_git_diff"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/et_commit_message"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <View style="@style/Divider" />
 
         <EditText
             android:id="@+id/et_commit_message"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_alignParentBottom="true"
             android:autofillHints="no"
+            android:background="@color/ck_transparent"
             android:gravity="top"
             android:hint="@string/commit_message"
             android:inputType="textMultiLine"
@@ -32,5 +35,5 @@
             android:textColorHint="@color/text_sub"
             android:textSize="18sp" />
 
-    </RelativeLayout>
+    </LinearLayout>
 </layout>

@@ -5,21 +5,21 @@
     <data>
 
         <variable
-            name="entry"
-            type="org.eclipse.jgit.diff.DiffEntry" />
+            name="uiState"
+            type="sweet.wong.gmark.repo.git.DiffUIState" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:padding="12dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="12dp">
 
         <TextView
             android:id="@+id/tv_diff_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="@{entry.toString()}"
+            android:text="@{uiState.entry.toString()}"
             android:textColor="@color/text_main"
             android:textSize="15sp"
             tools:text="Diff" />
