@@ -26,7 +26,7 @@ class ProjectViewModel : ViewModel() {
         updateNavigationBar(uiState)
     }
 
-    fun refreshDrawer() {
+    private fun refreshDrawer() {
         currentFolder?.let {
             selectDrawerFile(it)
         }
@@ -74,22 +74,29 @@ class ProjectViewModel : ViewModel() {
         }
 
         // Second traversal add directories
+        val folderList = mutableListOf<ProjectUIState>()
         fileChildren.forEach {
             if (it.exists() && it.isDirectory && !filterFolder(it)) {
-                sorted.add(ProjectUIState(it, uiState.showingFile, uiState.rootFile))
+                folderList.add(ProjectUIState(it, uiState.showingFile, uiState.rootFile))
             }
         }
+        sorted.addAll(folderList.sortedBy { it.drawerFile.name })
+
         // Third traversal add files
+        val fileList = mutableListOf<ProjectUIState>()
         fileChildren.forEach {
             if (it.exists() && it.isFile) {
-                sorted.add(ProjectUIState(it, uiState.showingFile, uiState.rootFile))
+                fileList.add(ProjectUIState(it, uiState.showingFile, uiState.rootFile))
             }
         }
+        sorted.addAll(fileList.sortedBy { it.drawerFile.name })
 
+        // Find highlight file
         sorted.forEach {
             setHighlight(it, it.showingFile, it.drawerFile, it.rootFile)
         }
 
+        // Refresh UI
         fileBrowserList.value = sorted
     }
 
