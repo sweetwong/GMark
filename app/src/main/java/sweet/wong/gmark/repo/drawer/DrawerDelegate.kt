@@ -26,6 +26,7 @@ class DrawerDelegate(
 
     fun onCreate(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
+            binding.drawerToolbar.title = activity.getString(R.string.project)
             activity.supportFragmentManager.commit {
                 add<ProjectFragment>(R.id.fragment_container_view)
             }

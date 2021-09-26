@@ -17,11 +17,10 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/drawer_toolbar"
             android:layout_width="0dp"
-            android:layout_height="?actionBarSize"
+            android:layout_height="@dimen/toolbar_height"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:title="@string/project" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <RelativeLayout
             android:id="@+id/drawer_btn_container"

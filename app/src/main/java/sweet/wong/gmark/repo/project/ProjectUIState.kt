@@ -6,6 +6,10 @@ import java.io.File
 
 /**
  * Binding layout [R.layout.recycle_item_project]
+ *
+ * @param drawerFile Current file item
+ * @param showingFile Current showing markdown file
+ * @param rootFile Repository local path
  */
 data class ProjectUIState(
     val drawerFile: File,
