@@ -181,7 +181,7 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
                 positionStart: Int,
                 itemCount: Int
             ) {
-                if (sender.isEmpty()) {
+                if (sender.isEmpty() && !viewModel.isRenaming) {
                     finish()
                     return
                 }

@@ -26,6 +26,8 @@ class ProjectFragment : DrawerFragment<FragmentProjectBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.repoViewModel = repoViewModel
+
+        // File browser Adapter
         browserAdapter = FileBrowserAdapter(viewModel, viewLifecycleOwner) { selected ->
             if (selected.isNavigateBack) {
                 val parent = ProjectUIState(
@@ -43,22 +45,27 @@ class ProjectFragment : DrawerFragment<FragmentProjectBinding>() {
             }
         }
 
+        // Navigation bar adapter
         navBarAdapter = NavigationBarAdapter { selected ->
             viewModel.selectDrawerFile(selected)
         }
 
+        // Binding adapter
         binding.fileBrowser.adapter = browserAdapter
         binding.fileBrowser.itemAnimator = null
         binding.navigationBar.adapter = navBarAdapter
 
+        // Observe drawer change event
         repoViewModel.drawerFolder.observe(viewLifecycleOwner) {
             viewModel.selectDrawerFile(it)
         }
 
+        // Observe file browser list refresh
         viewModel.fileBrowserList.observe(viewLifecycleOwner) {
             browserAdapter.submitList(it)
         }
 
+        // Observe navigation bar list refresh
         viewModel.navBarList.observe(viewLifecycleOwner) {
             navBarAdapter.submitList(it) {
                 binding.navigationBar.scrollToPosition(it.lastIndex)

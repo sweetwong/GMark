@@ -153,11 +153,7 @@ class ProjectViewModel : ViewModel() {
         try {
             val file = uiState.drawerFile
             val newName = uiState.editingText
-            val success = renameInner(file, newName)
-            if (success) {
-                uiState.name = newName
-                refreshDrawer()
-            }
+            renameInner(uiState, file, newName)
             uiState.isEditing = false
             uiState.updateUI()
         } catch (e: Exception) {
@@ -166,9 +162,9 @@ class ProjectViewModel : ViewModel() {
         }
     }
 
-    private fun renameInner(file: File, newName: String): Boolean {
+    private fun renameInner(uiState: ProjectUIState, oldFile: File, newName: String): Boolean {
         // Same name, do nothing
-        if (file.name == newName) {
+        if (oldFile.name == newName) {
             return true
         }
         // Check blank
@@ -177,7 +173,7 @@ class ProjectViewModel : ViewModel() {
             return false
         }
         // Parent doesn't exist
-        val parentFile = file.parentFile
+        val parentFile = oldFile.parentFile
         if (parentFile?.exists() != true) {
             return false
         }
@@ -188,10 +184,15 @@ class ProjectViewModel : ViewModel() {
             return false
         }
         // Rename failed
-        if (!file.renameTo(newFile)) {
+        if (!oldFile.renameTo(newFile)) {
             toast("Rename file failed")
             return false
         }
+
+        // Success, update ui
+        uiState.name = newName
+        refreshDrawer()
+        repoViewModel.renameFile(oldFile, newFile)
 
         return true
     }

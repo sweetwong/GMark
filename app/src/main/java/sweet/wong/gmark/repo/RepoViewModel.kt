@@ -12,6 +12,7 @@ import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.DaoManager
 import sweet.wong.gmark.data.Page
 import sweet.wong.gmark.data.Repo
+import sweet.wong.gmark.ext.MAIN_CATCH
 import sweet.wong.gmark.repo.data.FileRaw
 import sweet.wong.gmark.repo.project.ProjectUIState
 import sweet.wong.gmark.sp.SPConstant
@@ -51,6 +52,8 @@ class RepoViewModel : ViewModel() {
 
     lateinit var rootFile: File
 
+    var isRenaming: Boolean = false
+
     /**
      * Current showing File, must be a file not a directory
      */
@@ -87,6 +90,19 @@ class RepoViewModel : ViewModel() {
         val drawerFile = showingFile.parentFile ?: return
 
         drawerFolder.value = ProjectUIState(drawerFile, showingFile, rootFile)
+    }
+
+    fun renameFile(oldFile: File, newFile: File) = viewModelScope.launch(Dispatchers.MAIN_CATCH) {
+        isRenaming = true
+        val oldPage = pages.find { it.file == oldFile }
+        if (oldPage != null) {
+            withContext(Dispatchers.IO) {
+                DaoManager.getPageDao(repo).delete(oldPage)
+            }
+            pages.remove(oldPage)
+        }
+        selectFile(newFile)
+        isRenaming = false
     }
 
     fun selectFile(position: Int) {
