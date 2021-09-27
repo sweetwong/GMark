@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="@{uiState.entry.toString()}"
+            android:text="@{uiState.entry.newPath}"
             android:textColor="@color/text_main"
             android:textSize="15sp"
             tools:text="Diff" />
