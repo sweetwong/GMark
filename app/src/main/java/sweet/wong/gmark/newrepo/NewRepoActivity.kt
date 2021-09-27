@@ -94,7 +94,7 @@ class NewRepoActivity : BaseActivity<ActivityNewRepoBinding>() {
 
     private fun refreshInputLayouts(url: String) = with(binding) {
         when (CloneUrlParser.parse(url)) {
-            CloneUrlType.HTTPS -> {
+            CloneUrlType.HTTP -> {
                 changeInputsVisible(username = true, password = true)
             }
             CloneUrlType.SSH -> {
@@ -137,7 +137,7 @@ class NewRepoActivity : BaseActivity<ActivityNewRepoBinding>() {
         }
 
         when (CloneUrlParser.parse(url)) {
-            CloneUrlType.HTTPS -> createHttpRepo(url)
+            CloneUrlType.HTTP -> createHttpRepo(url)
             CloneUrlType.SSH -> createSshRepo(url)
             CloneUrlType.GITHUB -> createGithubRepo(url)
             CloneUrlType.INVALID -> toast("Url is invalid")

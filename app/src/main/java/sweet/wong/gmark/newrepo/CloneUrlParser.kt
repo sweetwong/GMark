@@ -15,8 +15,8 @@ object CloneUrlParser {
             return CloneUrlType.GITHUB
         }
 
-        if (url.startsWith("https://")) {
-            return CloneUrlType.HTTPS
+        if (url.startsWith("http://")) {
+            return CloneUrlType.HTTP
         }
 
         return CloneUrlType.INVALID
@@ -29,6 +29,6 @@ enum class CloneUrlType {
     INVALID,
     GITHUB,
     SSH,
-    HTTPS
+    HTTP
 
 }
