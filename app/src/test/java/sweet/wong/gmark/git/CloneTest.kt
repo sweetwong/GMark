@@ -36,4 +36,21 @@ class CloneTest {
         }
     }
 
+    @Test
+    fun gitHubClone(): Unit = runBlocking {
+        // Start clone
+        val repo = Repo(
+            url = "https://github.com/sweetwong/Android-Interview-QA.git",
+            localPath = localPath,
+            name = "Android-Interview-QA",
+            username = "Add token here",
+            password = "",
+            ssh = null
+        )
+
+        Clone.start(repo).collect {
+            println(it)
+        }
+    }
+
 }

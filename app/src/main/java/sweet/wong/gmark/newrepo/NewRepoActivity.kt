@@ -12,11 +12,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
+import com.blankj.utilcode.util.GsonUtils
 import sweet.wong.gmark.R
 import sweet.wong.gmark.base.BaseActivity
 import sweet.wong.gmark.core.toast
+import sweet.wong.gmark.data.GithubAuthData
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.databinding.ActivityNewRepoBinding
+import sweet.wong.gmark.sp.SPConstant
+import sweet.wong.gmark.sp.SPUtils
 import sweet.wong.gmark.utils.SinglePost
 import sweet.wong.gmark.utils.Utils
 
@@ -57,6 +61,10 @@ class NewRepoActivity : BaseActivity<ActivityNewRepoBinding>() {
             createRepo()
         }
 
+    val githubAuthData = SPUtils.getString(SPConstant.GITHUB_AUTH_DATA)?.let {
+        GsonUtils.fromJson(it, GithubAuthData::class.java)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
@@ -64,6 +72,7 @@ class NewRepoActivity : BaseActivity<ActivityNewRepoBinding>() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         initView()
+        binding.inputGithub.editText?.setText(githubAuthData?.email)
     }
 
     private fun initView() = with(binding) {
@@ -150,7 +159,7 @@ class NewRepoActivity : BaseActivity<ActivityNewRepoBinding>() {
                 url,
                 Utils.getRepoPath(url),
                 Utils.getTitleByGitUrl(url),
-                "",
+                githubAuthData?.token,
                 "",
                 null
             )

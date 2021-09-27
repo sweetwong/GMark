@@ -23,7 +23,6 @@ object Clone {
                 .setURI(repo.url)
                 .setProgressMonitor(RepoProgressMonitor(this))
                 .setDirectory(rootFile)
-                .setCloneSubmodules(false)
                 // for SSH clone
                 .apply {
                     repo.ssh?.let { ssh ->
@@ -42,7 +41,9 @@ object Clone {
 
             cloneCommand.call()
         } catch (e: Exception) {
+            e.printStackTrace()
             send(GitResult.Failure(e))
+            close()
         }
         awaitClose()
     }
