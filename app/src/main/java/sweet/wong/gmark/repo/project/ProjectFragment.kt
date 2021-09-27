@@ -82,7 +82,8 @@ class ProjectFragment : DrawerFragment<FragmentProjectBinding>() {
                     layoutInflater.inflate(R.layout.dialog_edit_text, null) as TextInputLayout
 
                 // Show dialog
-                AlertDialog.Builder(requireContext())
+                AlertDialog.Builder(requireContext(), R.style.AlertDialog)
+                    .setTitle(R.string.create_new_file)
                     .setView(inputFileName)
                     .setNegativeButton(R.string.cancel) { dialog, which ->
                         dialog.dismiss()

@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import sweet.wong.gmark.core.toast
-import sweet.wong.gmark.ext.MAIN_CATCH
+import sweet.wong.gmark.ext.IO_CATCH
 import sweet.wong.gmark.repo.RepoViewModel
 import java.io.File
 
@@ -131,7 +131,7 @@ class ProjectViewModel : ViewModel() {
         return false
     }
 
-    fun newFile(fileName: String) = viewModelScope.launch(Dispatchers.MAIN_CATCH) {
+    fun newFile(fileName: String) = viewModelScope.launch(Dispatchers.IO_CATCH) {
         if (fileName.isBlank()) {
             toast("File name is blank")
             return@launch
@@ -141,12 +141,18 @@ class ProjectViewModel : ViewModel() {
         val folderFile = currentFolder.drawerFile
 
         val newFile = File(folderFile, fileName)
+
+        if (newFile.exists()) {
+            toast("File exists, please delete old file first")
+            return@launch
+        }
+
         if (!newFile.createNewFile()) {
             toast("Create failed")
             return@launch
         }
 
-        repoViewModel.selectFile(newFile)
+        withContext(Dispatchers.Main) { repoViewModel.selectFile(newFile) }
     }
 
     fun rename(uiState: ProjectUIState) = viewModelScope.launch {

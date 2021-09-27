@@ -46,4 +46,8 @@
         <item name="android:textAllCaps">false</item>
     </style>
 
+    <style name="AlertDialog" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/shape_alert_dialog_background</item>
+    </style>
+
 </resources>
