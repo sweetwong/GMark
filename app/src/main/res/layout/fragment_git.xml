@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_git_diff"
+            android:id="@+id/rv_diff"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -24,7 +24,7 @@
         <EditText
             android:id="@+id/et_commit_message"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:autofillHints="no"
             android:background="@color/ck_transparent"
             android:gravity="top"
@@ -33,7 +33,30 @@
             android:padding="12dp"
             android:textColor="@color/text_main"
             android:textColorHint="@color/text_sub"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_commit"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="100dp"
+                android:text="@string/commit" />
+
+            <Button
+                android:id="@+id/btn_push"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="100dp"
+                android:text="@string/push" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </layout>

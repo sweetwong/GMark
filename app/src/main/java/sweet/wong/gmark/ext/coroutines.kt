@@ -4,7 +4,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import sweet.wong.gmark.core.toast
 
-private val exceptionHandler = CoroutineExceptionHandler { _, e ->
+val exceptionHandler = CoroutineExceptionHandler { _, e ->
     e.printStackTrace()
     toast(e)
 }

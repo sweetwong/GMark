@@ -44,4 +44,6 @@
     <string name="password">Password</string>
     <string name="add">Add</string>
     <string name="file_name">File name</string>
+    <string name="commit">Commit</string>
+    <string name="push">Push</string>
 </resources>

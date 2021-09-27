@@ -15,16 +15,16 @@ class GitFragment : DrawerFragment<FragmentGitBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = DiffAdapter(viewModel, viewLifecycleOwner)
-        binding.rvGitDiff.adapter = adapter
-        binding.rvGitDiff.itemAnimator = null
+        binding.rvDiff.adapter = adapter
+        binding.rvDiff.itemAnimator = null
 
-        viewModel.uiStates.observe(viewLifecycleOwner) {
+        viewModel.diffUIStates.observe(viewLifecycleOwner) {
             adapter.submitList(it.toMutableList())
         }
 
         repoViewModel.onDrawerShow.observe(viewLifecycleOwner) { show ->
             if (show) {
-                viewModel.refresh(repoViewModel.rootFile)
+                viewModel.refreshDiffList(repoViewModel.rootFile)
             }
         }
     }

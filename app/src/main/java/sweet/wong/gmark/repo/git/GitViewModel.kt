@@ -11,14 +11,18 @@ import java.io.File
 
 class GitViewModel : ViewModel() {
 
-    val uiStates = MutableLiveData<List<DiffUIState>>()
+    val diffUIStates = MutableLiveData<List<DiffUIState>>()
 
-    fun refresh(file: File) = viewModelScope.launch(Dispatchers.IO_CATCH) {
+    fun refreshDiffList(file: File) = viewModelScope.launch(Dispatchers.IO_CATCH) {
         val uiStates = mutableListOf<DiffUIState>()
         Git.open(file).diff().call().forEach {
             uiStates.add(DiffUIState(it))
         }
-        this@GitViewModel.uiStates.postValue(uiStates)
+        diffUIStates.postValue(uiStates)
+    }
+
+    fun commit() {
+
     }
 
 }
