@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
+import com.blankj.utilcode.util.ScreenUtils
 import com.google.android.material.textfield.TextInputLayout
 import sweet.wong.gmark.R
 import sweet.wong.gmark.databinding.FragmentProjectBinding
@@ -92,12 +94,15 @@ class ProjectFragment : DrawerFragment<FragmentProjectBinding>() {
                         val fileName = inputFileName.editText?.text?.toString().orEmpty()
                         viewModel.newFile(fileName)
                     }
-                    .create()
+                    .show()
                     .apply {
                         inputFileName.requestFocus()
                         window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
+                        window?.setLayout(
+                            (ScreenUtils.getAppScreenWidth() * 0.85).toInt(),
+                            ViewGroup.LayoutParams.WRAP_CONTENT
+                        )
                     }
-                    .show()
             }
         }
     }
