@@ -56,9 +56,13 @@
         app:title="@string/user_email"
         app:useSimpleSummaryProvider="true" />
 
-    <Preference
+    <EditTextPreference
+        app:dialogLayout="@layout/pref_editor_dialog"
+        app:dialogTitle="Github Email"
+        app:icon="@drawable/github_gray"
         app:key="@string/pref_github_auth"
         app:persistent="true"
-        app:title="@string/github" />
+        app:title="@string/github"
+        app:useSimpleSummaryProvider="true" />
 
 </PreferenceScreen>
