@@ -1,4 +1,4 @@
-package sweet.wong.gmark.repo.outline
+package sweet.wong.gmark.repo.drawer.outline
 
 import android.view.ViewGroup
 import android.view.animation.Animation

@@ -6,7 +6,7 @@ import org.commonmark.node.Heading
 import org.commonmark.node.Node
 import org.commonmark.node.Text
 import sweet.wong.gmark.core.toast
-import sweet.wong.gmark.repo.outline.Head
+import sweet.wong.gmark.repo.drawer.outline.Head
 
 class MarkdownViewModel : ViewModel() {
 

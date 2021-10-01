@@ -1,4 +1,4 @@
-package sweet.wong.gmark.repo.outline
+package sweet.wong.gmark.repo.drawer.outline
 
 data class Head(
     val title: String,

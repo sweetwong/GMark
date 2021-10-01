@@ -1,4 +1,4 @@
-package sweet.wong.gmark.repo.history
+package sweet.wong.gmark.repo.drawer.history
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

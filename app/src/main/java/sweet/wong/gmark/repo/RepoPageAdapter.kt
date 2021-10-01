@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ListAdapter
 import sweet.wong.gmark.data.Page
+import sweet.wong.gmark.repo.viewholder.MarkdownViewHolder
 import sweet.wong.gmark.utils.DefaultDiffUtilCallback
 
 class RepoPageAdapter(

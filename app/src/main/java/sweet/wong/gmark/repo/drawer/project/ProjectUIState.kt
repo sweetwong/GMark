@@ -1,4 +1,4 @@
-package sweet.wong.gmark.repo.project
+package sweet.wong.gmark.repo.drawer.project
 
 import sweet.wong.gmark.R
 import sweet.wong.gmark.utils.UIState

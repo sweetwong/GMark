@@ -8,7 +8,7 @@
 
         <variable
             name="head"
-            type="sweet.wong.gmark.repo.outline.Head" />
+            type="sweet.wong.gmark.repo.drawer.outline.Head" />
     </data>
 
     <LinearLayout

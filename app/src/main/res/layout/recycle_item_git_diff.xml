@@ -6,7 +6,7 @@
 
         <variable
             name="uiState"
-            type="sweet.wong.gmark.repo.git.DiffUIState" />
+            type="sweet.wong.gmark.repo.drawer.git.DiffUIState" />
     </data>
 
     <RelativeLayout

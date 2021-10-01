@@ -1,4 +1,4 @@
-package sweet.wong.gmark.repo
+package sweet.wong.gmark.repo.viewholder
 
 import android.os.Build
 import android.view.ViewGroup
@@ -13,6 +13,7 @@ import sweet.wong.gmark.data.Page
 import sweet.wong.gmark.databinding.FragmentMarkdownBinding
 import sweet.wong.gmark.ext.MAIN_CATCH
 import sweet.wong.gmark.ext.inflater
+import sweet.wong.gmark.repo.RepoViewModel
 import sweet.wong.gmark.repo.markdown.MarkdownDelegate
 import sweet.wong.gmark.utils.SnappingLinearLayoutManager
 

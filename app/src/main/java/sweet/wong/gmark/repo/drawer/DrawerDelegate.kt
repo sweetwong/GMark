@@ -11,10 +11,10 @@ import sweet.wong.gmark.core.delay
 import sweet.wong.gmark.databinding.LayoutDrawerBinding
 import sweet.wong.gmark.repo.RepoActivity
 import sweet.wong.gmark.repo.RepoViewModel
-import sweet.wong.gmark.repo.git.GitFragment
-import sweet.wong.gmark.repo.history.HistoryFragment
-import sweet.wong.gmark.repo.outline.OutlineFragment
-import sweet.wong.gmark.repo.project.ProjectFragment
+import sweet.wong.gmark.repo.drawer.git.GitFragment
+import sweet.wong.gmark.repo.drawer.history.HistoryFragment
+import sweet.wong.gmark.repo.drawer.outline.OutlineFragment
+import sweet.wong.gmark.repo.drawer.project.ProjectFragment
 import sweet.wong.gmark.settings.SettingsActivity
 import sweet.wong.gmark.utils.Event
 
