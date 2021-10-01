@@ -37,8 +37,6 @@ class RepoViewModel : ViewModel() {
 
     val pages = NonNullLiveData<MutableList<Page>>(mutableListOf())
 
-    var currentTabPosition = -1
-
     /**
      * Current Repository, this data is get from argument
      */
@@ -98,23 +96,6 @@ class RepoViewModel : ViewModel() {
         }
         selectFile(newFile)
         isRenaming = false
-    }
-
-    fun selectFile(position: Int) {
-        val pages = pages.value
-        if (position !in 0 until pages.size) {
-            toast("Select file failed cause position is invalid")
-            return
-        }
-        selectFile(pages[position])
-    }
-
-    fun selectFile(page: Page) {
-        selectFile(page.file)
-    }
-
-    fun selectFile(path: String) {
-        selectFile(File(path))
     }
 
     /**
@@ -179,12 +160,6 @@ class RepoViewModel : ViewModel() {
             e.printStackTrace()
             toast("Read file failed", e)
         }
-
     }
-
-    fun removeShowingPage(): Boolean = isPositionValid() && pages.value.remove(showingPage.value)
-
-    private fun isPositionValid() =
-        currentTabPosition != -1 && currentTabPosition < pages.value.size
 
 }

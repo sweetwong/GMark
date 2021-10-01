@@ -21,6 +21,7 @@ import sweet.wong.gmark.core.noOpDelegate
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.databinding.ActivityRepoBinding
 import sweet.wong.gmark.editor.EditorActivity
+import sweet.wong.gmark.ext.notify
 import sweet.wong.gmark.ext.start
 import sweet.wong.gmark.repo.drawer.DrawerDelegate
 import sweet.wong.gmark.repolist.RepoListActivity
@@ -57,7 +58,6 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
         initToolbar(viewModel.repo.name)
         initViewPager()
         initDrawer(savedInstanceState)
-        initObservers()
 
         // load README.md
         if (savedInstanceState == null) {
@@ -149,12 +149,7 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
 
         drawerDelegate = DrawerDelegate(this, viewModel, binding.includeLayoutDrawer)
         drawerDelegate.onCreate(savedInstanceState)
-    }
 
-    /**
-     * View model observers
-     */
-    private fun initObservers() {
         viewModel.showDrawer.observe(this, EventObserver { open ->
             if (open) binding.drawerLayout.openDrawer(binding.navigationView)
             else binding.drawerLayout.closeDrawer(binding.navigationView)
@@ -171,7 +166,10 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
                 return true
             }
 
-            if (viewModel.removeShowingPage()) {
+            if (viewModel.pages.value.size > 1
+                && viewModel.pages.value.remove(viewModel.showingPage.value)
+            ) {
+                viewModel.pages.notify()
                 return true
             }
         }

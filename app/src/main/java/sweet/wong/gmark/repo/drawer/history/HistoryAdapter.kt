@@ -24,7 +24,7 @@ class HistoryAdapter(private val viewModel: HistoryViewModel) :
             binding.executePendingBindings()
 
             itemView.setOnClickListener {
-                viewModel.repoViewModel.selectFile(page)
+                viewModel.repoViewModel.selectFile(page.file)
             }
         }
 
