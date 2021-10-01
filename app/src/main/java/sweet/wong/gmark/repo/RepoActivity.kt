@@ -10,28 +10,23 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.isVisible
-import androidx.databinding.ObservableList
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
-import androidx.fragment.app.add
-import androidx.fragment.app.commit
+import androidx.viewpager2.widget.ViewPager2
 import com.blankj.utilcode.util.ScreenUtils
-import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import sweet.wong.gmark.R
 import sweet.wong.gmark.base.BaseActivity
 import sweet.wong.gmark.core.delay
 import sweet.wong.gmark.core.noOpDelegate
 import sweet.wong.gmark.core.toast
-import sweet.wong.gmark.data.Page
 import sweet.wong.gmark.databinding.ActivityRepoBinding
 import sweet.wong.gmark.editor.EditorActivity
 import sweet.wong.gmark.ext.start
 import sweet.wong.gmark.repo.drawer.DrawerDelegate
-import sweet.wong.gmark.repo.markdown.MarkdownFragment
 import sweet.wong.gmark.repolist.RepoListActivity
 import sweet.wong.gmark.settings.SettingsActivity
 import sweet.wong.gmark.sp.SPUtils.settings
 import sweet.wong.gmark.utils.EventObserver
-import sweet.wong.gmark.utils.OnListChangedCallback
 import kotlin.math.min
 
 class RepoActivity : BaseActivity<ActivityRepoBinding>() {
@@ -60,9 +55,8 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
         binding.lifecycleOwner = this
 
         initToolbar(viewModel.repo.name)
-        initFragment(savedInstanceState)
+        initViewPager()
         initDrawer(savedInstanceState)
-        initTabLayout()
         initObservers()
 
         // load README.md
@@ -83,7 +77,7 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         binding.tabLayout.apply {
-            viewModel.pages.forEach {
+            viewModel.pages.value.forEach {
                 val tab = newTab().apply { text = it.file.name }
                 addTab(tab)
                 if (it == viewModel.showingPage.value) {
@@ -101,12 +95,24 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
         supportActionBar?.title = title
     }
 
-    private fun initFragment(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                add<MarkdownFragment>(R.id.markdown_fragment_container)
+    private lateinit var pageAdapter: RepoPageAdapter
+    private fun initViewPager() {
+        pageAdapter = RepoPageAdapter(this, viewModel)
+        binding.viewPager.adapter = pageAdapter
+        viewModel.pages.observe(this) { pages ->
+            pageAdapter.submitList(pages.toMutableList()) {
+                viewModel.pages.value.indexOf(viewModel.showingPage.value).takeIf { it != -1 }
+                    ?.let { binding.viewPager.currentItem = it }
             }
         }
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                viewModel.showingPage.value = viewModel.pages.value[position]
+            }
+        })
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            tab.text = pageAdapter.currentList[position].file.name
+        }.attach()
     }
 
     private fun initDrawer(savedInstanceState: Bundle?) {
@@ -143,53 +149,6 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
 
         drawerDelegate = DrawerDelegate(this, viewModel, binding.includeLayoutDrawer)
         drawerDelegate.onCreate(savedInstanceState)
-    }
-
-    private fun initTabLayout() = with(binding.tabLayout) {
-        addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener by noOpDelegate() {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                viewModel.currentTabPosition = tab.position
-                viewModel.selectFile(tab.position)
-            }
-        })
-
-        viewModel.pages.addOnListChangedCallback(object :
-            OnListChangedCallback<ObservableList<Page>>() {
-
-            override fun onItemRangeChanged(
-                sender: ObservableList<Page>,
-                positionStart: Int,
-                itemCount: Int
-            ) {
-                selectTab(getTabAt(positionStart))
-            }
-
-            override fun onItemRangeInserted(
-                sender: ObservableList<Page>,
-                positionStart: Int,
-                itemCount: Int
-            ) {
-                val tab = newTab().apply { text = sender[positionStart].file.name }
-                addTab(tab)
-                delay(10) {
-                    selectTab(tab)
-                }
-            }
-
-            override fun onItemRangeRemoved(
-                sender: ObservableList<Page>,
-                positionStart: Int,
-                itemCount: Int
-            ) {
-                if (sender.isEmpty() && !viewModel.isRenaming) {
-                    finish()
-                    return
-                }
-
-                // This will trigger onTabSelected
-                binding.tabLayout.removeTabAt(positionStart)
-            }
-        })
     }
 
     /**

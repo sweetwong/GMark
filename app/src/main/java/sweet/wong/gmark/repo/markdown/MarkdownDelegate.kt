@@ -1,5 +1,6 @@
 package sweet.wong.gmark.repo.markdown
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.graphics.Color
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,7 @@ import io.noties.markwon.syntax.SyntaxHighlightPlugin
 import io.noties.prism4j.Prism4j
 import io.noties.prism4j.annotations.PrismBundle
 import org.commonmark.node.FencedCodeBlock
+import org.commonmark.node.Node
 import sweet.wong.gmark.R
 import sweet.wong.gmark.core.App
 import sweet.wong.gmark.repo.RepoViewModel
@@ -23,16 +25,15 @@ import sweet.wong.gmark.repo.markdown.plugins.LinkPlugin
 
 
 @PrismBundle(include = ["java", "kotlin"], grammarLocatorClassName = ".GrammarLocatorSourceCode")
-class MarkdownDelegate(
-    repoViewModel: RepoViewModel,
-    private val markdownViewModel: MarkdownViewModel
-) {
+class MarkdownDelegate(repoViewModel: RepoViewModel) {
 
     private val prism4j = Prism4j(GrammarLocatorSourceCode())
     private val prism4jTheme = Prism4jThemeDefault.create(getCodeBlockColor())
     private val reducer = MarkwonReducer.directChildren()
 
-    internal lateinit var markList: RecyclerView
+    private var nodes: List<Node> = emptyList()
+
+    private lateinit var markList: RecyclerView
 
     private val markwon: Markwon = Markwon.builder(App.app)
         .usePlugins(
@@ -42,7 +43,12 @@ class MarkdownDelegate(
                 TablePlugin.create(App.app),
                 SyntaxHighlightPlugin.create(prism4j, prism4jTheme),
                 ImagePlugin(),
-                LinkPlugin(repoViewModel, markdownViewModel, this)
+                LinkPlugin(
+                    getShowingFile = { repoViewModel.showingFile },
+                    getNodes = { nodes },
+                    onSelectFile = { repoViewModel.selectFile(it) },
+                    onClickCatalog = { markList.scrollToPosition(it) }
+                )
             )
         )
         .build()
@@ -55,6 +61,7 @@ class MarkdownDelegate(
         .build()
 
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setMarkdown(fileName: String, markList: RecyclerView, markdown: String) {
         // FIXME: 2021/9/7 这里会ANR
         this.markList = markList
@@ -65,7 +72,7 @@ class MarkdownDelegate(
         adapter.setParsedMarkdown(markwon, nodes)
         adapter.notifyDataSetChanged()
 
-        markdownViewModel.nodesToAllHeads.value = nodes
+        this.nodes = nodes
     }
 
     private fun getFileType(fileName: String): String {

@@ -5,18 +5,17 @@ import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.LinkResolverDef
 import io.noties.markwon.MarkwonConfiguration
 import org.commonmark.node.Heading
+import org.commonmark.node.Node
 import org.commonmark.node.Text
 import sweet.wong.gmark.core.log
 import sweet.wong.gmark.core.toast
-import sweet.wong.gmark.repo.RepoViewModel
-import sweet.wong.gmark.repo.markdown.MarkdownDelegate
-import sweet.wong.gmark.repo.markdown.MarkdownViewModel
 import java.io.File
 
 class LinkPlugin(
-    private val repoViewModel: RepoViewModel,
-    private val markdownViewModel: MarkdownViewModel,
-    private val delegate: MarkdownDelegate,
+    private val getShowingFile: () -> File?,
+    private val getNodes: () -> List<Node>,
+    private val onSelectFile: (File) -> Unit,
+    private val onClickCatalog: (Int) -> Unit
 ) : AbstractMarkwonPlugin() {
 
     override fun configureConfiguration(builder: MarkwonConfiguration.Builder) {
@@ -28,7 +27,7 @@ class LinkPlugin(
                     return
                 }
 
-                val showingFile = repoViewModel.showingFile ?: return toast("Current file is null")
+                val showingFile = getShowingFile() ?: return toast("Current file is null")
 
                 log("link is $link", "showingFile is $showingFile")
 
@@ -37,13 +36,12 @@ class LinkPlugin(
 
                 if (link.startsWith("#")) {
                     val head = link.replace("#", "")
-                    val nodes = markdownViewModel.nodesToAllHeads.value ?: return
-                    val recyclerView = delegate.markList
+                    val nodes = getNodes()
                     repeat(nodes.size) { i ->
                         val node = nodes[i]
                         val firstChild = node.firstChild
                         if (node is Heading && firstChild is Text && firstChild.literal == head) {
-                            recyclerView.smoothScrollToPosition(i)
+                            onClickCatalog(i)
                         }
                     }
                     return
@@ -64,8 +62,7 @@ class LinkPlugin(
                     }
                 }
 
-                repoViewModel.selectFile(File(resolved))
-
+                onSelectFile(File(resolved))
             }
         })
     }

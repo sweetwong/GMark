@@ -1,6 +1,5 @@
 package sweet.wong.gmark.repo
 
-import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,19 +12,14 @@ import sweet.wong.gmark.data.DaoManager
 import sweet.wong.gmark.data.Page
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.ext.MAIN_CATCH
-import sweet.wong.gmark.repo.data.FileRaw
 import sweet.wong.gmark.repo.project.ProjectUIState
 import sweet.wong.gmark.sp.SPConstant
 import sweet.wong.gmark.sp.SPUtils
 import sweet.wong.gmark.utils.Event
+import sweet.wong.gmark.utils.NonNullLiveData
 import java.io.File
 
 class RepoViewModel : ViewModel() {
-
-    /**
-     * File raw text, this data may be large
-     */
-    val fileRaw = MutableLiveData<FileRaw>()
 
     /**
      * This is used to control drawer
@@ -41,7 +35,7 @@ class RepoViewModel : ViewModel() {
 
     val drawerFolder = MutableLiveData<ProjectUIState>()
 
-    val pages = ObservableArrayList<Page>()
+    val pages = NonNullLiveData<MutableList<Page>>(mutableListOf())
 
     var currentTabPosition = -1
 
@@ -94,6 +88,7 @@ class RepoViewModel : ViewModel() {
 
     fun renameFile(oldFile: File, newFile: File) = viewModelScope.launch(Dispatchers.MAIN_CATCH) {
         isRenaming = true
+        val pages = pages.value
         val oldPage = pages.find { it.file == oldFile }
         if (oldPage != null) {
             withContext(Dispatchers.IO) {
@@ -106,6 +101,7 @@ class RepoViewModel : ViewModel() {
     }
 
     fun selectFile(position: Int) {
+        val pages = pages.value
         if (position !in 0 until pages.size) {
             toast("Select file failed cause position is invalid")
             return
@@ -145,18 +141,14 @@ class RepoViewModel : ViewModel() {
         }
 
         try {
-            // Read file in io thread
-            val raw = withContext(Dispatchers.IO) { file.readText() }
+            val pages = pages.value
 
-            // Update markdown text
-            fileRaw.value = FileRaw(file, raw)
             pages.find { it.file == file }
                 ?.let { existingPage ->
-                    // Use existing file
-                    showingPage.value = existingPage
-
                     val index = pages.indexOf(existingPage)
                     pages[index] = pages[index]
+                    showingPage.value = existingPage
+                    this@RepoViewModel.pages.value = pages
 
                     withContext(Dispatchers.IO) {
                         DaoManager.getPageDao(repo).apply {
@@ -170,6 +162,7 @@ class RepoViewModel : ViewModel() {
                     val newPage = Page(file.absolutePath)
                     pages.add(newPage)
                     showingPage.value = newPage
+                    this@RepoViewModel.pages.value = pages
 
                     withContext(Dispatchers.IO) {
                         DaoManager.getPageDao(repo).apply {
@@ -189,8 +182,9 @@ class RepoViewModel : ViewModel() {
 
     }
 
-    fun removeShowingPage(): Boolean = isPositionValid() && pages.remove(showingPage.value)
+    fun removeShowingPage(): Boolean = isPositionValid() && pages.value.remove(showingPage.value)
 
-    private fun isPositionValid() = currentTabPosition != -1 && currentTabPosition < pages.size
+    private fun isPositionValid() =
+        currentTabPosition != -1 && currentTabPosition < pages.value.size
 
 }

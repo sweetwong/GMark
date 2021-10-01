@@ -41,6 +41,9 @@
         <activity
             android:name=".newrepo.NewRepoActivity"
             android:exported="true" />
+        <activity
+            android:name=".viewpager.ViewPagerActivity"
+            android:exported="true" />
 
     </application>
 
