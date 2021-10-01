@@ -2,21 +2,40 @@ package sweet.wong.gmark.data
 
 import android.os.Parcelable
 import androidx.room.*
+import com.blankj.utilcode.util.RegexUtils
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import java.io.File
+import java.util.*
 
 @Parcelize
 @Entity
 data class Page(
     @ColumnInfo(name = "path") val path: String,
     @ColumnInfo(name = "scrollY") var scrollY: Int = 0,
-    @PrimaryKey(autoGenerate = true) var uid: Int = 0
+    @PrimaryKey val uid: String = UUID.randomUUID().toString()
 ) : Parcelable {
 
     @IgnoredOnParcel
     @Ignore
-    val file = File(path)
+    val pageType: PageType = run {
+        if (RegexUtils.isURL(path)) {
+            PageType.URL
+        } else {
+            PageType.FILE
+        }
+    }
+
+    @IgnoredOnParcel
+    @Ignore
+    val file: File? = if (pageType == PageType.FILE) File(path) else null
+
+}
+
+enum class PageType {
+
+    FILE,
+    URL
 
 }
 

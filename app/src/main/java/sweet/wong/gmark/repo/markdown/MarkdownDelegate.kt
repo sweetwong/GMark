@@ -47,7 +47,8 @@ class MarkdownDelegate(repoViewModel: RepoViewModel) {
                     getShowingFile = { repoViewModel.showingFile },
                     getNodes = { nodes },
                     onSelectFile = { repoViewModel.selectFile(it) },
-                    onClickCatalog = { markList.scrollToPosition(it) }
+                    onClickCatalog = { markList.scrollToPosition(it) },
+                    onClickUrl = { repoViewModel.selectUrl(it) }
                 )
             )
         )

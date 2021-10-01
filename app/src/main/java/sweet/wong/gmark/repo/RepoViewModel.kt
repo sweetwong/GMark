@@ -10,8 +10,10 @@ import sweet.wong.gmark.core.log
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.DaoManager
 import sweet.wong.gmark.data.Page
+import sweet.wong.gmark.data.PageType
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.ext.MAIN_CATCH
+import sweet.wong.gmark.ext.notify
 import sweet.wong.gmark.repo.drawer.project.ProjectUIState
 import sweet.wong.gmark.sp.SPConstant
 import sweet.wong.gmark.sp.SPUtils
@@ -31,7 +33,7 @@ class RepoViewModel : ViewModel() {
      */
     val onDrawerShow = MutableLiveData<Boolean>()
 
-    val showingPage = MutableLiveData<Page>()
+    var showingPage: Page? = null
 
     val drawerFolder = MutableLiveData<ProjectUIState>()
 
@@ -50,7 +52,7 @@ class RepoViewModel : ViewModel() {
      * Current showing File, must be a file not a directory
      */
     val showingFile: File?
-        get() = showingPage.value?.file
+        get() = showingPage?.file
 
     fun init(): Boolean {
         // 1: Get recent loaded url by shared preferences
@@ -98,6 +100,23 @@ class RepoViewModel : ViewModel() {
         isRenaming = false
     }
 
+    fun selectPage(page: Page?) {
+        if (page?.pageType == PageType.FILE) {
+            selectFile(page.file)
+        }
+
+        if (page?.pageType == PageType.URL) {
+            selectUrl(page.path)
+        }
+    }
+
+    fun selectUrl(url: String) {
+        val urlPage = Page(path = url)
+        pages.value.add(urlPage)
+        pages.notify()
+        showingPage = urlPage
+    }
+
     /**
      * There are three cases:
      *
@@ -128,7 +147,7 @@ class RepoViewModel : ViewModel() {
                 ?.let { existingPage ->
                     val index = pages.indexOf(existingPage)
                     pages[index] = pages[index]
-                    showingPage.value = existingPage
+                    showingPage = existingPage
                     this@RepoViewModel.pages.value = pages
 
                     withContext(Dispatchers.IO) {
@@ -142,7 +161,7 @@ class RepoViewModel : ViewModel() {
                     // Add new file
                     val newPage = Page(file.absolutePath)
                     pages.add(newPage)
-                    showingPage.value = newPage
+                    showingPage = newPage
                     this@RepoViewModel.pages.value = pages
 
                     withContext(Dispatchers.IO) {

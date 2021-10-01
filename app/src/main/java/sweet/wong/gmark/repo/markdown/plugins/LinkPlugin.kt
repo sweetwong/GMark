@@ -15,7 +15,8 @@ class LinkPlugin(
     private val getShowingFile: () -> File?,
     private val getNodes: () -> List<Node>,
     private val onSelectFile: (File) -> Unit,
-    private val onClickCatalog: (Int) -> Unit
+    private val onClickCatalog: (Int) -> Unit,
+    private val onClickUrl: (String) -> Unit
 ) : AbstractMarkwonPlugin() {
 
     override fun configureConfiguration(builder: MarkwonConfiguration.Builder) {
@@ -23,7 +24,7 @@ class LinkPlugin(
         builder.linkResolver(object : LinkResolverDef() {
             override fun resolve(view: View, link: String) {
                 if (link.startsWith("http")) {
-                    super.resolve(view, link)
+                    onClickUrl(link)
                     return
                 }
 

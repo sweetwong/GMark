@@ -21,7 +21,7 @@ class MarkdownViewHolder(
     private val activity: AppCompatActivity,
     private val repoViewModel: RepoViewModel,
     private val binding: FragmentMarkdownBinding,
-) : RecyclerView.ViewHolder(binding.root) {
+) : AbsViewHolder<Page>(binding.root) {
 
     private val delegate = MarkdownDelegate(repoViewModel)
 
@@ -33,20 +33,21 @@ class MarkdownViewHolder(
         }
     }
 
-    fun bind(page: Page) {
-        LogUtils.d("MarkdownViewHolder bind page, position: $adapterPosition, page: $page")
+    override fun bind(data: Page) {
+        LogUtils.d("MarkdownViewHolder bind page, position: $adapterPosition, page: $data")
         activity.lifecycleScope.launch(Dispatchers.MAIN_CATCH) {
-            val source = withContext(Dispatchers.IO) { page.file.readText() }
-            delegate.setMarkdown(page.file.name, binding.markList, source)
+            val file = data.file ?: return@launch
+            val source = withContext(Dispatchers.IO) { file.readText() }
+            delegate.setMarkdown(file.name, binding.markList, source)
 
-            binding.markList.scrollBy(0, page.scrollY)
+            binding.markList.scrollBy(0, data.scrollY)
 
-            page.scrollY = 0
+            data.scrollY = 0
             binding.markList.clearOnScrollListeners()
             binding.markList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    page.scrollY += dy
+                    data.scrollY += dy
                 }
             })
 

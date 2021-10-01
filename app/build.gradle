@@ -57,6 +57,7 @@ android {
 
     buildFeatures {
         dataBinding = true
+        viewBinding = true
     }
 }
 
@@ -118,4 +119,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     // Gson
     implementation 'com.google.code.gson:gson:2.8.8'
+    implementation 'com.github.youlookwhat:ByWebView:1.1.4'
 }

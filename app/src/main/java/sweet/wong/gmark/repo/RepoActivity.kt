@@ -16,9 +16,9 @@ import com.blankj.utilcode.util.ScreenUtils
 import com.google.android.material.tabs.TabLayoutMediator
 import sweet.wong.gmark.R
 import sweet.wong.gmark.base.BaseActivity
-import sweet.wong.gmark.core.delay
 import sweet.wong.gmark.core.noOpDelegate
 import sweet.wong.gmark.core.toast
+import sweet.wong.gmark.data.PageType
 import sweet.wong.gmark.databinding.ActivityRepoBinding
 import sweet.wong.gmark.editor.EditorActivity
 import sweet.wong.gmark.ext.notify
@@ -74,21 +74,21 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
         binding.tabLayout.isVisible = !hideTabLayout
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        binding.tabLayout.apply {
-            viewModel.pages.value.forEach {
-                val tab = newTab().apply { text = it.file.name }
-                addTab(tab)
-                if (it == viewModel.showingPage.value) {
-                    delay(10) {
-                        selectTab(tab)
-                    }
-                }
-            }
-        }
-        viewModel.updateDrawer()
-    }
+//    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+//        super.onRestoreInstanceState(savedInstanceState)
+//        binding.tabLayout.apply {
+//            viewModel.pages.value.forEach {
+//                val tab = newTab().apply { text = it.file.name }
+//                addTab(tab)
+//                if (it == viewModel.showingPage.value) {
+//                    delay(10) {
+//                        selectTab(tab)
+//                    }
+//                }
+//            }
+//        }
+//        viewModel.updateDrawer()
+//    }
 
     private fun initToolbar(title: String) {
         setSupportActionBar(binding.toolbar)
@@ -101,17 +101,21 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
         binding.viewPager.adapter = pageAdapter
         viewModel.pages.observe(this) { pages ->
             pageAdapter.submitList(pages.toMutableList()) {
-                viewModel.pages.value.indexOf(viewModel.showingPage.value).takeIf { it != -1 }
+                viewModel.pages.value.indexOf(viewModel.showingPage).takeIf { it != -1 }
                     ?.let { binding.viewPager.currentItem = it }
             }
         }
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                viewModel.showingPage.value = viewModel.pages.value[position]
+                viewModel.showingPage = viewModel.pages.value[position]
             }
         })
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            tab.text = pageAdapter.currentList[position].file.name
+            val page = viewModel.pages.value[position]
+            tab.text = when (page.pageType) {
+                PageType.FILE -> page.file?.name
+                PageType.URL -> page.path
+            }
         }.attach()
     }
 
@@ -167,7 +171,7 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
             }
 
             if (viewModel.pages.value.size > 1
-                && viewModel.pages.value.remove(viewModel.showingPage.value)
+                && viewModel.pages.value.remove(viewModel.showingPage)
             ) {
                 viewModel.pages.notify()
                 return true
