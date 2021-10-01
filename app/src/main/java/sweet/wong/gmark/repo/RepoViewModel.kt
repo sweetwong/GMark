@@ -33,11 +33,17 @@ class RepoViewModel : ViewModel() {
      */
     val onDrawerShow = MutableLiveData<Boolean>()
 
-    var showingPage: Page? = null
-
     val drawerFolder = MutableLiveData<ProjectUIState>()
 
     val pages = NonNullLiveData<MutableList<Page>>(mutableListOf())
+
+    var currentPosition = -1
+
+    val showingPage: Page?
+        get() = pages.value.getOrNull(currentPosition)
+
+    val showingFile: File?
+        get() = showingPage?.file
 
     /**
      * Current Repository, this data is get from argument
@@ -47,12 +53,6 @@ class RepoViewModel : ViewModel() {
     lateinit var rootFile: File
 
     var isRenaming: Boolean = false
-
-    /**
-     * Current showing File, must be a file not a directory
-     */
-    val showingFile: File?
-        get() = showingPage?.file
 
     fun init(): Boolean {
         // 1: Get recent loaded url by shared preferences
@@ -112,9 +112,8 @@ class RepoViewModel : ViewModel() {
 
     fun selectUrl(url: String) {
         val urlPage = Page(path = url)
-        pages.value.add(urlPage)
+        pages.value.add(++currentPosition, urlPage)
         pages.notify()
-        showingPage = urlPage
     }
 
     /**
@@ -145,10 +144,9 @@ class RepoViewModel : ViewModel() {
 
             pages.find { it.file == file }
                 ?.let { existingPage ->
-                    val index = pages.indexOf(existingPage)
-                    pages[index] = pages[index]
-                    showingPage = existingPage
-                    this@RepoViewModel.pages.value = pages
+                    val position = pages.indexOf(existingPage)
+                    currentPosition = position
+                    this@RepoViewModel.pages.notify()
 
                     withContext(Dispatchers.IO) {
                         DaoManager.getPageDao(repo).apply {
@@ -160,9 +158,8 @@ class RepoViewModel : ViewModel() {
                 ?: apply {
                     // Add new file
                     val newPage = Page(file.absolutePath)
-                    pages.add(newPage)
-                    showingPage = newPage
-                    this@RepoViewModel.pages.value = pages
+                    pages.add(++currentPosition, newPage)
+                    this@RepoViewModel.pages.notify()
 
                     withContext(Dispatchers.IO) {
                         DaoManager.getPageDao(repo).apply {

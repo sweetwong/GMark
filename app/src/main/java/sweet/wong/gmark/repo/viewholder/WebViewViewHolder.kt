@@ -1,5 +1,6 @@
 package sweet.wong.gmark.repo.viewholder
 
+import android.view.KeyEvent
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import me.jingbin.web.ByWebView
@@ -13,7 +14,7 @@ import sweet.wong.gmark.repo.RepoViewModel
 
 class WebViewViewHolder(
     activity: AppCompatActivity,
-    viewModel: RepoViewModel,
+    private val viewModel: RepoViewModel,
     private val binding: PageWebviewBinding
 ) : AbsViewHolder<Page>(binding.root) {
 
@@ -27,8 +28,19 @@ class WebViewViewHolder(
         .useWebProgress(App.app.getColorFromAttr(R.attr.colorPrimary))
         .loadUrl(null)
 
+    private val webView = byWebView.webView
+
     override fun bind(data: Page) {
         byWebView.loadUrl(data.path)
+    }
+
+    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+        if (adapterPosition == viewModel.currentPosition
+            && byWebView.handleKeyEvent(keyCode, event)
+        ) {
+            return true
+        }
+        return false
     }
 
     companion object {

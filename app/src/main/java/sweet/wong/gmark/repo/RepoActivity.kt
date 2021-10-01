@@ -74,22 +74,6 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
         binding.tabLayout.isVisible = !hideTabLayout
     }
 
-//    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-//        super.onRestoreInstanceState(savedInstanceState)
-//        binding.tabLayout.apply {
-//            viewModel.pages.value.forEach {
-//                val tab = newTab().apply { text = it.file.name }
-//                addTab(tab)
-//                if (it == viewModel.showingPage.value) {
-//                    delay(10) {
-//                        selectTab(tab)
-//                    }
-//                }
-//            }
-//        }
-//        viewModel.updateDrawer()
-//    }
-
     private fun initToolbar(title: String) {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.title = title
@@ -101,15 +85,17 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
         binding.viewPager.adapter = pageAdapter
         viewModel.pages.observe(this) { pages ->
             pageAdapter.submitList(pages.toMutableList()) {
-                viewModel.pages.value.indexOf(viewModel.showingPage).takeIf { it != -1 }
-                    ?.let { binding.viewPager.currentItem = it }
+                if (viewModel.currentPosition != -1) {
+                    binding.viewPager.currentItem = viewModel.currentPosition
+                }
             }
         }
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                viewModel.showingPage = viewModel.pages.value[position]
+                viewModel.currentPosition = position
             }
         })
+
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             val page = viewModel.pages.value[position]
             tab.text = when (page.pageType) {
@@ -164,12 +150,18 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
      * Intercept back pressed
      */
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+        // Pass event to view holders so that web view can handle key event
+        if (pageAdapter.onKeyUp(keyCode, event)) {
+            return true
+        }
+
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (binding.drawerLayout.isDrawerVisible(binding.navigationView)) {
                 binding.drawerLayout.closeDrawer(binding.navigationView)
                 return true
             }
 
+            // FIXME: 2021/10/1 这里有时候会判断错误
             if (viewModel.pages.value.size > 1
                 && viewModel.pages.value.remove(viewModel.showingPage)
             ) {
