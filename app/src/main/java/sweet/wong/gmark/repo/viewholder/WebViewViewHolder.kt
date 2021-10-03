@@ -2,6 +2,7 @@ package sweet.wong.gmark.repo.viewholder
 
 import android.view.KeyEvent
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.appcompat.app.AppCompatActivity
 import me.jingbin.web.ByWebView
 import sweet.wong.gmark.R
@@ -11,36 +12,32 @@ import sweet.wong.gmark.databinding.PageWebviewBinding
 import sweet.wong.gmark.ext.getColorFromAttr
 import sweet.wong.gmark.ext.inflater
 import sweet.wong.gmark.repo.RepoViewModel
+import sweet.wong.gmark.webview.MyWebView
 
 class WebViewViewHolder(
-    activity: AppCompatActivity,
+    private val activity: AppCompatActivity,
     private val viewModel: RepoViewModel,
     private val binding: PageWebviewBinding
 ) : AbsViewHolder<Page>(binding.root) {
 
-    private val byWebView: ByWebView = ByWebView.with(activity)
-        .setWebParent(
-            binding.webViewContainer, ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-        )
-        .useWebProgress(App.app.getColorFromAttr(R.attr.colorPrimary))
-        .loadUrl(null)
-
-    private val webView = byWebView.webView
+    private var byWebView: ByWebView? = null
 
     override fun bind(data: Page) {
-        byWebView.loadUrl(data.path)
+        binding.webViewContainer.removeAllViews()
+
+        byWebView = ByWebView.with(activity)
+            .setWebParent(
+                binding.webViewContainer,
+                ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
+            )
+            .setCustomWebView(MyWebView(activity))
+            .useWebProgress(App.app.getColorFromAttr(R.attr.colorPrimary))
+            .loadUrl(data.path)
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
-        if (adapterPosition == viewModel.currentPosition
-            && byWebView.handleKeyEvent(keyCode, event)
-        ) {
-            return true
-        }
-        return false
+        return adapterPosition == viewModel.currentPosition
+                && byWebView?.handleKeyEvent(keyCode, event) == true
     }
 
     companion object {
