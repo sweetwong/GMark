@@ -1,7 +1,6 @@
 package sweet.wong.gmark.utils
 
 import android.content.Context
-import android.graphics.PointF
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
@@ -21,8 +20,9 @@ class SnappingLinearLayoutManager(val context: Context) : LinearLayoutManager(co
         val smoothScroller = object : LinearSmoothScroller(context) {
             override fun getVerticalSnapPreference(): Int = SNAP_TO_START
 
-            override fun computeScrollVectorForPosition(targetPosition: Int): PointF? =
-                this@SnappingLinearLayoutManager.computeScrollVectorForPosition(targetPosition)
+            override fun calculateTimeForScrolling(dx: Int): Int = 100
+
+            override fun calculateTimeForDeceleration(dx: Int): Int = 100
         }
         smoothScroller.targetPosition = position
         startSmoothScroll(smoothScroller)

@@ -47,6 +47,8 @@ class RepoViewModel : ViewModel() {
     val showingFile: File?
         get() = showingPage?.file
 
+    val onTabReselect = MutableLiveData<Unit>()
+
     /**
      * Current Repository, this data is get from argument
      */
@@ -178,6 +180,19 @@ class RepoViewModel : ViewModel() {
             e.printStackTrace()
             toast("Read file failed", e)
         }
+    }
+
+    fun pageSize(): Int = pages.value.size
+
+    fun removeShowingPage(): Boolean {
+        val pages = pages.value
+        val showingPage = showingPage ?: return false
+        val success = pages.remove(showingPage)
+        if (success && currentPosition > 0) {
+            currentPosition--
+        }
+        this.pages.notify()
+        return success
     }
 
 }

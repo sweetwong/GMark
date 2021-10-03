@@ -1,9 +1,11 @@
 package sweet.wong.gmark.repo.viewholder
 
+import android.animation.ObjectAnimator
 import android.view.KeyEvent
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import me.jingbin.web.ByWebView
 import me.jingbin.web.OnTitleProgressCallback
 import sweet.wong.gmark.data.Page
@@ -20,6 +22,13 @@ class WebViewViewHolder(
 ) : AbsViewHolder<Page>(binding.root) {
 
     private var byWebView: ByWebView? = null
+
+    private val onTabReselectObserver = Observer<Unit> {
+        val webView = byWebView?.webView ?: return@Observer
+        webView.scrollTo(webView.scrollX, webView.scrollY)
+        val anim = ObjectAnimator.ofInt(webView, "scrollY", webView.scrollY, 0)
+        anim.setDuration(200).start()
+    }
 
     override fun bind(data: Page) {
         binding.webViewContainer.removeAllViews()
@@ -38,6 +47,9 @@ class WebViewViewHolder(
             })
             .useWebProgress(false)
             .loadUrl(data.path)
+
+        viewModel.onTabReselect.removeObserver(onTabReselectObserver)
+        viewModel.onTabReselect.observe(activity, onTabReselectObserver)
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {

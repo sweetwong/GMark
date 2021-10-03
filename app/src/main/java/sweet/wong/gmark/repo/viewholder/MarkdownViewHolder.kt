@@ -19,17 +19,22 @@ import sweet.wong.gmark.utils.SnappingLinearLayoutManager
 
 class MarkdownViewHolder(
     private val activity: AppCompatActivity,
-    private val repoViewModel: RepoViewModel,
+    private val viewModel: RepoViewModel,
     private val binding: FragmentMarkdownBinding,
 ) : AbsViewHolder<Page>(binding.root) {
 
-    private val delegate = MarkdownDelegate(repoViewModel)
+    private val delegate = MarkdownDelegate(viewModel)
 
     init {
         binding.markList.itemAnimator = null
         binding.markList.layoutManager = SnappingLinearLayoutManager(itemView.context)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             binding.markList.isForceDarkAllowed = false
+        }
+        viewModel.onTabReselect.observe(activity) {
+            if (adapterPosition == viewModel.currentPosition) {
+                binding.markList.smoothScrollToPosition(0)
+            }
         }
     }
 

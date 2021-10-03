@@ -13,6 +13,7 @@ import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.viewpager2.widget.ViewPager2
 import com.blankj.utilcode.util.ScreenUtils
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import sweet.wong.gmark.R
 import sweet.wong.gmark.base.BaseActivity
@@ -21,7 +22,6 @@ import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.PageType
 import sweet.wong.gmark.databinding.ActivityRepoBinding
 import sweet.wong.gmark.editor.EditorActivity
-import sweet.wong.gmark.ext.notify
 import sweet.wong.gmark.ext.start
 import sweet.wong.gmark.repo.drawer.DrawerDelegate
 import sweet.wong.gmark.repolist.RepoListActivity
@@ -107,6 +107,15 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
         viewModel.webViewNameUpdateEvent.observe(this, EventObserver {
             binding.tabLayout.getTabAt(viewModel.currentPosition)?.text = it
         })
+
+        binding.tabLayout.addOnTabSelectedListener(
+            object : TabLayout.OnTabSelectedListener by noOpDelegate() {
+
+                override fun onTabReselected(tab: TabLayout.Tab?) {
+                    viewModel.onTabReselect.value = Unit
+                }
+
+            })
     }
 
     private fun initDrawer(savedInstanceState: Bundle?) {
@@ -166,10 +175,7 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
             }
 
             // FIXME: 2021/10/1 这里有时候会判断错误
-            if (viewModel.pages.value.size > 1
-                && viewModel.pages.value.remove(viewModel.showingPage)
-            ) {
-                viewModel.pages.notify()
+            if (viewModel.pageSize() > 1 && viewModel.removeShowingPage()) {
                 return true
             }
         }
