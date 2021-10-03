@@ -5,13 +5,12 @@ import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.appcompat.app.AppCompatActivity
 import me.jingbin.web.ByWebView
-import sweet.wong.gmark.R
-import sweet.wong.gmark.core.App
+import me.jingbin.web.OnTitleProgressCallback
 import sweet.wong.gmark.data.Page
 import sweet.wong.gmark.databinding.PageWebviewBinding
-import sweet.wong.gmark.ext.getColorFromAttr
 import sweet.wong.gmark.ext.inflater
 import sweet.wong.gmark.repo.RepoViewModel
+import sweet.wong.gmark.utils.Event
 import sweet.wong.gmark.webview.MyWebView
 
 class WebViewViewHolder(
@@ -31,7 +30,13 @@ class WebViewViewHolder(
                 ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
             )
             .setCustomWebView(MyWebView(activity))
-            .useWebProgress(App.app.getColorFromAttr(R.attr.colorPrimary))
+            .setOnTitleProgressCallback(object : OnTitleProgressCallback() {
+                override fun onReceivedTitle(title: String) {
+                    data.name = title
+                    viewModel.webViewNameUpdateEvent.value = Event(title)
+                }
+            })
+            .useWebProgress(false)
             .loadUrl(data.path)
     }
 

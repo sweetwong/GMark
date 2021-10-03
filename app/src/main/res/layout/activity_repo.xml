@@ -31,6 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
                 android:layout_below="@id/toolbar"
+                app:tabIndicatorAnimationMode="elastic"
                 app:tabIndicatorColor="?colorPrimary"
                 app:tabMaxWidth="200dp"
                 app:tabMode="scrollable"

@@ -13,6 +13,7 @@ import java.util.*
 data class Page(
     @ColumnInfo(name = "path") val path: String,
     @ColumnInfo(name = "scrollY") var scrollY: Int = 0,
+    @ColumnInfo(name = "name") var name: String? = null,
     @PrimaryKey val uid: String = UUID.randomUUID().toString()
 ) : Parcelable {
 

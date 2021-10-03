@@ -103,6 +103,10 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
                 PageType.URL -> page.path
             }
         }.attach()
+
+        viewModel.webViewNameUpdateEvent.observe(this, EventObserver {
+            binding.tabLayout.getTabAt(viewModel.currentPosition)?.text = it
+        })
     }
 
     private fun initDrawer(savedInstanceState: Bundle?) {
