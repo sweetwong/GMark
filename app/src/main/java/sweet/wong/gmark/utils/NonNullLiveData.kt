@@ -21,6 +21,8 @@ open class NonNullLiveData<T>(value: T) : MutableLiveData<T>(value) {
 
 }
 
+open class NonNullLiveDataList<T> : NonNullLiveData<List<T>>(emptyList())
+
 fun <T> LiveData<T>.toNonNull() =
     object : NonNullLiveData<T>(this.value ?: throw NullPointerException()) {
 

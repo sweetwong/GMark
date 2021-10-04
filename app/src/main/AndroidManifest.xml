@@ -45,7 +45,7 @@
         </activity>
 
         <activity
-            android:name=".debug.SearchActivity"
+            android:name=".search.SearchActivity"
             android:exported="true"
             android:windowSoftInputMode="stateAlwaysVisible" />
 

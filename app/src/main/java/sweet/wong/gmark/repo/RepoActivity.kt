@@ -24,11 +24,11 @@ import sweet.wong.gmark.core.noOpDelegate
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.PageType
 import sweet.wong.gmark.databinding.ActivityRepoBinding
-import sweet.wong.gmark.debug.SearchActivity
 import sweet.wong.gmark.editor.EditorActivity
 import sweet.wong.gmark.ext.start
 import sweet.wong.gmark.repo.drawer.DrawerDelegate
 import sweet.wong.gmark.repolist.RepoListActivity
+import sweet.wong.gmark.search.SearchActivity
 import sweet.wong.gmark.settings.SettingsActivity
 import sweet.wong.gmark.sp.SPUtils.settings
 import sweet.wong.gmark.utils.EventObserver
@@ -83,7 +83,7 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
         supportActionBar?.title = title
 
         binding.tvUrl.setOnClickListener {
-            SearchActivity.start(this, binding.tvUrl, "")
+            SearchActivity.start(this, binding.tvUrl, viewModel.repo.localPath, "")
         }
     }
 
