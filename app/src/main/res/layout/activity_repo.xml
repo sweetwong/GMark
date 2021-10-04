@@ -46,17 +46,13 @@
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
+                android:layout_height="32dp"
                 android:layout_below="@id/toolbar"
                 app:tabIndicatorAnimationMode="elastic"
                 app:tabIndicatorColor="?colorPrimary"
-                app:tabMaxWidth="200dp"
+                app:tabMaxWidth="180dp"
                 app:tabMode="scrollable"
-                app:tabRippleColor="?colorRipple"
-                app:tabSelectedTextColor="?colorPrimary"
-                app:tabTextAppearance="@style/TabTextAppearance"
-                app:tabTextColor="@color/text_main"
-                app:tabUnboundedRipple="false" />
+                app:tabRippleColor="@color/ck_transparent" />
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/view_pager"

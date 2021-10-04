@@ -8,6 +8,7 @@ import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -126,15 +127,33 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
         })
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            val textView = layoutInflater.inflate(
+                R.layout.custom_tab_view, tab.view, false
+            ) as TextView
+            textView.setOnClickListener {
+                binding.tabLayout.selectTab(tab)
+            }
+            tab.customView = textView
+
             val page = viewModel.pages.value[position]
-            tab.text = when (page.pageType) {
+            val path = when (page.pageType) {
                 PageType.FILE -> page.file?.name
                 PageType.URL -> page.path
+            }
+            textView.text = path
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                textView.tooltipText = path
             }
         }.attach()
 
         viewModel.webViewNameUpdateEvent.observe(this, EventObserver {
-            binding.tabLayout.getTabAt(viewModel.currentPosition)?.text = it
+            val tab = binding.tabLayout.getTabAt(viewModel.currentPosition) ?: return@EventObserver
+            val textView = tab.customView as? TextView ?: return@EventObserver
+            textView.text = it
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                textView.tooltipText = it
+            }
+            textView.requestLayout()
         })
 
         binding.tabLayout.addOnTabSelectedListener(
