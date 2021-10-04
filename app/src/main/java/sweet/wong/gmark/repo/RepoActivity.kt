@@ -154,6 +154,7 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
                 textView.tooltipText = it
             }
             textView.requestLayout()
+            binding.tabLayout.selectTab(tab)
         })
 
         binding.tabLayout.addOnTabSelectedListener(
