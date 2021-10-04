@@ -1,7 +1,9 @@
 package sweet.wong.gmark.repo
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
@@ -21,6 +23,7 @@ import sweet.wong.gmark.core.noOpDelegate
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.PageType
 import sweet.wong.gmark.databinding.ActivityRepoBinding
+import sweet.wong.gmark.debug.SearchActivity
 import sweet.wong.gmark.editor.EditorActivity
 import sweet.wong.gmark.ext.start
 import sweet.wong.gmark.repo.drawer.DrawerDelegate
@@ -77,6 +80,10 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
     private fun initToolbar(title: String) {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.title = title
+
+        binding.tvUrl.setOnClickListener {
+            SearchActivity.start(this, binding.tvUrl, "")
+        }
     }
 
     private lateinit var pageAdapter: RepoPageAdapter
@@ -93,6 +100,28 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 viewModel.currentPosition = position
+
+                val showingPage = viewModel.showingPage ?: return
+                when (showingPage.pageType) {
+                    PageType.URL -> {
+                        binding.tvUrl.text = showingPage.path
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            binding.tvUrl.tooltipText = showingPage.path
+                        }
+
+                        binding.tvUrl.ellipsize = TextUtils.TruncateAt.END
+                    }
+                    PageType.FILE -> {
+                        val rootParent = viewModel.rootFile.parentFile ?: return
+                        val relativePath = showingPage.file?.relativeTo(rootParent)?.path ?: return
+                        binding.tvUrl.text = relativePath
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            binding.tvUrl.tooltipText = relativePath
+                        }
+
+                        binding.tvUrl.ellipsize = TextUtils.TruncateAt.START
+                    }
+                }
             }
         })
 

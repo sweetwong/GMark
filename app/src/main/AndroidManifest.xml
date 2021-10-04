@@ -39,10 +39,18 @@
         <activity android:name=".editor.EditorActivity" />
 
         <activity
-            android:name=".newrepo.NewRepoActivity"
-            android:exported="true" />
+            android:name=".debug.DebugActivity"
+            android:exported="true">
+
+        </activity>
+
         <activity
-            android:name=".viewpager.ViewPagerActivity"
+            android:name=".debug.SearchActivity"
+            android:exported="true"
+            android:windowSoftInputMode="stateAlwaysVisible" />
+
+        <activity
+            android:name=".newrepo.NewRepoActivity"
             android:exported="true" />
 
     </application>

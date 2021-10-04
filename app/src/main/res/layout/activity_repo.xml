@@ -24,7 +24,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/toolbar_height"
                 android:background="@color/white"
-                app:title="@{viewModel.repo.name}" />
+                app:contentInsetStartWithNavigation="0dp">
+
+                <TextView
+                    android:id="@+id/tv_url"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_search_background"
+                    android:maxLines="1"
+                    android:paddingStart="16dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="6dp"
+                    android:text="https://www.google.com"
+                    android:textColor="@color/text_main"
+                    android:textSize="14sp"
+                    bind:ignore="LabelFor" />
+
+            </androidx.appcompat.widget.Toolbar>
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout"

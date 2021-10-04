@@ -24,4 +24,6 @@
     <color name="yellow_accent">@color/ck_yellow700</color>
     <color name="yellow_ripple">@color/ck_yellow500_10</color>
 
+    <color name="search_bar_background">#F1F3F4</color>
+
 </resources>
