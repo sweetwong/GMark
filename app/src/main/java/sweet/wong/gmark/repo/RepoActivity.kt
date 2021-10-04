@@ -1,5 +1,6 @@
 package sweet.wong.gmark.repo
 
+import android.app.Activity
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
@@ -32,6 +33,7 @@ import sweet.wong.gmark.search.SearchActivity
 import sweet.wong.gmark.settings.SettingsActivity
 import sweet.wong.gmark.sp.SPUtils.settings
 import sweet.wong.gmark.utils.EventObserver
+import java.io.File
 import kotlin.math.min
 
 class RepoActivity : BaseActivity<ActivityRepoBinding>() {
@@ -44,6 +46,13 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
         if (result.resultCode == RESULT_OK) {
             // File has changed, now we force update
             viewModel.selectFile(viewModel.showingFile, true)
+        }
+    }
+
+    private val searchLauncher = registerForActivityResult(StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val path = result.data?.data?.toString() ?: return@registerForActivityResult
+            viewModel.selectFile(File(path))
         }
     }
 
@@ -83,7 +92,13 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
         supportActionBar?.title = title
 
         binding.tvUrl.setOnClickListener {
-            SearchActivity.start(this, binding.tvUrl, viewModel.repo.localPath, "")
+            SearchActivity.start(
+                this,
+                binding.tvUrl,
+                searchLauncher,
+                viewModel.repo.localPath,
+                ""
+            )
         }
     }
 

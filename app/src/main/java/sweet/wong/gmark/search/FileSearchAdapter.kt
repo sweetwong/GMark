@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import sweet.wong.gmark.R
 import sweet.wong.gmark.core.App
-import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.databinding.RecycleItemFileSearchBinding
 import sweet.wong.gmark.ext.getColorFromAttr
 import sweet.wong.gmark.ext.inflater
 import sweet.wong.gmark.utils.DefaultDiffUtilCallback
+import sweet.wong.gmark.utils.Event
 
 class FileSearchAdapter(
     private val activity: AppCompatActivity,
@@ -33,12 +33,6 @@ class FileSearchAdapter(
         private val color = App.app.getColorFromAttr(R.attr.colorPrimary)
 
         private var keywordObserver: Observer<String>? = null
-
-        init {
-            binding.textView.setOnClickListener {
-                toast("不错")
-            }
-        }
 
         fun bind(data: FileSearchResult) {
             keywordObserver?.let {
@@ -61,6 +55,10 @@ class FileSearchAdapter(
             }
             viewModel.keyword.observe(activity, observer)
             keywordObserver = observer
+
+            binding.textView.setOnClickListener {
+                viewModel.selectFileEvent.value = Event(data.file)
+            }
         }
 
     }

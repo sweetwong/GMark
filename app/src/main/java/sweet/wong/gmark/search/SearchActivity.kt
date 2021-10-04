@@ -2,13 +2,18 @@ package sweet.wong.gmark.search
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.widget.doOnTextChanged
+import com.blankj.utilcode.util.KeyboardUtils
 import sweet.wong.gmark.base.BaseActivity
+import sweet.wong.gmark.core.delay
 import sweet.wong.gmark.databinding.ActivitySearchBinding
+import sweet.wong.gmark.utils.EventObserver
 import sweet.wong.gmark.utils.SinglePost
 
 class SearchActivity : BaseActivity<ActivitySearchBinding>() {
@@ -20,6 +25,9 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.sharedElementEnterTransition.duration = 200
+        window.sharedElementReturnTransition.duration = 200
+
         val root = intent.getStringExtra(EXTRA_ROOT)
         val path = intent.getStringExtra(EXTRA_PATH)
         if (root == null || path == null) {
@@ -29,12 +37,16 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
 
         viewModel.init(root, path)
         binding.initView()
+
+        delay(500) {
+            KeyboardUtils.showSoftInput(binding.etUrl)
+        }
     }
 
     private fun ActivitySearchBinding.initView() {
         etUrl.transitionName = SHARED_ELEMENT_NAME
         etUrl.doOnTextChanged { text, _, _, _ ->
-            val textString = text?.toString().orEmpty()
+            val textString = text?.toString().orEmpty().trim()
             viewModel.keyword.value = textString
             singlePost.postDelayed(200) {
                 viewModel.searchFileDelayed(textString)
@@ -47,6 +59,12 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
         viewModel.fileSearchResult.observe(this@SearchActivity) {
             fileSearchAdapter.submitList(it.toMutableList())
         }
+
+        viewModel.selectFileEvent.observe(this@SearchActivity, EventObserver {
+            val intent = Intent().setData(Uri.parse(it.absolutePath))
+            setResult(Activity.RESULT_OK, intent)
+            finishAfterTransition()
+        })
     }
 
     companion object {
@@ -55,7 +73,13 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
         private const val EXTRA_ROOT = "extra_root"
         private const val EXTRA_PATH = "extra_path"
 
-        fun start(activity: Activity, view: View, root: String, path: String) {
+        fun start(
+            activity: Activity,
+            view: View,
+            launcher: ActivityResultLauncher<Intent>,
+            root: String,
+            path: String
+        ) {
             view.transitionName = SHARED_ELEMENT_NAME
 
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
@@ -68,10 +92,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
                 .putExtra(EXTRA_ROOT, root)
                 .putExtra(EXTRA_PATH, path)
 
-            activity.startActivity(
-                intent,
-                options.toBundle()
-            )
+            launcher.launch(intent, options)
         }
     }
 

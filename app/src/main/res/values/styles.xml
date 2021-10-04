@@ -5,7 +5,7 @@
         <item name="android:textColor">@color/text_main</item>
         <item name="hintTextColor">@color/text_sub</item>
         <item name="background">@color/ck_transparent</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="ToolbarStyle">
