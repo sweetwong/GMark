@@ -14,7 +14,7 @@
             android:id="@+id/et_url"
             style="@style/SearchTextStyle"
             android:background="@drawable/shape_search_background"
-            android:hint="搜索或输入网站"
+            android:hint="@string/search_hint"
             android:importantForAutofill="no"
             android:inputType="textUri"
             tools:ignore="UnusedAttribute" />

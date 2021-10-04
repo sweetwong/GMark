@@ -50,20 +50,22 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
             viewModel.keyword.value = textString
             singlePost.postDelayed(200) {
                 viewModel.searchFileDelayed(textString)
-                binding.rvSearchList.scrollToPosition(0)
             }
         }
 
         fileSearchAdapter = FileSearchAdapter(this@SearchActivity, viewModel)
         rvSearchList.adapter = fileSearchAdapter
         viewModel.fileSearchResult.observe(this@SearchActivity) {
-            fileSearchAdapter.submitList(it.toMutableList())
+            fileSearchAdapter.submitList(it.toMutableList()) {
+                binding.rvSearchList.scrollToPosition(0)
+            }
         }
 
         viewModel.selectFileEvent.observe(this@SearchActivity, EventObserver {
             val intent = Intent().setData(Uri.parse(it.absolutePath))
             setResult(Activity.RESULT_OK, intent)
-            finishAfterTransition()
+            finish()
+            overridePendingTransition(0, 0)
         })
     }
 

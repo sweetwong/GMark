@@ -37,4 +37,5 @@
     <string name="commit">提交</string>
     <string name="push">推送</string>
     <string name="create_new_file">新建文件</string>
+    <string name="search_hint">搜索本地文件或者网站</string>
 </resources>

@@ -22,6 +22,8 @@ class SearchViewModel : ViewModel() {
 
     fun searchFileDelayed(keyword: String) = viewModelScope.launch(Dispatchers.IO_CATCH) {
         if (keyword.isBlank()) {
+            fileSearchResult.postValue(emptyList())
+            this@SearchViewModel.keyword.postValue("")
             return@launch
         }
 

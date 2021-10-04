@@ -47,4 +47,5 @@
     <string name="commit">Commit</string>
     <string name="push">Push</string>
     <string name="create_new_file">Create new file</string>
+    <string name="search_hint">Search local files or websites</string>
 </resources>
