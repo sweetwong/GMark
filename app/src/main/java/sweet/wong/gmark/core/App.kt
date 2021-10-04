@@ -19,6 +19,8 @@ class App : Application() {
                 ThemeUtils.setTheme(activity)
             }
         })
+
+//        UETool.showUETMenu()
     }
 
     companion object {

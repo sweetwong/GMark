@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/et_url"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:background="@drawable/shape_search_background"
-        android:hint="搜索或输入网站"
-        android:importantForAutofill="no"
-        android:inputType="textUri"
-        android:paddingStart="16dp"
-        android:paddingTop="6dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="6dp"
-        android:textColor="@color/text_main"
-        android:textColorHint="@color/text_sub"
-        android:textSize="15sp"
-        tools:ignore="UnusedAttribute" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/ToolbarStyle"
+        app:contentInsetEnd="16dp">
+
+        <EditText
+            android:id="@+id/et_url"
+            style="@style/SearchTextStyle"
+            android:background="@drawable/shape_search_background"
+            android:hint="搜索或输入网站"
+            android:importantForAutofill="no"
+            android:inputType="textUri"
+            tools:ignore="UnusedAttribute" />
+
+    </androidx.appcompat.widget.Toolbar>
 
 </RelativeLayout>
