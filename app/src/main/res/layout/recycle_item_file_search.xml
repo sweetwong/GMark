@@ -8,9 +8,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?selectableItemBackground"
-        android:paddingStart="20dp"
+        android:paddingStart="26dp"
         android:paddingTop="8dp"
-        android:paddingEnd="20dp"
+        android:paddingEnd="26dp"
         android:paddingBottom="8dp"
         android:textColor="@color/text_main" />
 

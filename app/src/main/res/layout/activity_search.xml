@@ -27,6 +27,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
         android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/recycle_item_file_search" />
 
 </RelativeLayout>
