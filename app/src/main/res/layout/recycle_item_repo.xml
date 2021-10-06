@@ -15,6 +15,11 @@
         android:layout_height="80dp"
         android:background="?selectableItemBackground">
 
+        <sweet.wong.gmark.debug.PercentProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <TextView
             android:id="@+id/repo_name_text"
             android:layout_width="wrap_content"

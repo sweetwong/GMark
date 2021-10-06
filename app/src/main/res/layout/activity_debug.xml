@@ -3,23 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <sweet.wong.gmark.debug.PercentProgressBar
+        android:id="@+id/percent_progress"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height"
-        android:background="@color/white">
+        android:layout_height="50dp" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="https://www.google.com" />
+    <EditText
+        android:id="@+id/et_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp" />
 
-    </androidx.appcompat.widget.Toolbar>
-
-    <TextView
+    <Button
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="不错" />
+        android:text="开始" />
 
 </RelativeLayout>

@@ -123,4 +123,6 @@ dependencies {
     // UETool
     debugImplementation 'me.ele:uetool:1.2.9'
     releaseImplementation 'me.ele:uetool-no-op:1.2.9'
+    // Lottie
+    implementation 'com.airbnb.android:lottie:4.2.0'
 }

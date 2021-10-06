@@ -34,6 +34,8 @@ class RepoListAdapter(
             uiState.bind(lifecycleOwner) {
                 binding.state = uiState
                 binding.executePendingBindings()
+
+                binding.progressBar.setProgress(uiState.progress)
             }
 
             itemView.setOnLongClickListener { v ->

@@ -8,7 +8,7 @@ import sweet.wong.gmark.utils.UIState
  */
 class RepoUIState(val repo: Repo) : UIState() {
 
-    var progress = ""
+    var progress: Int = 0
 
     var statusText = ""
 

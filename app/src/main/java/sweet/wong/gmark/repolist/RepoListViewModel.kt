@@ -61,7 +61,7 @@ class RepoListViewModel : ViewModel() {
                 withContext(Dispatchers.IO) {
                     uiState.repo.state = Repo.STATE_SYNCING
                     uiState.statusText = "${result.title} ... (${result.percent}%)"
-                    uiState.progress = result.percent.toString()
+                    uiState.progress = result.percent
                 }
                 uiState.updateUI()
             }
