@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<sweet.wong.gmark.widget.NestedHorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clipChildren="false"
-    android:clipToPadding="false"
-    android:fillViewport="true"
-    android:overScrollMode="never"
     android:scrollbars="none">
 
     <TextView
@@ -19,4 +15,4 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="14sp" />
 
-</HorizontalScrollView>
+</sweet.wong.gmark.widget.NestedHorizontalScrollView>
