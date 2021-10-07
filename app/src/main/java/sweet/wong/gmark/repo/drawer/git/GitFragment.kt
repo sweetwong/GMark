@@ -14,6 +14,17 @@ class GitFragment : DrawerFragment<FragmentGitBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initViewBinding()
+        initDiffList()
+    }
+
+    private fun initViewBinding() {
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        viewModel.repo = repoViewModel.repo
+    }
+
+    private fun initDiffList() {
         adapter = DiffAdapter(viewModel, viewLifecycleOwner)
         binding.rvDiff.adapter = adapter
         binding.rvDiff.itemAnimator = null
@@ -24,7 +35,7 @@ class GitFragment : DrawerFragment<FragmentGitBinding>() {
 
         repoViewModel.onDrawerShow.observe(viewLifecycleOwner) { show ->
             if (show) {
-                viewModel.refreshDiffList(repoViewModel.rootFile)
+                viewModel.refreshDiffList()
             }
         }
     }

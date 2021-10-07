@@ -4,6 +4,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="sweet.wong.gmark.repo.drawer.git.GitViewModel" />
     </data>
 
     <LinearLayout
@@ -28,6 +31,7 @@
             android:autofillHints="no"
             android:background="@color/ck_transparent"
             android:gravity="top"
+            android:text="@={viewModel.commitMessage}"
             android:hint="@string/commit_message"
             android:inputType="textMultiLine"
             android:padding="12dp"
@@ -44,6 +48,7 @@
                 android:id="@+id/btn_commit"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
+                android:onClick="@{() -> viewModel.commit()}"
                 android:layout_height="wrap_content"
                 android:minWidth="100dp"
                 android:text="@string/commit" />
@@ -53,6 +58,7 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> viewModel.push()}"
                 android:minWidth="100dp"
                 android:text="@string/push" />
 

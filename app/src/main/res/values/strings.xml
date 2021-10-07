@@ -48,4 +48,6 @@
     <string name="push">Push</string>
     <string name="create_new_file">Create new file</string>
     <string name="search_hint">Search local files or websites</string>
+    <string name="pref_user_name">pref_user_name</string>
+    <string name="pref_user_email">pref_user_email</string>
 </resources>

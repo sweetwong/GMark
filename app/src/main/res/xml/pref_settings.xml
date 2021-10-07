@@ -44,14 +44,14 @@
 
     <EditTextPreference
         app:icon="@drawable/username"
-        app:key="user_name"
+        app:key="@string/pref_user_name"
         app:persistent="true"
         app:title="@string/user_name"
         app:useSimpleSummaryProvider="true" />
 
     <EditTextPreference
         app:icon="@drawable/password"
-        app:key="user_email"
+        app:key="@string/pref_user_email"
         app:persistent="true"
         app:title="@string/user_email"
         app:useSimpleSummaryProvider="true" />
