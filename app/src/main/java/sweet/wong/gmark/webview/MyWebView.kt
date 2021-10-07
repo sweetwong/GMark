@@ -15,6 +15,8 @@ class MyWebView @JvmOverloads constructor(
     private var newY = 0f
     private var newX = 0f
     private var firstMove = false
+    private var disallowParentScroll = false
+    private var clampedX = false
 
     /**
      * For a sliding event, only respond to one direction of sliding
@@ -26,6 +28,7 @@ class MyWebView @JvmOverloads constructor(
                 newX = event.x
                 newY = event.y
                 firstMove = true
+                clampedX = false
             }
             MotionEvent.ACTION_MOVE -> {
                 val oldX = newX
@@ -34,16 +37,26 @@ class MyWebView @JvmOverloads constructor(
                 newY = event.y
                 val moveX = abs(newX - oldX)
                 val moveY = abs(newY - oldY)
-                if (firstMove && moveY > moveX) {
+                if (firstMove && (moveY > moveX)) {
                     parent.requestDisallowInterceptTouchEvent(true)
+                    disallowParentScroll = true
+                }
+                if (!disallowParentScroll) {
+                    parent.requestDisallowInterceptTouchEvent(!clampedX)
                 }
                 firstMove = false
             }
-            MotionEvent.ACTION_UP -> {
+            else -> {
                 parent.requestDisallowInterceptTouchEvent(false)
+                disallowParentScroll = false
             }
         }
         return super.onTouchEvent(event)
+    }
+
+    override fun onOverScrolled(scrollX: Int, scrollY: Int, clampedX: Boolean, clampedY: Boolean) {
+        super.onOverScrolled(scrollX, scrollY, clampedX, clampedY)
+        this.clampedX = clampedX
     }
 
 }
