@@ -35,22 +35,24 @@ class RepoListViewModel : ViewModel() {
             }
 
             override fun onNext(p: Progress) {
-                uiState.repo.state = Repo.STATE_SYNCING
                 uiState.statusText = "${p.message} ${p.leftHint} ${p.rightHint}"
                 uiState.progress = p.progress
+                uiState.repo.state = Repo.STATE_SYNCING
                 uiState.updateUI()
             }
 
             override fun onError(e: Throwable) {
-                toast("Clone failed", e)
                 uiState.repo.state = Repo.STATE_FAILED
                 uiState.updateUI()
                 updateRepo(uiState.repo)
+
+                toast("Clone failed", e)
             }
 
             override fun onComplete() {
-                uiState.repo.state = Repo.STATE_SUCCESS
                 uiState.statusText = TimeUtils.getRelativeString()
+                uiState.progress = 0
+                uiState.repo.state = Repo.STATE_SUCCESS
                 uiState.updateUI()
                 updateRepo(uiState.repo)
             }
@@ -69,9 +71,10 @@ class RepoListViewModel : ViewModel() {
             }
 
             override fun onError(e: Throwable) {
-                toast("Pull failed", e)
                 uiState.updateUI()
                 updateRepo(uiState.repo)
+
+                toast("Pull failed", e)
             }
 
             override fun onComplete() {

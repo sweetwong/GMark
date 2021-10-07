@@ -5,9 +5,10 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.os.SystemClock
 import android.util.AttributeSet
 import android.view.View
-import android.view.animation.AccelerateInterpolator
+import android.view.animation.LinearInterpolator
 import sweet.wong.gmark.R
 import sweet.wong.gmark.core.App
 import sweet.wong.gmark.ext.getColorFromAttr
@@ -20,6 +21,7 @@ class PercentProgressBar @JvmOverloads constructor(
 
     private var animator: Animator? = null
     private var currentProgress: Float = 0f
+    private var lastSetProgressTime: Long = 0
 
     private val paint = Paint().apply {
         color = this@PercentProgressBar.color
@@ -33,28 +35,28 @@ class PercentProgressBar @JvmOverloads constructor(
         }
         animator?.cancel()
 
-        if (anim) {
+        val currentTime = SystemClock.uptimeMillis()
+
+        if (anim && progress > currentProgress && currentTime - lastSetProgressTime > 33) {
             val startProgress = currentProgress
             val diffProgress = newProgress - currentProgress
             animator = ValueAnimator.ofFloat(0f, 1f).apply {
-                duration = 200
-                interpolator = AccelerateInterpolator()
+                duration = 100
+                interpolator = LinearInterpolator()
                 addUpdateListener {
                     val animatedValue = it.animatedValue as Float
                     val progressAdd = diffProgress * animatedValue
                     currentProgress = startProgress + progressAdd
+                    invalidate()
                 }
             }
             animator?.start()
         } else {
             currentProgress = newProgress
+            invalidate()
         }
 
-        invalidate()
-    }
-
-    fun reset() {
-        setProgress(0, false)
+        lastSetProgressTime = currentTime
     }
 
     override fun onDraw(canvas: Canvas) {
