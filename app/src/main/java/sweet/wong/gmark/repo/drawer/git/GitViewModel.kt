@@ -5,17 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.eclipse.jgit.api.Git
-import org.eclipse.jgit.transport.SshTransport
-import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider
 import sweet.wong.gmark.R
 import sweet.wong.gmark.core.getString
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.ext.IO_CATCH
-import sweet.wong.gmark.git.SshSessionFactory
+import sweet.wong.gmark.git.setCredential
 import sweet.wong.gmark.sp.SPUtils
-import java.io.File
 
 class GitViewModel : ViewModel() {
 
@@ -25,12 +21,9 @@ class GitViewModel : ViewModel() {
 
     val commitMessage = MutableLiveData<String>()
 
-    private val git: Git
-        get() = Git.open(File(repo.localPath))
-
     fun refreshDiffList() = viewModelScope.launch(Dispatchers.IO_CATCH) {
         val uiStates = mutableListOf<DiffUIState>()
-        git.diff().call().forEach {
+        repo.git.diff().call().forEach {
             uiStates.add(DiffUIState(it))
         }
         diffUIStates.postValue(uiStates)
@@ -56,7 +49,7 @@ class GitViewModel : ViewModel() {
         }
 
         viewModelScope.launch(Dispatchers.IO_CATCH) {
-            val git = this@GitViewModel.git
+            val git = repo.git
             // Add all
             git.add()
                 .addFilepattern(".")
@@ -75,24 +68,10 @@ class GitViewModel : ViewModel() {
 
     fun push() {
         viewModelScope.launch(Dispatchers.IO_CATCH) {
-            val git = this@GitViewModel.git
+            val git = repo.git
 
             git.push()
-                // for SSH clone
-                .apply {
-                    repo.ssh?.let { ssh ->
-                        setTransportConfigCallback { transport ->
-                            (transport as? SshTransport)?.sshSessionFactory = SshSessionFactory(ssh)
-                        }
-                    }
-                }
-                // for HTTP clone
-                .apply {
-                    if (repo.username != null && repo.password != null)
-                        setCredentialsProvider(
-                            UsernamePasswordCredentialsProvider(repo.username, repo.password)
-                        )
-                }
+                .setCredential(repo)
                 .call()
 
             toast("Push success")

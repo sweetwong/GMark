@@ -3,6 +3,8 @@ package sweet.wong.gmark.data
 import android.os.Parcelable
 import androidx.room.*
 import kotlinx.parcelize.Parcelize
+import org.eclipse.jgit.api.Git
+import java.io.File
 
 @Entity
 @Parcelize
@@ -16,6 +18,9 @@ data class Repo(
     @ColumnInfo(name = "time") var time: Long = System.currentTimeMillis(),
     @ColumnInfo(name = "state") var state: Int = STATE_INIT,
 ) : Parcelable {
+
+    val git: Git
+        get() = Git.open(File(localPath))
 
     companion object {
         const val STATE_INIT = 0

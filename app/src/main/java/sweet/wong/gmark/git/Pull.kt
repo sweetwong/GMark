@@ -18,8 +18,16 @@ object Pull {
             val remotes: Set<String> = config.getSubsections("remote")
             val remote = remotes.first()
             git.pull()
-                .setProgressMonitor(RepoProgressMonitor(this@callbackFlow))
+                .setProgressMonitor(BasicProgressMonitor {
+                    trySend(
+                        GitResult.Progress(
+                            "${it.message} ${it.leftHint} ${it.rightHint}",
+                            it.progress
+                        )
+                    )
+                })
                 .setRemote(remote)
+                .setCredential(repo)
                 .call()
         } catch (e: Exception) {
             e.printStackTrace()
