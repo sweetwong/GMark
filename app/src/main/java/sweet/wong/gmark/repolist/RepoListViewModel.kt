@@ -30,14 +30,17 @@ class RepoListViewModel : ViewModel() {
     val repoSelectEvent = MutableLiveData<Event<Repo>>()
 
     private fun clone(uiState: RepoUIState) = viewModelScope.launch {
+        uiState.repo.state = Repo.STATE_SYNCING
+        uiState.updateUI()
+
         Clone.start(uiState.repo).subscribe(object : Observer<Progress> {
             override fun onSubscribe(d: Disposable) {
             }
 
             override fun onNext(p: Progress) {
-                uiState.statusText = "${p.message} ${p.leftHint} ${p.rightHint}"
-                uiState.progress = p.progress
                 uiState.repo.state = Repo.STATE_SYNCING
+                uiState.statusText = p.combinedMessage
+                uiState.progress = p.progress
                 uiState.updateUI()
             }
 
@@ -50,9 +53,9 @@ class RepoListViewModel : ViewModel() {
             }
 
             override fun onComplete() {
+                uiState.repo.state = Repo.STATE_SUCCESS
                 uiState.statusText = TimeUtils.getRelativeString()
                 uiState.progress = 0
-                uiState.repo.state = Repo.STATE_SUCCESS
                 uiState.updateUI()
                 updateRepo(uiState.repo)
             }
@@ -65,7 +68,7 @@ class RepoListViewModel : ViewModel() {
             }
 
             override fun onNext(p: Progress) {
-                uiState.statusText = "${p.message} ${p.leftHint} ${p.rightHint}"
+                uiState.statusText = p.combinedMessage
                 uiState.progress = p.progress
                 uiState.updateUI()
             }

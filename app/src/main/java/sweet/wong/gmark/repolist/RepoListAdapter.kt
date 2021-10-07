@@ -8,6 +8,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import sweet.wong.gmark.R
+import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.databinding.RecycleItemRepoBinding
 import sweet.wong.gmark.ext.inflater
 import sweet.wong.gmark.utils.DefaultDiffUtilCallback
@@ -33,9 +34,16 @@ class RepoListAdapter(
         fun bind(viewModel: RepoListViewModel, uiState: RepoUIState) {
             uiState.bind(lifecycleOwner) {
                 binding.state = uiState
+                binding.viewModel = viewModel
                 binding.executePendingBindings()
 
                 binding.progressBar.setProgress(uiState.progress)
+
+                if (uiState.repo.state == Repo.STATE_SYNCING) {
+                    binding.btnSync.start()
+                } else {
+                    binding.btnSync.stop()
+                }
             }
 
             itemView.setOnLongClickListener { v ->
@@ -45,10 +53,6 @@ class RepoListAdapter(
 
             itemView.setOnClickListener {
                 viewModel.repoSelectEvent.value = Event(uiState.repo)
-            }
-
-            binding.btnSync.setOnClickListener {
-                viewModel.pull(uiState)
             }
         }
 

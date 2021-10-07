@@ -3,10 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <sweet.wong.gmark.debug.PercentProgressBar
+    <sweet.wong.gmark.widget.PercentProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp" />
+
+    <sweet.wong.gmark.widget.SyncButton
+        android:id="@+id/sync_button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp" />
 
     <TextView
         android:id="@+id/tv_progress"

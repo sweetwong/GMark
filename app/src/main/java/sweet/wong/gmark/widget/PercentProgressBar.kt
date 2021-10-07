@@ -1,4 +1,4 @@
-package sweet.wong.gmark.debug
+package sweet.wong.gmark.widget
 
 import android.animation.Animator
 import android.animation.ValueAnimator

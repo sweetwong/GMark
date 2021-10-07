@@ -47,4 +47,7 @@ data class Progress(
     val leftHint: String?,
     val rightHint: String?,
     val progress: Int
-)
+) {
+    val combinedMessage: String
+        get() = "$message: $leftHint ($rightHint)"
+}
