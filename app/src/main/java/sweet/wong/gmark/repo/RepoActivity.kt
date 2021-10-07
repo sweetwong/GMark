@@ -96,7 +96,7 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
                 this,
                 binding.tvUrl,
                 searchLauncher,
-                viewModel.repo.localPath,
+                viewModel.repo.root,
                 ""
             )
         }

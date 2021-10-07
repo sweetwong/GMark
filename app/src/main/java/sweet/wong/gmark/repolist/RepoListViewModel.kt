@@ -100,7 +100,7 @@ class RepoListViewModel : ViewModel() {
                 DaoManager.repoDao.delete(uiState.repo)
 
                 // Delete files
-                File(uiState.repo.localPath).takeIf { it.isDirectory }?.deleteRecursively()
+                File(uiState.repo.root).takeIf { it.isDirectory }?.deleteRecursively()
             }
             refreshRepoList()
         } catch (e: Exception) {

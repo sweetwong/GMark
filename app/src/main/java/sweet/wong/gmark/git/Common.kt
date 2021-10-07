@@ -16,4 +16,4 @@ object Common {
 }
 
 val Repo.git: Git
-    get() = Git.open(File(localPath))
+    get() = Git.open(File(root))

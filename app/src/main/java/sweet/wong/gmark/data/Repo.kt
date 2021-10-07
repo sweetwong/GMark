@@ -10,7 +10,7 @@ import java.io.File
 @Parcelize
 data class Repo(
     @PrimaryKey @ColumnInfo(name = "url") var url: String,
-    @ColumnInfo(name = "local_path") var localPath: String,
+    @ColumnInfo(name = "root") var root: String,
     @ColumnInfo(name = "name") var name: String,
     @ColumnInfo(name = "username") var username: String?,
     @ColumnInfo(name = "password") var password: String?,
@@ -20,7 +20,7 @@ data class Repo(
 ) : Parcelable {
 
     val git: Git
-        get() = Git.open(File(localPath))
+        get() = Git.open(File(root))
 
     companion object {
         const val STATE_INIT = 0

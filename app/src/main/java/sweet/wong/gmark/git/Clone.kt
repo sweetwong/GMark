@@ -12,7 +12,7 @@ object Clone {
     fun start(repo: Repo): Flow<GitResult> = callbackFlow {
         try {
             // Delete old files
-            val rootFile = File(repo.localPath)
+            val rootFile = File(repo.root)
             if (rootFile.isDirectory) {
                 rootFile.deleteRecursively()
             }

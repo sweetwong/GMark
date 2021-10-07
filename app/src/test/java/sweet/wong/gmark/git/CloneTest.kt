@@ -8,12 +8,12 @@ import java.io.File
 
 class CloneTest {
 
-    private val localPath = "D:\\Project\\Mine\\GMark\\gittest"
+    private val root = "D:\\Project\\Mine\\GMark\\gittest"
 
     @Test
     fun delete() {
         // Delete if exists
-        val file = File(localPath)
+        val file = File(root)
         if (file.exists() && file.isDirectory) {
             file.deleteRecursively()
         }
@@ -24,7 +24,7 @@ class CloneTest {
         // Start clone
         val repo = Repo(
             url = "https://github.com/sweetwong/GMark.git",
-            localPath = localPath,
+            root = root,
             name = "Gmark",
             username = null,
             password = null,
@@ -41,7 +41,7 @@ class CloneTest {
         // Start clone
         val repo = Repo(
             url = "https://github.com/sweetwong/Android-Interview-QA.git",
-            localPath = localPath,
+            root = root,
             name = "Android-Interview-QA",
             username = "Add token here",
             password = "",

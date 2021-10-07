@@ -66,7 +66,7 @@ class RepoViewModel : ViewModel() {
         // 3: Ensure repo has downloaded successfully
         if (repo.state != Repo.STATE_SUCCESS) return false
         // 4: Ensure local directory exists
-        rootFile = File(repo.localPath).apply { if (!isDirectory) return false }
+        rootFile = File(repo.root).apply { if (!isDirectory) return false }
 
         // Now we init success
         this.repo = repo
