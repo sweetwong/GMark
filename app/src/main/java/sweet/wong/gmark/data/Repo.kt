@@ -22,6 +22,9 @@ data class Repo(
     val git: Git
         get() = Git.open(File(root))
 
+    val rootFile: File
+        get() = File(root)
+
     companion object {
         const val STATE_INIT = 0
         const val STATE_SYNCING = 1

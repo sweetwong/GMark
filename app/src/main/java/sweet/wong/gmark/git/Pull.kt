@@ -1,7 +1,8 @@
 package sweet.wong.gmark.git
 
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.callbackFlow
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import sweet.wong.gmark.data.Repo
 
 /**
@@ -11,29 +12,19 @@ import sweet.wong.gmark.data.Repo
  */
 object Pull {
 
-    fun start(repo: Repo) = callbackFlow {
-        try {
-            val git = repo.git
-            val config = git.repository.config
-            val remotes: Set<String> = config.getSubsections("remote")
-            val remote = remotes.first()
-            git.pull()
-                .setProgressMonitor(BasicProgressMonitor {
-                    trySend(
-                        GitResult.Progress(
-                            "${it.message} ${it.leftHint} ${it.rightHint}",
-                            it.progress
-                        )
-                    )
-                })
-                .setRemote(remote)
-                .setCredential(repo)
-                .call()
-        } catch (e: Exception) {
-            e.printStackTrace()
-            trySend(GitResult.Failure(e))
-        }
-        awaitClose()
+    fun start(repo: Repo): Observable<Progress> = Observable.create<Progress> { emitter ->
+        val git = repo.git
+        val config = git.repository.config
+        val remotes: Set<String> = config.getSubsections("remote")
+        val remote = remotes.first()
+        git.pull()
+            .setProgressMonitor(BasicProgressMonitor { progress -> emitter.onNext(progress) })
+            .setRemote(remote)
+            .setCredential(repo)
+            .call()
+        emitter.onComplete()
     }
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeOn(Schedulers.io())
 
 }

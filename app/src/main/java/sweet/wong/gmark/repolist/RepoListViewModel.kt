@@ -3,16 +3,17 @@ package sweet.wong.gmark.repolist
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import io.reactivex.rxjava3.core.Observer
+import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.DaoManager
 import sweet.wong.gmark.data.Repo
+import sweet.wong.gmark.ext.IO_CATCH
 import sweet.wong.gmark.git.Clone
-import sweet.wong.gmark.git.GitResult
+import sweet.wong.gmark.git.Progress
 import sweet.wong.gmark.git.Pull
 import sweet.wong.gmark.utils.Event
 import sweet.wong.gmark.utils.NonNullLiveData
@@ -29,42 +30,61 @@ class RepoListViewModel : ViewModel() {
     val repoSelectEvent = MutableLiveData<Event<Repo>>()
 
     private fun clone(uiState: RepoUIState) = viewModelScope.launch {
-        Clone.start(uiState.repo).flowOn(Dispatchers.IO).collect { result ->
-            updateUI(uiState, result)
-        }
+        Clone.start(uiState.repo).subscribe(object : Observer<Progress> {
+            override fun onSubscribe(d: Disposable) {
+            }
+
+            override fun onNext(p: Progress) {
+                uiState.repo.state = Repo.STATE_SYNCING
+                uiState.statusText = "${p.message} ${p.leftHint} ${p.rightHint}"
+                uiState.progress = p.progress
+                uiState.updateUI()
+            }
+
+            override fun onError(e: Throwable) {
+                toast("Clone failed", e)
+                uiState.repo.state = Repo.STATE_FAILED
+                uiState.updateUI()
+                updateRepo(uiState.repo)
+            }
+
+            override fun onComplete() {
+                uiState.repo.state = Repo.STATE_SUCCESS
+                uiState.statusText = TimeUtils.getRelativeString()
+                uiState.updateUI()
+                updateRepo(uiState.repo)
+            }
+        })
     }
 
     fun pull(uiState: RepoUIState) = viewModelScope.launch {
-        Pull.start(uiState.repo).flowOn(Dispatchers.IO).collect { result ->
-            updateUI(uiState, result)
-        }
+        Pull.start(uiState.repo).subscribe(object : Observer<Progress> {
+            override fun onSubscribe(d: Disposable) {
+            }
+
+            override fun onNext(p: Progress) {
+                uiState.statusText = "${p.message} ${p.leftHint} ${p.rightHint}"
+                uiState.progress = p.progress
+                uiState.updateUI()
+            }
+
+            override fun onError(e: Throwable) {
+                toast("Pull failed", e)
+                uiState.updateUI()
+                updateRepo(uiState.repo)
+            }
+
+            override fun onComplete() {
+                uiState.statusText = TimeUtils.getRelativeString()
+                uiState.updateUI()
+                updateRepo(uiState.repo)
+            }
+        })
     }
 
-    private suspend fun updateUI(uiState: RepoUIState, result: GitResult) {
-        when (result) {
-            is GitResult.Success -> {
-                withContext(Dispatchers.IO) {
-                    uiState.repo.state = Repo.STATE_SUCCESS
-                    uiState.statusText = TimeUtils.getRelativeString()
-                    DaoManager.repoDao.update(uiState.repo)
-                }
-                uiState.updateUI()
-            }
-            is GitResult.Failure -> {
-                toast("Clone failed", result.e)
-                withContext(Dispatchers.IO) {
-                    uiState.repo.state = Repo.STATE_FAILED
-                    DaoManager.repoDao.update(uiState.repo)
-                }
-            }
-            is GitResult.Progress -> {
-                withContext(Dispatchers.IO) {
-                    uiState.repo.state = Repo.STATE_SYNCING
-                    uiState.statusText = "${result.title} ... (${result.percent}%)"
-                    uiState.progress = result.percent
-                }
-                uiState.updateUI()
-            }
+    private fun updateRepo(repo: Repo) {
+        viewModelScope.launch(Dispatchers.IO_CATCH) {
+            DaoManager.repoDao.update(repo)
         }
     }
 
