@@ -8,10 +8,13 @@ import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import sweet.wong.gmark.R
+import sweet.wong.gmark.core.getString
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.DaoManager
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.ext.IO_CATCH
+import sweet.wong.gmark.ext.MAIN_CATCH
 import sweet.wong.gmark.git.Clone
 import sweet.wong.gmark.git.Progress
 import sweet.wong.gmark.git.Pull
@@ -30,7 +33,7 @@ class RepoListViewModel : ViewModel() {
     val repoSelectEvent = MutableLiveData<Event<Repo>>()
 
     private fun clone(uiState: RepoUIState) = viewModelScope.launch {
-        uiState.repo.state = Repo.STATE_SYNCING
+        uiState.state = Repo.STATE_SYNCING
         uiState.updateUI()
 
         Clone.start(uiState.repo).subscribe(object : Observer<Progress> {
@@ -38,25 +41,29 @@ class RepoListViewModel : ViewModel() {
             }
 
             override fun onNext(p: Progress) {
-                uiState.repo.state = Repo.STATE_SYNCING
-                uiState.statusText = p.combinedMessage
-                uiState.progress = p.progress
-                uiState.updateUI()
+                uiState.updateUI {
+                    state = Repo.STATE_SYNCING
+                    summary = p.combinedMessage
+                    progress = p.progress
+                }
             }
 
             override fun onError(e: Throwable) {
-                uiState.repo.state = Repo.STATE_FAILED
-                uiState.updateUI()
+                uiState.updateUI {
+                    state = Repo.STATE_FAILED
+                    summary = getString(R.string.summary_clone_failed)
+                    progress = 0
+                }
                 updateRepo(uiState.repo)
-
                 toast("Clone failed", e)
             }
 
             override fun onComplete() {
-                uiState.repo.state = Repo.STATE_SUCCESS
-                uiState.statusText = TimeUtils.getRelativeString()
-                uiState.progress = 0
-                uiState.updateUI()
+                uiState.updateUI {
+                    state = Repo.STATE_SUCCESS
+                    summary = TimeUtils.getRelativeString()
+                    progress = 0
+                }
                 updateRepo(uiState.repo)
             }
         })
@@ -68,21 +75,26 @@ class RepoListViewModel : ViewModel() {
             }
 
             override fun onNext(p: Progress) {
-                uiState.statusText = p.combinedMessage
-                uiState.progress = p.progress
-                uiState.updateUI()
+                uiState.updateUI {
+                    summary = p.combinedMessage
+                    progress = p.progress
+                }
             }
 
             override fun onError(e: Throwable) {
-                uiState.updateUI()
+                uiState.updateUI {
+                    summary = getString(R.string.summary_pull_failed)
+                    progress = 0
+                }
                 updateRepo(uiState.repo)
-
                 toast("Pull failed", e)
             }
 
             override fun onComplete() {
-                uiState.statusText = TimeUtils.getRelativeString()
-                uiState.updateUI()
+                uiState.updateUI {
+                    summary = TimeUtils.getRelativeString()
+                    progress = 0
+                }
                 updateRepo(uiState.repo)
             }
         })
@@ -95,44 +107,38 @@ class RepoListViewModel : ViewModel() {
     }
 
     // FIXME: 2021/9/2 这里刷新可能会导致丢失UI状态
-    fun refreshRepoList() = viewModelScope.launch {
-        try {
-            val repos = withContext(Dispatchers.IO) { DaoManager.repoDao.getAll() }
-            val repoUtiStatesValue = mutableListOf<RepoUIState>()
-            repos.forEach { repo ->
-                val uiState = RepoUIState(repo)
-                repoUtiStatesValue.add(uiState)
-                if (uiState.repo.state == Repo.STATE_INIT) {
-                    uiState.statusText = "Preparing clone ..."
-                    uiState.updateUI()
+    fun refreshRepoList() = viewModelScope.launch(Dispatchers.MAIN_CATCH) {
+        val repos = withContext(Dispatchers.IO) { DaoManager.repoDao.getAll() }
+        val repoUIStates = mutableListOf<RepoUIState>()
+        repos.forEach { repo ->
+            val uiState = RepoUIState(repo)
+            repoUIStates.add(uiState)
+            when (uiState.state) {
+                Repo.STATE_INIT -> {
+                    uiState.summary = getString(R.string.summary_prepare_clone)
                     clone(uiState)
-                } else if (uiState.repo.state == Repo.STATE_SUCCESS) {
-                    uiState.statusText = TimeUtils.getRelativeString(uiState.repo.time)
-                    uiState.updateUI()
+                }
+                Repo.STATE_SUCCESS -> {
+                    uiState.summary = TimeUtils.getRelativeString(uiState.repo.time)
+                }
+                Repo.STATE_FAILED -> {
+                    uiState.summary = getString(R.string.summary_clone_failed)
                 }
             }
-            repoUIStates.value = repoUtiStatesValue
-        } catch (e: Exception) {
-            e.printStackTrace()
-            toast("Refresh repo list failed", e)
         }
+        this@RepoListViewModel.repoUIStates.value = repoUIStates
     }
 
 
-    fun deleteRepo(uiState: RepoUIState) = viewModelScope.launch {
-        try {
-            withContext(Dispatchers.IO) {
-                // Delete sql
-                DaoManager.repoDao.delete(uiState.repo)
+    fun deleteRepo(uiState: RepoUIState) = viewModelScope.launch(Dispatchers.MAIN_CATCH) {
+        withContext(Dispatchers.IO) {
+            // Delete sql
+            DaoManager.repoDao.delete(uiState.repo)
 
-                // Delete files
-                File(uiState.repo.root).takeIf { it.isDirectory }?.deleteRecursively()
-            }
-            refreshRepoList()
-        } catch (e: Exception) {
-            e.printStackTrace()
-            toast("Delete repo failed", e)
+            // Delete files
+            File(uiState.repo.root).takeIf { it.isDirectory }?.deleteRecursively()
         }
+        refreshRepoList()
     }
 
 }

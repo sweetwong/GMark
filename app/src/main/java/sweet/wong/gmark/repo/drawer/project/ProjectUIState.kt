@@ -17,7 +17,7 @@ data class ProjectUIState(
     val rootFile: File,
     val isNavigateBack: Boolean = false,
     var isEditing: Boolean = false
-) : UIState() {
+) : UIState<ProjectUIState>() {
 
     var name: String = if (isNavigateBack) ".." else drawerFile.name
 

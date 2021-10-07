@@ -41,7 +41,7 @@
             android:id="@+id/tip_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{state.statusText}"
+            android:text="@{state.summary}"
             android:textColor="@color/text_sub"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/repo_name_text"

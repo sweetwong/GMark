@@ -50,4 +50,7 @@
     <string name="search_hint">Search local files or websites</string>
     <string name="pref_user_name">pref_user_name</string>
     <string name="pref_user_email">pref_user_email</string>
+    <string name="summary_clone_failed">Clone failed, please click sync button to restart</string>
+    <string name="summary_pull_failed">Pull failed, please click sync button to restart</string>
+    <string name="summary_prepare_clone">Preparing clone ...</string>
 </resources>
