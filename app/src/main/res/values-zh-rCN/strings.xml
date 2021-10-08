@@ -38,4 +38,7 @@
     <string name="push">推送</string>
     <string name="create_new_file">新建文件</string>
     <string name="search_hint">搜索本地文件或者网站</string>
+    <string name="summary_clone_failed">克隆失败，请点击同步按钮重新开始</string>
+    <string name="summary_pull_failed">拉取失败，请点击同步按钮重新开始</string>
+    <string name="summary_prepare_clone">准备克隆..</string>
 </resources>

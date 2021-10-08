@@ -6,6 +6,16 @@
         app:title="General" />
 
     <ListPreference
+        app:defaultValue="english"
+        app:entries="@array/language_texts"
+        app:entryValues="@array/language_values"
+        app:icon="@drawable/language"
+        app:key="@string/pref_language"
+        app:persistent="true"
+        app:title="@string/language"
+        app:useSimpleSummaryProvider="true" />
+
+    <ListPreference
         app:defaultValue="blue"
         app:entries="@array/theme_color_texts"
         app:entryValues="@array/theme_color_values"

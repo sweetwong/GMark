@@ -7,6 +7,7 @@ import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.GsonUtils
+import com.blankj.utilcode.util.LanguageUtils
 import com.blankj.utilcode.util.RegexUtils
 import com.google.firebase.auth.OAuthCredential
 import com.google.firebase.auth.OAuthProvider
@@ -18,11 +19,25 @@ import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.GithubAuthData
 import sweet.wong.gmark.sp.SPConstant
 import sweet.wong.gmark.sp.SPUtils
+import java.util.*
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.pref_settings, rootKey)
+
+        val prefLanguage = findPreference<ListPreference>(getString(R.string.pref_language))
+        prefLanguage?.setOnPreferenceChangeListener { preference, newValue ->
+            when (newValue) {
+                "english" -> {
+                    LanguageUtils.applyLanguage(Locale.ENGLISH)
+                }
+                "chinese" -> {
+                    LanguageUtils.applyLanguage(Locale.CHINESE)
+                }
+            }
+            true
+        }
 
         val prefTextSize = findPreference<EditTextPreference>(getString(R.string.pref_text_size))
         prefTextSize?.setOnBindEditTextListener {

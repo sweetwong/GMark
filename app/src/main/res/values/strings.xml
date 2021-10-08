@@ -48,9 +48,10 @@
     <string name="push">Push</string>
     <string name="create_new_file">Create new file</string>
     <string name="search_hint">Search local files or websites</string>
-    <string name="pref_user_name">pref_user_name</string>
-    <string name="pref_user_email">pref_user_email</string>
+    <string name="pref_user_name" translatable="false">pref_user_name</string>
+    <string name="pref_user_email" translatable="false">pref_user_email</string>
     <string name="summary_clone_failed">Clone failed, please click sync button to restart</string>
     <string name="summary_pull_failed">Pull failed, please click sync button to restart</string>
     <string name="summary_prepare_clone">Preparing clone ...</string>
+    <string name="pref_language" translatable="false">pref_language</string>
 </resources>
