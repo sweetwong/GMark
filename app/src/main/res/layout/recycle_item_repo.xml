@@ -22,7 +22,8 @@
         <sweet.wong.gmark.widget.PercentProgressBar
             android:id="@+id/progress_bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            app:progress="@{state.progress}" />
 
         <TextView
             android:id="@+id/repo_name_text"

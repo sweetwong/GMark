@@ -22,6 +22,7 @@ class GitFragment : DrawerFragment<FragmentGitBinding>() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         viewModel.repo = repoViewModel.repo
+        viewModel.repoViewModel = repoViewModel
     }
 
     private fun initDiffList() {

@@ -9,6 +9,8 @@ import android.os.SystemClock
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.LinearInterpolator
+import androidx.core.content.res.use
+import androidx.databinding.BindingAdapter
 import sweet.wong.gmark.R
 import sweet.wong.gmark.core.App
 import sweet.wong.gmark.ext.getColorFromAttr
@@ -17,15 +19,25 @@ class PercentProgressBar @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    private var color: Int = App.app.getColorFromAttr(R.attr.colorRipple)
+    private var defaultColor: Int = App.app.getColorFromAttr(R.attr.colorRipple)
 
     private var animator: Animator? = null
     private var currentProgress: Float = 0f
     private var lastSetProgressTime: Long = 0
 
     private val paint = Paint().apply {
-        color = this@PercentProgressBar.color
         isAntiAlias = true
+    }
+
+    init {
+        context.obtainStyledAttributes(attrs, R.styleable.PercentProgressBar).use { a ->
+            val color = a.getColor(R.styleable.PercentProgressBar_color, 0)
+            if (color != 0) {
+                paint.color = color
+            } else {
+                paint.color = defaultColor
+            }
+        }
     }
 
     fun setProgress(progress: Int, anim: Boolean = true) {
@@ -68,6 +80,16 @@ class PercentProgressBar @JvmOverloads constructor(
             height.toFloat(),
             paint
         )
+    }
+
+    companion object {
+
+        @JvmStatic
+        @BindingAdapter("progress")
+        fun PercentProgressBar.progress(progress: Int) {
+            setProgress(progress)
+        }
+
     }
 
 }

@@ -49,6 +49,8 @@ class RepoViewModel : ViewModel() {
 
     val onTabReselect = MutableLiveData<Unit>()
 
+    val loadingUIState = NonNullLiveData(LoadingUIState())
+
     /**
      * Current Repository, this data is get from argument
      */
@@ -194,5 +196,11 @@ class RepoViewModel : ViewModel() {
         this.pages.notify()
         return success
     }
+
+    data class LoadingUIState(
+        var visible: Boolean = false,
+        var progress: Int = 0,
+        var text: CharSequence? = null
+    )
 
 }

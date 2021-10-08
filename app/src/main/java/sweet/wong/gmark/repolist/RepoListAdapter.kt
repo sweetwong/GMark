@@ -37,8 +37,6 @@ class RepoListAdapter(
                 binding.viewModel = viewModel
                 binding.executePendingBindings()
 
-                binding.progressBar.setProgress(uiState.progress)
-
                 if (uiState.repo.state == Repo.STATE_SYNCING) {
                     binding.btnSync.start()
                 } else {

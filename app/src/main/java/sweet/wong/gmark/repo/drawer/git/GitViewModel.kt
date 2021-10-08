@@ -4,18 +4,25 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import sweet.wong.gmark.R
 import sweet.wong.gmark.core.getString
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.ext.IO_CATCH
+import sweet.wong.gmark.ext.update
+import sweet.wong.gmark.git.BasicProgressMonitor
 import sweet.wong.gmark.git.setCredential
+import sweet.wong.gmark.repo.RepoViewModel
 import sweet.wong.gmark.sp.SPUtils
+import sweet.wong.gmark.utils.Event
 
 class GitViewModel : ViewModel() {
 
     lateinit var repo: Repo
+
+    lateinit var repoViewModel: RepoViewModel
 
     val diffUIStates = MutableLiveData<List<DiffUIState>>()
 
@@ -68,13 +75,30 @@ class GitViewModel : ViewModel() {
 
     fun push() {
         viewModelScope.launch(Dispatchers.IO_CATCH) {
-            val git = repo.git
+            try {
+                repoViewModel.showDrawer.postValue(Event(false))
+                repoViewModel.loadingUIState.update {
+                    visible = true
+                }
 
-            git.push()
-                .setCredential(repo)
-                .call()
+                val git = repo.git
+                git.push()
+                    .setProgressMonitor(BasicProgressMonitor { p ->
+                        repoViewModel.loadingUIState.update {
+                            text = p.combinedMessage
+                            progress = p.progress
+                        }
+                    })
+                    .setCredential(repo)
+                    .call()
 
-            toast("Push success")
+                toast("Push Success")
+            } finally {
+                delay(2000)
+                repoViewModel.loadingUIState.update {
+                    visible = false
+                }
+            }
         }
     }
 

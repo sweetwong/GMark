@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="sweet.wong.gmark.repo.RepoViewModel" />
@@ -43,11 +45,37 @@
                 app:tabMode="scrollable"
                 app:tabRippleColor="@color/ck_transparent" />
 
+            <FrameLayout
+                android:id="@+id/fl_loading"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_below="@+id/tab_layout"
+                android:visibility="@{viewModel.loadingUIState.visible ? View.VISIBLE : View.GONE}">
+
+                <sweet.wong.gmark.widget.PercentProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?colorRipple"
+                    app:color="?colorPrimary"
+                    app:progress="@{viewModel.loadingUIState.progress}" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="0dp"
+                    android:text="@{viewModel.loadingUIState.text}"
+                    android:textColor="@color/text_main"
+                    android:textSize="14sp" />
+
+            </FrameLayout>
+
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/tab_layout" />
+                android:layout_below="@+id/fl_loading" />
 
         </RelativeLayout>
 
