@@ -27,13 +27,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.pref_settings, rootKey)
 
         val prefLanguage = findPreference<ListPreference>(getString(R.string.pref_language))
-        prefLanguage?.setOnPreferenceChangeListener { preference, newValue ->
+        prefLanguage?.setOnPreferenceChangeListener { _, newValue ->
             when (newValue) {
+                "system_language" -> {
+                    LanguageUtils.applySystemLanguage(false)
+                }
                 "english" -> {
-                    LanguageUtils.applyLanguage(Locale.ENGLISH)
+                    LanguageUtils.applyLanguage(Locale.ENGLISH, false)
                 }
                 "chinese" -> {
-                    LanguageUtils.applyLanguage(Locale.CHINESE)
+                    LanguageUtils.applyLanguage(Locale.CHINESE, false)
                 }
             }
             true

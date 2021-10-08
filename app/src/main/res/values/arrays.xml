@@ -3,12 +3,14 @@
 
     <!-- Used for SP -->
     <string-array name="language_values">
+        <item>system_language</item>
         <item>english</item>
         <item>chinese</item>
     </string-array>
 
     <!-- Used for showing -->
     <string-array name="language_texts">
+        <item>System Language</item>
         <item>English</item>
         <item>Chinese</item>
     </string-array>

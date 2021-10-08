@@ -2,6 +2,7 @@
 <resources>
 
     <string-array name="language_texts">
+        <item>系统语言</item>
         <item>英语</item>
         <item>中文</item>
     </string-array>
