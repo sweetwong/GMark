@@ -16,11 +16,8 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbar_height"
-            android:background="@color/white"
-            app:title="@{viewModel.toolbarTitle}"
-            tools:title="README.md" />
+            style="@style/ToolbarStyle"
+            app:title="@{viewModel.toolbarTitle}" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"

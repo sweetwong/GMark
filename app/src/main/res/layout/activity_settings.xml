@@ -12,13 +12,11 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:background="@color/white"
+            style="@style/ToolbarStyle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="Settings" />
+            app:title="@string/settings" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/settings_container"

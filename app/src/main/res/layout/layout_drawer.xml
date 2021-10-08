@@ -16,8 +16,7 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/drawer_toolbar"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/toolbar_height"
+            style="@style/ToolbarStyle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
