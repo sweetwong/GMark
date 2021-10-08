@@ -148,32 +148,21 @@ class RepoViewModel : ViewModel() {
         try {
             val pages = pages.value
 
-            pages.find { it.file == file }
-                ?.let { existingPage ->
-                    val position = pages.indexOf(existingPage)
-                    currentPosition = position
-                    this@RepoViewModel.pages.notify()
+            val existingPage = pages.find { it.file == file }
+            if (existingPage != null) {
+                val position = pages.indexOf(existingPage)
+                currentPosition = position
+                this@RepoViewModel.pages.notify()
 
-                    withContext(Dispatchers.IO) {
-                        DaoManager.getPageDao(repo).apply {
-                            deleteByPath(existingPage.path)
-                            insertAll(existingPage)
-                        }
-                    }
-                }
-                ?: apply {
-                    // Add new file
-                    val newPage = Page(file.absolutePath)
-                    pages.add(++currentPosition, newPage)
-                    this@RepoViewModel.pages.notify()
+                insertPage(existingPage)
+            } else {
+                // Add new file
+                val newPage = Page(file.absolutePath)
+                pages.add(++currentPosition, newPage)
+                this@RepoViewModel.pages.notify()
 
-                    withContext(Dispatchers.IO) {
-                        DaoManager.getPageDao(repo).apply {
-                            deleteByPath(newPage.path)
-                            insertAll(newPage)
-                        }
-                    }
-                }
+                insertPage(newPage)
+            }
 
             // Close and refresh drawer
             showDrawer.value = Event(false)
@@ -181,6 +170,15 @@ class RepoViewModel : ViewModel() {
         } catch (e: Exception) {
             e.printStackTrace()
             toast("Read file failed", e)
+        }
+    }
+
+    private suspend fun insertPage(page: Page) {
+        withContext(Dispatchers.IO) {
+            DaoManager.getPageDao(repo).apply {
+                deleteByPath(page.path)
+                insertAll(page)
+            }
         }
     }
 
