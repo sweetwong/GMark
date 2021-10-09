@@ -1,6 +1,5 @@
 package sweet.wong.gmark.git
 
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import sweet.wong.gmark.data.Repo
@@ -31,9 +30,9 @@ class CloneTest {
             ssh = null
         )
 
-        Clone.start(repo).collect {
-            println(it)
-        }
+        Clone.start(repo)
+            .doOnError { println(it) }
+            .subscribe()
     }
 
     @Test
@@ -48,9 +47,9 @@ class CloneTest {
             ssh = null
         )
 
-        Clone.start(repo).collect {
-            println(it)
-        }
+        Clone.start(repo)
+            .doOnError { println(it) }
+            .subscribe()
     }
 
 }
