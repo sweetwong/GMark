@@ -51,6 +51,8 @@ class RepoViewModel : ViewModel() {
 
     val loadingUIState = NonNullLiveData(LoadingUIState())
 
+    val updateFile = MutableLiveData<Event<Unit>>()
+
     /**
      * Current Repository, this data is get from argument
      */
@@ -155,6 +157,8 @@ class RepoViewModel : ViewModel() {
                 this@RepoViewModel.pages.notify()
 
                 insertPage(existingPage)
+
+                updateFile.value = Event(Unit)
             } else {
                 // Add new file
                 val newPage = Page(file.absolutePath)

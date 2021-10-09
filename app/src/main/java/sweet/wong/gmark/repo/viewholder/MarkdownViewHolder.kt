@@ -15,6 +15,7 @@ import sweet.wong.gmark.ext.MAIN_CATCH
 import sweet.wong.gmark.ext.inflater
 import sweet.wong.gmark.repo.RepoViewModel
 import sweet.wong.gmark.repo.markdown.MarkdownDelegate
+import sweet.wong.gmark.utils.EventObserver
 import sweet.wong.gmark.utils.SnappingLinearLayoutManager
 
 class MarkdownViewHolder(
@@ -36,6 +37,15 @@ class MarkdownViewHolder(
                 binding.markList.smoothScrollToPosition(0)
             }
         }
+        viewModel.updateFile.observe(activity, EventObserver {
+            if (viewModel.currentPosition == adapterPosition) {
+                viewModel.showingPage?.let { page ->
+                    bind(page)
+                }
+            } else {
+                viewModel.updateFile.value?.hasBeenHandled = false
+            }
+        })
     }
 
     override fun bind(data: Page) {
