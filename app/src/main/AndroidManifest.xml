@@ -18,11 +18,15 @@
 
         <activity
             android:name=".repolist.RepoListActivity"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleTask">
 
         </activity>
 
-        <activity android:name=".repo.RepoActivity">
+        <activity
+            android:name=".repo.RepoActivity"
+            android:exported="true"
+            android:launchMode="singleTask">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,17 +36,21 @@
 
         </activity>
 
-        <activity android:name=".photoview.PhotoViewActivity" />
+        <activity
+            android:name=".photoview.PhotoViewActivity"
+            android:exported="true" />
 
-        <activity android:name=".settings.SettingsActivity" />
+        <activity
+            android:name=".settings.SettingsActivity"
+            android:exported="true" />
 
-        <activity android:name=".editor.EditorActivity" />
+        <activity
+            android:name=".editor.EditorActivity"
+            android:exported="true" />
 
         <activity
             android:name=".debug.DebugActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
 
         <activity
             android:name=".search.SearchActivity"

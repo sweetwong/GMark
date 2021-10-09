@@ -71,6 +71,7 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
         initToolbar(viewModel.repo.name)
         initViewPager()
         initDrawer(savedInstanceState)
+        initFab()
 
         // load README.md
         if (savedInstanceState == null) {
@@ -221,6 +222,13 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
             if (open) binding.drawerLayout.openDrawer(binding.navigationView)
             else binding.drawerLayout.closeDrawer(binding.navigationView)
         })
+    }
+
+    private fun initFab() {
+        binding.fabEdit.setOnClickListener {
+            val file = viewModel.showingFile ?: return@setOnClickListener
+            EditorActivity.start(this, editorLauncher, file.absolutePath)
+        }
     }
 
     /**
