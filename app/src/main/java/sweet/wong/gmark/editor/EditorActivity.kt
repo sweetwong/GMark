@@ -38,15 +38,9 @@ class EditorActivity : BaseActivity<ActivityEditorBinding>() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        initToolbar(binding.toolbar)
 
         undoRedo = TextViewUndoRedo(binding.etRaw)
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

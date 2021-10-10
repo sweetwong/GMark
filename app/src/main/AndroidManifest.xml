@@ -61,6 +61,10 @@
             android:name=".newrepo.NewRepoActivity"
             android:exported="true" />
 
+        <activity
+            android:name=".diff.DiffActivity"
+            android:exported="true" />
+
     </application>
 
 </manifest>

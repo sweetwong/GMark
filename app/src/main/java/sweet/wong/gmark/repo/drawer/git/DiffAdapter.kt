@@ -5,6 +5,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import sweet.wong.gmark.databinding.RecycleItemGitDiffBinding
+import sweet.wong.gmark.diff.DiffActivity
 import sweet.wong.gmark.ext.inflater
 import sweet.wong.gmark.utils.DefaultDiffUtilCallback
 
@@ -25,6 +26,10 @@ class DiffAdapter(
             uiState.bind(lifecycleOwner) {
                 binding.uiState = uiState
                 binding.executePendingBindings()
+            }
+
+            itemView.setOnClickListener {
+                DiffActivity.start(itemView.context, viewModel.repo.root, uiState.entry.newPath)
             }
         }
 

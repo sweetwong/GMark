@@ -3,6 +3,8 @@ package sweet.wong.gmark.base
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.databinding.ViewDataBinding
 import androidx.viewbinding.ViewBinding
 import java.lang.reflect.ParameterizedType
 
@@ -25,7 +27,19 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
             LayoutInflater::class.java
         )
         binding = inflateMethod.invoke(null, layoutInflater) as T
+        (binding as? ViewDataBinding)?.lifecycleOwner = this
     }
 
+    protected fun initToolbar(toolbar: Toolbar, showBack: Boolean = true) {
+        setSupportActionBar(toolbar)
+        if (showBack) {
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
+    }
 
 }

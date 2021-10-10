@@ -66,7 +66,6 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
 
         // Binding View
         binding.viewModel = viewModel
-        binding.lifecycleOwner = this
 
         initToolbar(viewModel.repo.name)
         initViewPager()
