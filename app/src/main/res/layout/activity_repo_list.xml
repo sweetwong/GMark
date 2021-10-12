@@ -43,6 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="36dp"
+                android:alpha="0.9"
                 android:src="@drawable/add"
                 android:tint="@color/red_main"
                 app:backgroundTint="@color/white"
