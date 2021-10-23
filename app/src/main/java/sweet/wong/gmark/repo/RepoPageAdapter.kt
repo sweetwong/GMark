@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ListAdapter
 import sweet.wong.gmark.data.Page
-import sweet.wong.gmark.data.PageType
 import sweet.wong.gmark.repo.viewholder.AbsViewHolder
 import sweet.wong.gmark.repo.viewholder.MarkdownViewHolder
 import sweet.wong.gmark.repo.viewholder.WebViewViewHolder
@@ -37,9 +36,9 @@ class RepoPageAdapter(
     override fun onBindViewHolder(holder: AbsViewHolder<Page>, position: Int) =
         holder.bind(getItem(position))
 
-    override fun getItemViewType(position: Int) = when (getItem(position).pageType) {
-        PageType.FILE -> VIEW_TYPE_MARKDOWN
-        PageType.URL -> VIEW_TYPE_WEB_VIEW
+    override fun getItemViewType(position: Int) = when (getItem(position).type) {
+        Page.TYPE_URL -> VIEW_TYPE_WEB_VIEW
+        else -> VIEW_TYPE_MARKDOWN
     }
 
     fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {

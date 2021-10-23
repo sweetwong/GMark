@@ -23,7 +23,7 @@ import sweet.wong.gmark.R
 import sweet.wong.gmark.base.BaseActivity
 import sweet.wong.gmark.core.noOpDelegate
 import sweet.wong.gmark.core.toast
-import sweet.wong.gmark.data.PageType
+import sweet.wong.gmark.data.Page
 import sweet.wong.gmark.databinding.ActivityRepoBinding
 import sweet.wong.gmark.editor.EditorActivity
 import sweet.wong.gmark.ext.start
@@ -53,10 +53,14 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
     private val searchLauncher = registerForActivityResult(StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val path = result.data?.data?.toString() ?: return@registerForActivityResult
-            val file = File(path)
-            if (file.isFile) {
-                viewModel.selectFile(file)
-            } else {
+            try {
+                val file = File(path)
+                if (file.exists() && file.isFile) {
+                    viewModel.selectFile(file)
+                } else {
+                    viewModel.selectUrl(SearchUtils.getSearchUrlByPref(path))
+                }
+            } catch (e: Exception) {
                 viewModel.selectUrl(SearchUtils.getSearchUrlByPref(path))
             }
         }
@@ -124,8 +128,8 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
                 viewModel.currentPosition = position
 
                 val showingPage = viewModel.showingPage ?: return
-                when (showingPage.pageType) {
-                    PageType.URL -> {
+                when (showingPage.type) {
+                    Page.TYPE_URL -> {
                         binding.tvUrl.text = showingPage.path
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             binding.tvUrl.tooltipText = showingPage.path
@@ -135,7 +139,7 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
 
                         binding.fabEdit.isVisible = false
                     }
-                    PageType.FILE -> {
+                    Page.TYPE_FILE -> {
                         val rootParent = viewModel.rootFile.parentFile ?: return
                         val relativePath = showingPage.file?.relativeTo(rootParent)?.path ?: return
                         binding.tvUrl.text = relativePath
@@ -161,9 +165,9 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
             tab.customView = textView
 
             val page = viewModel.pages.value[position]
-            val path = when (page.pageType) {
-                PageType.FILE -> page.file?.name
-                PageType.URL -> page.path
+            val path = when (page.type) {
+                Page.TYPE_URL -> page.path
+                else -> page.file?.name
             }
             textView.text = path
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -180,6 +184,7 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
             }
             textView.requestLayout()
             binding.tabLayout.selectTab(tab)
+            binding.tvUrl.text = it
         })
 
         binding.tabLayout.addOnTabSelectedListener(

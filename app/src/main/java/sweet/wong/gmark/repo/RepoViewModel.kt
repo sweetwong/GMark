@@ -10,7 +10,6 @@ import sweet.wong.gmark.core.log
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.DaoManager
 import sweet.wong.gmark.data.Page
-import sweet.wong.gmark.data.PageType
 import sweet.wong.gmark.data.Repo
 import sweet.wong.gmark.ext.MAIN_CATCH
 import sweet.wong.gmark.ext.notify
@@ -108,18 +107,8 @@ class RepoViewModel : ViewModel() {
         isRenaming = false
     }
 
-    fun selectPage(page: Page?) {
-        if (page?.pageType == PageType.FILE) {
-            selectFile(page.file)
-        }
-
-        if (page?.pageType == PageType.URL) {
-            selectUrl(page.path)
-        }
-    }
-
     fun selectUrl(url: String) {
-        val urlPage = Page(path = url)
+        val urlPage = Page(path = url, type = Page.TYPE_URL)
         pages.value.add(++currentPosition, urlPage)
         pages.notify()
     }
