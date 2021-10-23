@@ -85,7 +85,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_margin="36dp"
-                android:alpha="0.9"
+                android:alpha="0.7"
                 android:src="@drawable/edit"
                 android:tint="@color/red_main"
                 app:backgroundTint="@color/white"

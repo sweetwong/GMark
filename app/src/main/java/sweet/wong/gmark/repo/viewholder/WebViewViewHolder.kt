@@ -8,8 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import me.jingbin.web.ByWebView
 import me.jingbin.web.OnTitleProgressCallback
+import sweet.wong.gmark.R
 import sweet.wong.gmark.data.Page
 import sweet.wong.gmark.databinding.PageWebviewBinding
+import sweet.wong.gmark.ext.getColorFromAttr
 import sweet.wong.gmark.ext.inflater
 import sweet.wong.gmark.repo.RepoViewModel
 import sweet.wong.gmark.utils.Event
@@ -38,6 +40,7 @@ class WebViewViewHolder(
                 binding.webViewContainer,
                 ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
             )
+            .useWebProgress(activity.getColorFromAttr(R.attr.colorPrimary))
             .setCustomWebView(MyWebView(activity))
             .setOnTitleProgressCallback(object : OnTitleProgressCallback() {
                 override fun onReceivedTitle(title: String) {
@@ -45,7 +48,6 @@ class WebViewViewHolder(
                     viewModel.webViewNameUpdateEvent.value = Event(title)
                 }
             })
-            .useWebProgress(false)
             .loadUrl(data.path)
 
         viewModel.onTabReselect.removeObserver(onTabReselectObserver)

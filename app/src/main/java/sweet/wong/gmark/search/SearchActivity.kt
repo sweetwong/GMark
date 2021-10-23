@@ -41,6 +41,14 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
         delay(500) {
             KeyboardUtils.showSoftInput(binding.etUrl)
         }
+
+        binding.etUrl.setOnEditorActionListener { v, actionId, event ->
+            val intent = Intent().setData(Uri.parse(v.text.toString()))
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+            overridePendingTransition(0, 0)
+            true
+        }
     }
 
     private fun ActivitySearchBinding.initView() {

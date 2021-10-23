@@ -33,6 +33,7 @@ import sweet.wong.gmark.search.SearchActivity
 import sweet.wong.gmark.settings.SettingsActivity
 import sweet.wong.gmark.sp.SPUtils.settings
 import sweet.wong.gmark.utils.EventObserver
+import sweet.wong.gmark.utils.SearchUtils
 import java.io.File
 import kotlin.math.min
 
@@ -52,7 +53,12 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
     private val searchLauncher = registerForActivityResult(StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val path = result.data?.data?.toString() ?: return@registerForActivityResult
-            viewModel.selectFile(File(path))
+            val file = File(path)
+            if (file.isFile) {
+                viewModel.selectFile(file)
+            } else {
+                viewModel.selectUrl(SearchUtils.getGoogleSearchUrl(path))
+            }
         }
     }
 
@@ -126,6 +132,8 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
                         }
 
                         binding.tvUrl.ellipsize = TextUtils.TruncateAt.END
+
+                        binding.fabEdit.isVisible = false
                     }
                     PageType.FILE -> {
                         val rootParent = viewModel.rootFile.parentFile ?: return
@@ -136,6 +144,8 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
                         }
 
                         binding.tvUrl.ellipsize = TextUtils.TruncateAt.START
+
+                        binding.fabEdit.isVisible = true
                     }
                 }
             }
