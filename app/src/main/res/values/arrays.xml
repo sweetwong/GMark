@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Used for SP -->
-    <string-array name="language_values">
+    <string-array name="language_values" translatable="false">
         <item>system_language</item>
         <item>english</item>
         <item>chinese</item>
@@ -16,7 +16,7 @@
     </string-array>
 
     <!-- Used for SP -->
-    <string-array name="theme_color_values">
+    <string-array name="theme_color_values" translatable="false">
         <item>blue</item>
         <item>red</item>
         <item>yellow</item>
@@ -35,7 +35,7 @@
         <item>Baidu</item>
     </string-array>
 
-    <string-array name="search_engine_values">
+    <string-array name="search_engine_values" translatable="false">
         <item>google</item>
         <item>bing</item>
         <item>baidu</item>

@@ -55,5 +55,5 @@
     <string name="summary_prepare_clone" translatable="false">Preparing clone …</string>
     <string name="pref_language" translatable="false">pref_language</string>
     <string name="search_engine">Search Engine</string>
-    <string name="pref_search_engine">pref_search_engine</string>
+    <string name="pref_search_engine" translatable="false">pref_search_engine</string>
 </resources>
