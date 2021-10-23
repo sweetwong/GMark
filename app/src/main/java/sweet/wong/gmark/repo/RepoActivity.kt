@@ -16,6 +16,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.viewpager2.widget.ViewPager2
+import com.blankj.utilcode.util.RegexUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -53,16 +54,25 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
     private val searchLauncher = registerForActivityResult(StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val path = result.data?.data?.toString() ?: return@registerForActivityResult
+
+            // Open url in WebView
+            if (RegexUtils.isURL(path)) {
+                viewModel.selectUrl(path)
+                return@registerForActivityResult
+            }
+
             try {
                 val file = File(path)
                 if (file.exists() && file.isFile) {
+                    // Select local file
                     viewModel.selectFile(file)
-                } else {
-                    viewModel.selectUrl(SearchUtils.getSearchUrlByPref(path))
+                    return@registerForActivityResult
                 }
             } catch (e: Exception) {
-                viewModel.selectUrl(SearchUtils.getSearchUrlByPref(path))
             }
+
+            // Search keyword in WebView
+            viewModel.selectUrl(SearchUtils.getSearchUrlByPref(path))
         }
     }
 

@@ -39,10 +39,10 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
         binding.initView()
 
         delay(500) {
-            KeyboardUtils.showSoftInput(binding.etUrl)
+            KeyboardUtils.showSoftInput(binding.etSearch)
         }
 
-        binding.etUrl.setOnEditorActionListener { v, actionId, event ->
+        binding.etSearch.setOnEditorActionListener { v, actionId, event ->
             val intent = Intent().setData(Uri.parse(v.text.toString()))
             setResult(Activity.RESULT_OK, intent)
             finish()
@@ -52,8 +52,8 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
     }
 
     private fun ActivitySearchBinding.initView() {
-        etUrl.transitionName = SHARED_ELEMENT_NAME
-        etUrl.doOnTextChanged { text, _, _, _ ->
+        etSearch.transitionName = SHARED_ELEMENT_NAME
+        etSearch.doOnTextChanged { text, _, _, _ ->
             val textString = text?.toString().orEmpty().trim()
             viewModel.keyword.value = textString
             singlePost.postDelayed(200) {

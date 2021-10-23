@@ -11,12 +11,12 @@
         app:contentInsetEnd="16dp">
 
         <EditText
-            android:id="@+id/et_url"
+            android:id="@+id/et_search"
             style="@style/SearchTextStyle"
             android:background="@drawable/shape_search_background"
             android:hint="@string/search_hint"
             android:importantForAutofill="no"
-            android:inputType="textUri"
+            android:inputType="text"
             tools:ignore="UnusedAttribute" />
 
     </androidx.appcompat.widget.Toolbar>
