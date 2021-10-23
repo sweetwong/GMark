@@ -1,23 +1,34 @@
 package sweet.wong.gmark.utils
 
-import android.content.Context
-import android.net.ConnectivityManager
-import sweet.wong.gmark.core.App
+import sweet.wong.gmark.R
+import sweet.wong.gmark.core.getString
+import sweet.wong.gmark.sp.SPUtils
 
 
 object SearchUtils {
 
-    private fun networkConnectivity(): Boolean {
-        val cm = App.app.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val networkInfo = cm.activeNetworkInfo
-        return networkInfo != null && networkInfo.isConnected
+    fun getSearchUrlByPref(keyword: String): String {
+        val searchEngineValue = SPUtils.settings.getString(
+            getString(R.string.pref_search_engine), SearchEngine.GOOGLE.value
+        )
+        return when (SearchEngine.valueOf(searchEngineValue)) {
+            SearchEngine.GOOGLE -> "https://www.google.com/search?q=$keyword"
+            SearchEngine.BING -> "https://www.bing.com/search?q=$keyword"
+            SearchEngine.BAIDU -> "https://www.baidu.com/s?wd=$keyword"
+        }
+    }
+}
+
+enum class SearchEngine(val value: String) {
+
+    GOOGLE("google"),
+    BING("bing"),
+    BAIDU("baidu");
+
+    companion object {
+
+        fun valueOf(value: String?) = values().find { it.value == value } ?: GOOGLE
+
     }
 
-    fun getGoogleSearchUrl(keyword: String): String {
-        return "https://www.google.com/search?q=$keyword"
-    }
-
-    fun getBingSearchUrl(keyword: String): String {
-        return "https://www.bing.com/search?q=$keyword"
-    }
 }

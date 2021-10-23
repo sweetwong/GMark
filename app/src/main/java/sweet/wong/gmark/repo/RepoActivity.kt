@@ -57,7 +57,7 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
             if (file.isFile) {
                 viewModel.selectFile(file)
             } else {
-                viewModel.selectUrl(SearchUtils.getGoogleSearchUrl(path))
+                viewModel.selectUrl(SearchUtils.getSearchUrlByPref(path))
             }
         }
     }

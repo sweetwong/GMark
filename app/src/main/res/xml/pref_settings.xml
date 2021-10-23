@@ -25,6 +25,16 @@
         app:title="@string/theme_color"
         app:useSimpleSummaryProvider="true" />
 
+    <ListPreference
+        app:defaultValue="google"
+        app:entries="@array/search_engine_texts"
+        app:entryValues="@array/search_engine_values"
+        app:icon="@drawable/search"
+        app:key="@string/pref_search_engine"
+        app:persistent="true"
+        app:title="@string/search_engine"
+        app:useSimpleSummaryProvider="true" />
+
     <PreferenceCategory
         app:iconSpaceReserved="false"
         app:title="View" />

@@ -29,4 +29,16 @@
         <item>Yellow</item>
     </string-array>
 
+    <string-array name="search_engine_texts">
+        <item>Google</item>
+        <item>Bing</item>
+        <item>Baidu</item>
+    </string-array>
+
+    <string-array name="search_engine_values">
+        <item>google</item>
+        <item>bing</item>
+        <item>baidu</item>
+    </string-array>
+
 </resources>
