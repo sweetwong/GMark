@@ -87,7 +87,7 @@
                 android:layout_margin="36dp"
                 android:alpha="0.7"
                 android:src="@drawable/edit"
-                android:tint="@color/red_main"
+                android:tint="?colorPrimary"
                 app:backgroundTint="@color/white"
                 tools:ignore="ContentDescription" />
 
