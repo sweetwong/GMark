@@ -178,9 +178,18 @@ class RepoViewModel : ViewModel() {
     fun pageSize(): Int = pages.value.size
 
     fun removeShowingPage(): Boolean {
-        val pages = pages.value
         val showingPage = showingPage ?: return false
-        val success = pages.remove(showingPage)
+        return remove(showingPage)
+    }
+
+    fun remove(path: String): Boolean {
+        val pages = this.pages.value
+        val page = pages.find { it.path == path } ?: return false
+        return remove(page)
+    }
+
+    fun remove(page: Page): Boolean {
+        val success = pages.value.remove(showingPage)
         if (success && currentPosition > 0) {
             currentPosition--
         }

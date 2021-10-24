@@ -17,6 +17,7 @@ import sweet.wong.gmark.git.setCredential
 import sweet.wong.gmark.repo.RepoViewModel
 import sweet.wong.gmark.sp.SPUtils
 import sweet.wong.gmark.utils.Event
+import java.io.File
 
 class GitViewModel : ViewModel() {
 
@@ -24,7 +25,7 @@ class GitViewModel : ViewModel() {
 
     lateinit var repoViewModel: RepoViewModel
 
-    val diffUIStates = MutableLiveData<List<DiffUIState>>()
+    val diffUIStates = MutableLiveData<MutableList<DiffUIState>>()
 
     val commitMessage = MutableLiveData<String>()
 
@@ -81,8 +82,7 @@ class GitViewModel : ViewModel() {
                     visible = true
                 }
 
-                val git = repo.git
-                git.push()
+                repo.git.push()
                     .setProgressMonitor(BasicProgressMonitor { p ->
                         repoViewModel.loadingUIState.update {
                             text = p.combinedMessage
@@ -98,6 +98,32 @@ class GitViewModel : ViewModel() {
                 repoViewModel.loadingUIState.update {
                     visible = false
                 }
+            }
+        }
+    }
+
+    fun rollback(uiState: DiffUIState) {
+        viewModelScope.launch(Dispatchers.IO_CATCH) {
+            val git = repo.git
+            val path = uiState.entry.newPath
+
+            git.reset()
+                .addPath(path)
+                .call()
+
+            git.checkout()
+                .addPath(path)
+                .call()
+
+            val cleaned = git.clean()
+                .setPaths(setOf(path))
+                .setForce(true)
+                .call()
+
+            refreshDiffList()
+
+            if (cleaned.isNotEmpty()) {
+                repoViewModel.remove(File(repo.rootFile, path).absolutePath)
             }
         }
     }

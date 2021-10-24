@@ -41,4 +41,5 @@
     <string name="summary_clone_failed">克隆失败，请点击同步按钮重新开始</string>
     <string name="summary_pull_failed">拉取失败，请点击同步按钮重新开始</string>
     <string name="search_engine">搜索引擎</string>
+    <string name="rollback">回滚</string>
 </resources>
