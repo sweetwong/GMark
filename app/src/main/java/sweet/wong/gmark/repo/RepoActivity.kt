@@ -185,16 +185,20 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
             }
         }.attach()
 
-        viewModel.webViewNameUpdateEvent.observe(this, EventObserver {
-            val tab = binding.tabLayout.getTabAt(viewModel.currentPosition) ?: return@EventObserver
+        viewModel.webViewNameUpdateEvent.observe(this, EventObserver { pair ->
+            val position = pair.first
+            val name = pair.second
+            val tab = binding.tabLayout.getTabAt(position) ?: return@EventObserver
             val textView = tab.customView as? TextView ?: return@EventObserver
-            textView.text = it
+            textView.text = name
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                textView.tooltipText = it
+                textView.tooltipText = name
             }
             textView.requestLayout()
             binding.tabLayout.selectTab(tab)
-            binding.tvUrl.text = it
+            if (viewModel.currentPosition == position) {
+                binding.tvUrl.text = name
+            }
         })
 
         binding.tabLayout.addOnTabSelectedListener(

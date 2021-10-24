@@ -36,7 +36,7 @@ class RepoViewModel : ViewModel() {
 
     val pages = NonNullLiveData<MutableList<Page>>(mutableListOf())
 
-    val webViewNameUpdateEvent = MutableLiveData<Event<String>>()
+    val webViewNameUpdateEvent = MutableLiveData<Event<Pair<Int, String>>>()
 
     var currentPosition = -1
 

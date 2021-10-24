@@ -45,7 +45,7 @@ class WebViewViewHolder(
             .setOnTitleProgressCallback(object : OnTitleProgressCallback() {
                 override fun onReceivedTitle(title: String) {
                     data.name = title
-                    viewModel.webViewNameUpdateEvent.value = Event(title)
+                    viewModel.webViewNameUpdateEvent.value = Event(Pair(adapterPosition, title))
                 }
             })
             .loadUrl(data.path)
