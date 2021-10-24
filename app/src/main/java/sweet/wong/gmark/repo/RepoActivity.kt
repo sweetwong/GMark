@@ -195,8 +195,8 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
                 textView.tooltipText = name
             }
             textView.requestLayout()
-            binding.tabLayout.selectTab(tab)
             if (viewModel.currentPosition == position) {
+                binding.tabLayout.selectTab(tab)
                 binding.tvUrl.text = name
             }
         })
