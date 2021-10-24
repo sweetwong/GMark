@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.viewpager2.widget.ViewPager2
 import com.blankj.utilcode.util.RegexUtils
@@ -105,6 +106,12 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
 
         val hideTabLayout = settings.getBoolean(getString(R.string.pref_hide_tab_layout), false)
         binding.tabLayout.isVisible = !hideTabLayout
+        binding.toolbar.updateLayoutParams {
+            height = resources.getDimensionPixelSize(
+                if (hideTabLayout) R.dimen.toolbar_height
+                else R.dimen.toolbar_height_with_tab
+            )
+        }
     }
 
     private fun initToolbar(title: String) {
