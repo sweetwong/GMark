@@ -15,6 +15,7 @@
             style="@style/SearchTextStyle"
             android:background="@drawable/shape_search_background"
             android:hint="@string/search_hint"
+            android:imeOptions="actionSearch"
             android:importantForAutofill="no"
             android:inputType="text"
             tools:ignore="UnusedAttribute" />

@@ -147,7 +147,7 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
                 val showingPage = viewModel.showingPage ?: return
                 when (showingPage.type) {
                     Page.TYPE_URL -> {
-                        binding.tvUrl.text = showingPage.path
+                        binding.tvUrl.text = showingPage.name ?: showingPage.path
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             binding.tvUrl.tooltipText = showingPage.path
                         }
@@ -206,6 +206,7 @@ class RepoActivity : BaseActivity<ActivityRepoBinding>() {
                 binding.tabLayout.selectTab(tab)
                 binding.tvUrl.text = name
             }
+            viewModel.pages.value[position].name = name
         })
 
         binding.tabLayout.addOnTabSelectedListener(
