@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -20,9 +21,12 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/recycle_item_git_diff" />
 
-        <View style="@style/Divider" />
+        <View
+            style="@style/Divider"
+            android:layout_marginTop="12dp" />
 
         <EditText
             android:id="@+id/et_commit_message"
@@ -31,10 +35,10 @@
             android:autofillHints="no"
             android:background="@color/ck_transparent"
             android:gravity="top"
-            android:text="@={viewModel.commitMessage}"
             android:hint="@string/commit_message"
             android:inputType="textMultiLine"
             android:padding="12dp"
+            android:text="@={viewModel.commitMessage}"
             android:textColor="@color/text_main"
             android:textColorHint="@color/text_sub"
             android:textSize="16sp" />
@@ -48,9 +52,9 @@
                 android:id="@+id/btn_commit"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
-                android:onClick="@{() -> viewModel.commit()}"
                 android:layout_height="wrap_content"
                 android:minWidth="100dp"
+                android:onClick="@{() -> viewModel.commit()}"
                 android:text="@string/commit" />
 
             <Button
@@ -58,8 +62,8 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> viewModel.push()}"
                 android:minWidth="100dp"
+                android:onClick="@{() -> viewModel.push()}"
                 android:text="@string/push" />
 
         </LinearLayout>

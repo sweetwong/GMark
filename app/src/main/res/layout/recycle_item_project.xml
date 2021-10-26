@@ -12,18 +12,14 @@
     </data>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:selectableItemBackground"
-        android:paddingStart="12dp"
+        style="@style/ItemContainer"
         android:paddingTop="6dp"
-        android:paddingEnd="12dp"
         android:paddingBottom="6dp">
 
         <ImageView
             android:id="@+id/iv_icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:layout_centerVertical="true"
             android:src="@{uiState.drawerFile.file ? @drawable/text : @drawable/folder}"
             tools:ignore="ContentDescription"
@@ -40,7 +36,7 @@
             android:padding="3dp"
             android:text="@{uiState.name}"
             android:textColor="@color/text_main"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:visibility="@{uiState.editing ? View.GONE : View.VISIBLE}"
             tools:text="目录" />
 

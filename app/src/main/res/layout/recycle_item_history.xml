@@ -9,14 +9,16 @@
             type="sweet.wong.gmark.data.Page" />
     </data>
 
-    <TextView
-        android:id="@+id/text"
-        style="@style/TextMessage"
-        android:layout_width="match_parent"
-        android:background="?selectableItemBackground"
-        android:gravity="start"
-        android:padding="12dp"
-        android:text="@{page.file.name}"
-        tools:text="目录" />
+    <LinearLayout style="@style/ItemContainer">
+
+        <TextView
+            android:id="@+id/text"
+            style="@style/TextMessage"
+            android:layout_width="match_parent"
+            android:gravity="start"
+            android:text="@{page.file.name}"
+            tools:text="目录" />
+
+    </LinearLayout>
 
 </layout>

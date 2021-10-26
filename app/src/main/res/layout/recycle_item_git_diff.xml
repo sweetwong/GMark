@@ -10,12 +10,10 @@
     </data>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?selectableItemBackground"
+        style="@style/ItemContainer"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="12dp">
+        tools:ignore="UseCompoundDrawables">
 
         <TextView
             android:id="@+id/tv_diff_title"
@@ -24,15 +22,17 @@
             android:layout_marginEnd="18dp"
             android:layout_weight="1"
             android:text="@{uiState.path}"
-            tools:text="Diff" />
+            tools:text="app/src/main/java/sweet/wong/gmark/core/MainActivity.kt" />
 
         <ImageView
             android:id="@+id/tv_diff_icon"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:padding="3dp"
+            tools:background="@drawable/shape_git_diff_add"
             tools:ignore="ContentDescription"
-            tools:src="@drawable/add" />
+            tools:src="@drawable/git_add"
+            tools:tint="@color/git_add" />
 
     </LinearLayout>
 
