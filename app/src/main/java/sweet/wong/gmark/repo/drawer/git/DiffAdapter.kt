@@ -7,7 +7,9 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import org.eclipse.jgit.diff.DiffEntry
 import sweet.wong.gmark.R
+import sweet.wong.gmark.core.getColorStateList
 import sweet.wong.gmark.databinding.RecycleItemGitDiffBinding
 import sweet.wong.gmark.diff.DiffActivity
 import sweet.wong.gmark.ext.inflater
@@ -32,9 +34,30 @@ class DiffAdapter(
                 binding.executePendingBindings()
             }
 
+            binding.tvDiffIcon.apply {
+                when (uiState.entry.changeType) {
+                    DiffEntry.ChangeType.ADD -> {
+                        setImageResource(R.drawable.git_add)
+                        imageTintList = getColorStateList(R.color.git_add)
+                        setBackgroundResource(R.drawable.shape_git_diff_add)
+                    }
+                    DiffEntry.ChangeType.DELETE -> {
+                        setImageResource(R.drawable.git_minus)
+                        imageTintList = getColorStateList(R.color.git_remove)
+                        setBackgroundResource(R.drawable.shape_git_diff_remove)
+                    }
+                    else -> {
+                        setImageResource(R.drawable.git_modify)
+                        imageTintList = getColorStateList(R.color.git_modify)
+                        setBackgroundResource(R.drawable.shape_git_diff_modify)
+                    }
+                }
+            }
+
             itemView.setOnClickListener {
                 DiffActivity.start(itemView.context, viewModel.repo.root, uiState.entry.newPath)
             }
+
 
             itemView.setOnLongClickListener {
                 showPopupMenu(it, uiState)

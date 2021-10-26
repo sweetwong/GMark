@@ -28,7 +28,6 @@ class GitFragment : DrawerFragment<FragmentGitBinding>() {
     private fun initDiffList() {
         adapter = DiffAdapter(viewModel, viewLifecycleOwner)
         binding.rvDiff.adapter = adapter
-        binding.rvDiff.itemAnimator = null
 
         viewModel.diffUIStates.observe(viewLifecycleOwner) {
             adapter.submitList(it.toMutableList())

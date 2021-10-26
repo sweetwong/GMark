@@ -105,7 +105,7 @@ class GitViewModel : ViewModel() {
     fun rollback(uiState: DiffUIState) {
         viewModelScope.launch(Dispatchers.IO_CATCH) {
             val git = repo.git
-            val path = uiState.entry.newPath
+            val path = uiState.path
 
             git.reset()
                 .addPath(path)

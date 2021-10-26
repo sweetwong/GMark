@@ -9,22 +9,31 @@
             type="sweet.wong.gmark.repo.drawer.git.DiffUIState" />
     </data>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:padding="12dp">
 
         <TextView
             android:id="@+id/tv_diff_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="@{uiState.entry.newPath}"
-            android:textColor="@color/text_main"
-            android:textSize="15sp"
+            style="@style/TextMessage"
+            android:layout_width="0dp"
+            android:layout_marginEnd="18dp"
+            android:layout_weight="1"
+            android:text="@{uiState.path}"
             tools:text="Diff" />
 
-    </RelativeLayout>
+        <ImageView
+            android:id="@+id/tv_diff_icon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:padding="3dp"
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/add" />
+
+    </LinearLayout>
 
 </layout>

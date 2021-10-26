@@ -3,6 +3,7 @@ package sweet.wong.gmark.core
 import android.content.res.Resources
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Proxy
@@ -32,3 +33,5 @@ private val NO_OP_HANDLER = InvocationHandler { _, _, _ ->
 val resources: Resources = App.app.resources
 
 fun getString(@StringRes resId: Int) = App.app.getString(resId)
+
+fun getColorStateList(@ColorRes colorId: Int) = App.app.getColorStateList(colorId)

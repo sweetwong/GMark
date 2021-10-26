@@ -26,4 +26,8 @@
 
     <color name="search_bar_background">#F1F3F4</color>
 
+    <color name="git_add">@color/ck_green400</color>
+    <color name="git_remove">@color/ck_red400</color>
+    <color name="git_modify">@color/ck_yellow400</color>
+
 </resources>
