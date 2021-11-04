@@ -8,14 +8,6 @@ class DebugActivity : BaseActivity<ActivityDebugBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        binding.button.setOnClickListener {
-            binding.syncButton.start()
-        }
-
-        binding.btnReset.setOnClickListener {
-            binding.syncButton.stop()
-        }
     }
 
 }
