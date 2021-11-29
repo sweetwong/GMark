@@ -19,6 +19,10 @@ object CloneUrlParser {
             return CloneUrlType.HTTP
         }
 
+        if (url.startsWith("https://")) {
+            return CloneUrlType.HTTP
+        }
+
         return CloneUrlType.INVALID
     }
 
