@@ -11,7 +11,7 @@ import io.noties.markwon.html.HtmlPlugin
 import io.noties.markwon.image.coil.CoilImagesPlugin
 import io.noties.markwon.recycler.MarkwonAdapter
 import io.noties.markwon.recycler.SimpleEntry
-import io.noties.markwon.syntax.Prism4jThemeDefault
+import io.noties.markwon.syntax.Prism4jThemeDarkula
 import io.noties.markwon.syntax.SyntaxHighlightPlugin
 import io.noties.prism4j.Prism4j
 import io.noties.prism4j.annotations.PrismBundle
@@ -28,7 +28,7 @@ import sweet.wong.gmark.repo.markdown.plugins.LinkPlugin
 class MarkdownDelegate(repoViewModel: RepoViewModel) {
 
     private val prism4j = Prism4j(GrammarLocatorSourceCode())
-    private val prism4jTheme = Prism4jThemeDefault.create(getCodeBlockColor())
+    private val prism4jTheme = Prism4jThemeDarkula.create()
     private val reducer = MarkwonReducer.directChildren()
 
     private var nodes: List<Node> = emptyList()
