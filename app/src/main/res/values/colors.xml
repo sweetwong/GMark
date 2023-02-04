@@ -30,4 +30,7 @@
     <color name="git_remove">@color/ck_red400</color>
     <color name="git_modify">@color/ck_yellow400</color>
 
+    <color name="markdown_message_text_color">@color/ck_black_80</color>
+
+
 </resources>

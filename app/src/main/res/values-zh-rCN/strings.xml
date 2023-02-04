@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">GMark</string>
+    <string name="app_name">学习</string>
     <string name="delete">删除</string>
     <string name="pull">拉取</string>
     <string name="confirm">确认</string>

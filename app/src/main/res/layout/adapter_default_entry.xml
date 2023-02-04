@@ -6,7 +6,8 @@
     android:layout_marginTop="6dp"
     android:layout_marginEnd="14dp"
     android:layout_marginBottom="6dp"
-    android:textColor="#3C4043"
-    android:textSize="16sp">
+    android:textColor="@color/markdown_message_text_color"
+    android:textSize="16sp"
+    android:forceDarkAllowed="false">
 
 </TextView>
