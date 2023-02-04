@@ -83,7 +83,7 @@ class MarkdownDelegate(repoViewModel: RepoViewModel) {
     }
 
     private fun getCodeBlockColor(): Int {
-        return if (isDarkMode()) 0xFF1B1B1B.toInt() else Color.WHITE
+        return App.app.getColor(R.color.ck_white_80)
     }
 
     private fun isDarkMode(): Boolean {

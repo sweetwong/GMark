@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import sweet.wong.gmark.core.delay
 import sweet.wong.gmark.core.log
 import sweet.wong.gmark.core.toast
 import sweet.wong.gmark.data.DaoManager
@@ -189,12 +190,18 @@ class RepoViewModel : ViewModel() {
     }
 
     fun remove(page: Page): Boolean {
-        val success = pages.value.remove(showingPage)
-        if (success && currentPosition > 0) {
+        if (currentPosition > 0) {
             currentPosition--
+            pages.notify()
+            pages.value.remove(page)
+            delay(200) {
+                pages.notify()
+            }
+        } else {
+            pages.value.remove(page)
+            pages.notify()
         }
-        this.pages.notify()
-        return success
+        return true
     }
 
     data class LoadingUIState(
