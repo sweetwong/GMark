@@ -55,10 +55,10 @@ class MarkdownDelegate(repoViewModel: RepoViewModel) {
         .build()
 
     val adapter = MarkwonAdapter.builderTextViewIsRoot(R.layout.adapter_default_entry)
-        .include(
-            FencedCodeBlock::class.java,
-            SimpleEntry.create(R.layout.adapter_node_code_block, R.id.text_view)
-        )
+//        .include(
+//            FencedCodeBlock::class.java,
+//            SimpleEntry.create(R.layout.adapter_node_code_block, R.id.text_view)
+//        )
         .build()
 
 
