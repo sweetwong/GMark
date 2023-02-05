@@ -1,6 +1,8 @@
 package sweet.wong.gmark.utils
 
+import android.content.res.Configuration
 import com.blankj.utilcode.util.PathUtils
+import sweet.wong.gmark.core.App
 
 /**
  * TODO: Add Description
@@ -28,5 +30,13 @@ object Utils {
         return source.replace("/external_files", PathUtils.getExternalStoragePath())
     }
 
+    fun isDarkMode(): Boolean {
+        return when (App.app.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
+            Configuration.UI_MODE_NIGHT_YES -> true
+            Configuration.UI_MODE_NIGHT_NO -> false
+            Configuration.UI_MODE_NIGHT_UNDEFINED -> false
+            else -> false
+        }
+    }
 
 }
